@@ -8,11 +8,16 @@ documentclass: book
 bibliography: [reference.bib]
 biblio-style: apalike
 link-citations: yes
+image: "./image/deeplearning-playbook.png"
 github-repo: statisticsplaybook/r-torch-playbook
 description: "딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집"
 ---
 
 # 들어가며
+
+```{r thumnail, echo=FALSE, fig.cap="deep-learning playbook", fig.align='center', out.width = '100%'}
+knitr::include_graphics("./image/deeplearning-playbook.png")
+```
 
 이제까지 R에서의 딥러닝은 Python의 라이브러리들을 `reticulate` 패키지를 이용하여 빌려온 형태였지만, [torch for R](https://torch.mlverse.org/) 패키지는 C 라이브러리를 Torch를 기반으로 R을 wrapper 언어로서 사용하여 패키지를 만들었다. 즉, Torch + Python = PyTorch, Torch + R = Rtorch가 되는 셈이다.
 

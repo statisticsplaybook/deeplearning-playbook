@@ -14,3 +14,6 @@ seq-함수-사용
 연산자-사용-1
 텐서와-행렬은-같을까
 literature
+operation
+토치-torch-불러오기-및-준비물-준비
+fig:thumnail

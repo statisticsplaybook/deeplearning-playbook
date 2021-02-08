@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>딥러닝 공략집 with R</title>
+  <title>Chapter 3 텐서 (tensor) 연산 | 딥러닝 공략집 with R</title>
   <meta name="description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="딥러닝 공략집 with R" />
+  <meta property="og:title" content="Chapter 3 텐서 (tensor) 연산 | 딥러닝 공략집 with R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="statisticsplaybook/r-torch-playbook" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="딥러닝 공략집 with R" />
+  <meta name="twitter:title" content="Chapter 3 텐서 (tensor) 연산 | 딥러닝 공략집 with R" />
   
   <meta name="twitter:description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="intro.html"/>
+<link rel="prev" href="intro.html"/>
+<link rel="next" href="references.html"/>
 <script src="libs/header-attrs-2.6.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -181,26 +181,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">딥러닝 공략집 with R</h1>
-<p class="author"><em>Issac Lee</em></p>
-<p class="date"><em>2021-02-07</em></p>
-</div>
-<div id="들어가며" class="section level1" number="1">
-<h1><span class="header-section-number">Chapter 1</span> 들어가며</h1>
-<div class="figure" style="text-align: center"><span id="fig:thumnail"></span>
-<img src="image/deeplearning-playbook.png" alt="deep-learning playbook" width="100%" />
-<p class="caption">
-Figure 1.1: deep-learning playbook
-</p>
-</div>
-<p>이제까지 R에서의 딥러닝은 Python의 라이브러리들을 <code>reticulate</code> 패키지를 이용하여 빌려온 형태였지만, <a href="https://torch.mlverse.org/">torch for R</a> 패키지는 C 라이브러리를 Torch를 기반으로 R을 wrapper 언어로서 사용하여 패키지를 만들었다. 즉, Torch + Python = PyTorch, Torch + R = Rtorch가 되는 셈이다.</p>
-<div id="설치하기" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> 설치하기</h2>
-<p>설치 역시 간단한다. 여느 R패키지와 같이 <code>install.packages()</code> 함수를 사용하면 된다. 서브 라이브러리인 <code>torchaudio</code>와 <code>torchvision</code>이 있으나, 책의 뒷부분에서 다루기로 한다.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;torch&quot;</span>)</span>
-<span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 혹은 개발버전을 다운 받고 싶다면</span></span>
-<span id="cb1-3"><a href="index.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::install_github(&quot;mlverse/torch&quot;)</span></span></code></pre></div>
+<div id="operation" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> 텐서 (tensor) 연산</h1>
+<p>지난 챕터에서 우리는 텐서가 행렬의 연산에 적용되는 <code>%*%</code>과 호환이 되지 않는 다는 것을 알게되었다. 이번 챕터에서는 텐서들의 연산에 대하여 알아보도록 하자.</p>
+<div id="토치-torch-불러오기-및-준비물-준비" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> 토치 (torch) 불러오기 및 준비물 준비</h2>
+<p>토치 (torch) 를 불러오고, 이번 챕터에 사용될 텐서 A, B, 그리고 C를 준비하자. 지난 챕터에서 배운 난수를 이용한 텐서도 만들 예정이니 난수를 고정한다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="operation.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span>
+<span id="cb1-2"><a href="operation.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="operation.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 난수 생성 시드 고정 </span></span>
+<span id="cb1-4"><a href="operation.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_manual_seed</span>(<span class="dv">2021</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="operation.html#cb2-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb2-2"><a href="operation.html#cb2-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">4</span>, <span class="dv">3</span>)</span>
+<span id="cb2-3"><a href="operation.html#cb2-3" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb2-4"><a href="operation.html#cb2-4" aria-hidden="true" tabindex="-1"></a>A; B; C</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1
+##  2
+##  3
+##  4
+##  5
+##  6
+## [ CPULongType{6} ]</code></pre>
+<pre><code>## torch_tensor
+##  0.5134  0.7426  0.7159
+##  0.5705  0.1653  0.0443
+##  0.9628  0.2943  0.0992
+##  0.8096  0.0169  0.8222
+## [ CPUFloatType{4,3} ]</code></pre>
+<pre><code>## torch_tensor
+## (1,.,.) = 
+##   0.1242  0.7489
+##   0.3608  0.5131
+##   0.2959  0.7834
+## 
+## (2,.,.) = 
+##   0.7405  0.8050
+##   0.3036  0.9942
+##   0.5025  0.3734
+## [ CPUFloatType{2,3,2} ]</code></pre>
+<p>만들어진 세 개의 텐서 결과를 살펴보면 다음과 같다.</p>
+<ol style="list-style-type: decimal">
+<li>텐서 A: 정수들로 구성이 되어있고, 12개의 원소들이 벡터를 이루고 있다.</li>
+<li>텐서 B: 실수들로 구성이 되어있고, 12개의 원소들이 있지만, 모양이 4행 3열인 2차원 행렬의 모양을 하고 있다.</li>
+</ol>
 
 </div>
 </div>
@@ -209,8 +233,8 @@ Figure 1.1: deep-learning playbook
           </div>
         </div>
       </div>
-
-<a href="intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -241,7 +265,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/statisticsplaybook/r-torch-playbook/edit/master/index.Rmd",
+"link": "https://github.com/statisticsplaybook/r-torch-playbook/edit/master/02-tensor-calculation.Rmd",
 "text": "Edit"
 },
 "history": {
