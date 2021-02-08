@@ -24,7 +24,7 @@
 <meta name="author" content="슬기로운통계생활" />
 
 
-<meta name="date" content="2021-02-07" />
+<meta name="date" content="2021-02-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -131,6 +131,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <ul class="summary">
 <li><a href="./">딥러닝 공략집 with Rtorch</a></li>
+<meta name="google-site-verification" content="z9CiKKDExNMW8gi4-dN3X6zGa1-OXeSaIpjGFgXgHEg" />
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> 들어가며</a>
@@ -201,11 +202,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-3"><a href="intro.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 텐서 x값 확인</span></span>
 <span id="cb3-4"><a href="intro.html#cb3-4" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0  0  0
-##  0  0  0
-##  0  0  0
-##  0  0  0
-##  0  0  0
+## -9.9757e+16  4.5821e-41 -9.9757e+16
+##  4.5821e-41 -5.9587e+29  3.0698e-41
+## -5.9587e+29  3.0698e-41  0.0000e+00
+##  0.0000e+00  0.0000e+00  0.0000e+00
+##  0.0000e+00  0.0000e+00  0.0000e+00
 ## [ CPUFloatType{5,3} ]</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="intro.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 텐서 x의 크기 확인</span></span>
 <span id="cb5-2"><a href="intro.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(x)</span></code></pre></div>
@@ -218,31 +219,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="intro.html#cb7-1" aria-hidden="true" tabindex="-1"></a>rand_tensor <span class="ot">&lt;-</span>  <span class="fu">torch_rand</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
 <span id="cb7-2"><a href="intro.html#cb7-2" aria-hidden="true" tabindex="-1"></a>rand_tensor</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.7455  0.3804  0.2387
-##  0.6164  0.9296  0.3853
-##  0.6021  0.7876  0.3077
-##  0.4160  0.2951  0.0530
-##  0.5559  0.3242  0.3042
+##  0.4541  0.5490  0.2186
+##  0.7428  0.1724  0.5408
+##  0.3123  0.0173  0.1595
+##  0.0922  0.3974  0.1295
+##  0.7382  0.7019  0.7639
 ## [ CPUFloatType{5,3} ]</code></pre>
 <p>참고로 이렇게 만들어진 텐서에는 R에서 텐서과 어레이(array)에 접근할 때사용한 모든 문법들을 사용해서 접근할 수 있다.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="intro.html#cb9-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[,<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.3804
-##  0.9296
-##  0.7876
-##  0.2951
-##  0.3242
+##  0.5490
+##  0.1724
+##  0.0173
+##  0.3974
+##  0.7019
 ## [ CPUFloatType{5} ]</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="intro.html#cb11-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.7455  0.3804  0.2387
-##  0.6164  0.9296  0.3853
-##  0.6021  0.7876  0.3077
+##  0.4541  0.5490  0.2186
+##  0.7428  0.1724  0.5408
+##  0.3123  0.0173  0.1595
 ## [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="intro.html#cb13-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.6021  0.3077
-##  0.4160  0.0530
+##  0.3123  0.1595
+##  0.0922  0.1295
 ## [ CPUFloatType{2,2} ]</code></pre>
 <p>위의 예제에서 벌써부터 일부 R유저들은 감격의 눈물을 흘릴 수 있다. 그렇다, Rtorch에서 텐서의 <strong>첫번째 위치는 1부터 시작</strong>한다. 이 너무나도 당연한 진리는 파이썬에서는 통하지 않는다.</p>
 </div>

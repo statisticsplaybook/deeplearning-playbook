@@ -24,7 +24,7 @@
 <meta name="author" content="슬기로운통계생활" />
 
 
-<meta name="date" content="2021-02-07" />
+<meta name="date" content="2021-02-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -159,6 +159,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3" data-path="operation.html"><a href="operation.html"><i class="fa fa-check"></i><b>3</b> 텐서 (tensor) 연산</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="operation.html"><a href="operation.html#토치-torch-불러오기-및-준비물-준비"><i class="fa fa-check"></i><b>3.1</b> 토치 (torch) 불러오기 및 준비물 준비</a></li>
+<li class="chapter" data-level="3.2" data-path="operation.html"><a href="operation.html#텐서의-연산"><i class="fa fa-check"></i><b>3.2</b> 텐서의 연산</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="operation.html"><a href="operation.html#형type-변환"><i class="fa fa-check"></i><b>3.2.1</b> 형(type) 변환</a></li>
+<li class="chapter" data-level="3.2.2" data-path="operation.html"><a href="operation.html#모양-변환"><i class="fa fa-check"></i><b>3.2.2</b> 모양 변환</a></li>
+<li class="chapter" data-level="3.2.3" data-path="operation.html"><a href="operation.html#덧셈과-뺄셈"><i class="fa fa-check"></i><b>3.2.3</b> 덧셈과 뺄셈</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -187,14 +193,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="토치-torch-불러오기-및-준비물-준비" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> 토치 (torch) 불러오기 및 준비물 준비</h2>
 <p>토치 (torch) 를 불러오고, 이번 챕터에 사용될 텐서 A, B, 그리고 C를 준비하자. 지난 챕터에서 배운 난수를 이용한 텐서도 만들 예정이니 난수를 고정한다.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="operation.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span>
-<span id="cb31-2"><a href="operation.html#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="operation.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 난수 생성 시드 고정 </span></span>
-<span id="cb31-4"><a href="operation.html#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_manual_seed</span>(<span class="dv">2021</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="operation.html#cb32-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
-<span id="cb32-2"><a href="operation.html#cb32-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">4</span>, <span class="dv">3</span>)</span>
-<span id="cb32-3"><a href="operation.html#cb32-3" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
-<span id="cb32-4"><a href="operation.html#cb32-4" aria-hidden="true" tabindex="-1"></a>A; B; C</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="operation.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span>
+<span id="cb1-2"><a href="operation.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="operation.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 난수 생성 시드 고정 </span></span>
+<span id="cb1-4"><a href="operation.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_manual_seed</span>(<span class="dv">2021</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="operation.html#cb2-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb2-2"><a href="operation.html#cb2-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb2-3"><a href="operation.html#cb2-3" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb2-4"><a href="operation.html#cb2-4" aria-hidden="true" tabindex="-1"></a>A; B; C</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1
 ##  2
@@ -206,27 +212,61 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## torch_tensor
 ##  0.5134  0.7426  0.7159
 ##  0.5705  0.1653  0.0443
-##  0.9628  0.2943  0.0992
-##  0.8096  0.0169  0.8222
-## [ CPUFloatType{4,3} ]</code></pre>
+## [ CPUFloatType{2,3} ]</code></pre>
 <pre><code>## torch_tensor
 ## (1,.,.) = 
+##   0.9628  0.2943
+##   0.0992  0.8096
+##   0.0169  0.8222
+## 
+## (2,.,.) = 
 ##   0.1242  0.7489
 ##   0.3608  0.5131
 ##   0.2959  0.7834
-## 
-## (2,.,.) = 
-##   0.7405  0.8050
-##   0.3036  0.9942
-##   0.5025  0.3734
 ## [ CPUFloatType{2,3,2} ]</code></pre>
 <p>만들어진 세 개의 텐서 결과를 살펴보면 다음과 같다.</p>
 <ol style="list-style-type: decimal">
 <li>텐서 A: 정수들로 구성이 되어있고, 6개의 원소들이 벡터를 이루고 있다.</li>
-<li>텐서 B: 실수들로 구성이 되어있고, 12개의 원소들이 있지만, 모양이 4행 3열인 2차원 행렬의 모양을 하고 있다.</li>
-<li>텐서 C: 실수들로 구성이 되어있고, 총 원소 갯수는 똑같이 12개지만, 모양은 3행 2열의 행렬이 두개가 쌓여진 꼴의 3차원 배열 (array) 이다.</li>
+<li>텐서 B: 실수들로 구성이 되어있고, 똑같이 6개의 원소들이 있지만, 모양이 4행 3열인 2차원 행렬의 모양을 하고 있다.</li>
+<li>텐서 C: 실수들로 구성이 되어있고, 총 원소 갯수는 12개지만, 모양은 3행 2열의 행렬이 두개가 쌓여진 꼴의 3차원 배열 (array) 이다.</li>
 </ol>
+</div>
+<div id="텐서의-연산" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> 텐서의 연산</h2>
+<div id="형type-변환" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> 형(type) 변환</h3>
+<p>먼저 주목해야 할 것은 바로 텐서 A와 B의 자료형이 다르다는 것이다. 이게 무슨뜻이냐면 A에는 정수만이 담길 수 있고, B에는 실수만이 담길 수 있도록 설계가 되어있다는 것이다. 앞에서 확인한 자료형을 좀 더 명확하게 확인하기 위해서는 <code>type()</code> 사용한다.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="operation.html#cb6-1" aria-hidden="true" tabindex="-1"></a>A<span class="sc">$</span>dtype</span></code></pre></div>
+<pre><code>## torch_Long</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="operation.html#cb8-1" aria-hidden="true" tabindex="-1"></a>B<span class="sc">$</span>dtype</span></code></pre></div>
+<pre><code>## torch_Float</code></pre>
+<p>텐서 A를 실수형 텐서로 바꿔보자. 텐서의 형을 변환할 때에는 A텐서 안에 속성으로 들어가있는 to() 함수를 사용 (좀 더 어려운 관점에서는 OOP의 method를 사용) 해서 바꿔줄 수 있다.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="operation.html#cb10-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> A<span class="sc">$</span><span class="fu">to</span>(<span class="at">dtype =</span> <span class="fu">torch_double</span>())</span>
+<span id="cb10-2"><a href="operation.html#cb10-2" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1
+##  2
+##  3
+##  4
+##  5
+##  6
+## [ CPUDoubleType{6} ]</code></pre>
+<p>torch에는 정말 많은 자료형이 있는데, 그 목록은 <a href="https://torch.mlverse.org/docs/reference/torch_dtype.html">다음</a>을 참고하자.</p>
+</div>
+<div id="모양-변환" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> 모양 변환</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="operation.html#cb12-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> A<span class="sc">$</span><span class="fu">view</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb12-2"><a href="operation.html#cb12-2" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1  2  3
+##  4  5  6
+## [ CPUDoubleType{2,3} ]</code></pre>
+</div>
+<div id="덧셈과-뺄셈" class="section level3" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> 덧셈과 뺄셈</h3>
+<p>R에서 배운 vectorized 프로그래밍에 익숙하다면 텐서들의 연산이 아주 자연스럽게 느껴질 것이다. 크기가 같은 행렬 A, B는 다음과 같이 더하고 뺄 수 있다.</p>
 
+</div>
 </div>
 </div>
             </section>
