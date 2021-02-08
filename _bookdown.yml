@@ -1,0 +1,10 @@
+book_filename: "bookdown-demo"
+output_dir: docs
+rmd_files: ["index.Rmd",
+            "01-intro-to-tensor.Rmd",
+            "02-tensor-calculation.Rmd",
+            "06-references.Rmd"]
+language:
+  ui:
+    chapter_name: "Chapter "
+delete_merged_file: true

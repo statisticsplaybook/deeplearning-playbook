@@ -1,2 +1,3 @@
-# r-torch-playbook
-딥러닝 공략집 with R torch
+# 딥러닝 끝판왕을 깨기위한 torch 공략집
+
+유튜브 `슬기로운통계생활` 딥러닝 with R 에서 사용하는 교재입니다.
