@@ -21,7 +21,7 @@
   <meta name="twitter:description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
   
 
-<meta name="author" content="Issac Lee" />
+<meta name="author" content="슬기로운통계생활" />
 
 
 <meta name="date" content="2021-02-07" />
@@ -218,31 +218,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="intro.html#cb7-1" aria-hidden="true" tabindex="-1"></a>rand_tensor <span class="ot">&lt;-</span>  <span class="fu">torch_rand</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
 <span id="cb7-2"><a href="intro.html#cb7-2" aria-hidden="true" tabindex="-1"></a>rand_tensor</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.5536  0.4378  0.6301
-##  0.3680  0.2975  0.7336
-##  0.9193  0.4505  0.6952
-##  0.4806  0.3624  0.8404
-##  0.4594  0.8212  0.3347
+##  0.7455  0.3804  0.2387
+##  0.6164  0.9296  0.3853
+##  0.6021  0.7876  0.3077
+##  0.4160  0.2951  0.0530
+##  0.5559  0.3242  0.3042
 ## [ CPUFloatType{5,3} ]</code></pre>
 <p>참고로 이렇게 만들어진 텐서에는 R에서 텐서과 어레이(array)에 접근할 때사용한 모든 문법들을 사용해서 접근할 수 있다.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="intro.html#cb9-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[,<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.4378
-##  0.2975
-##  0.4505
-##  0.3624
-##  0.8212
+##  0.3804
+##  0.9296
+##  0.7876
+##  0.2951
+##  0.3242
 ## [ CPUFloatType{5} ]</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="intro.html#cb11-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.5536  0.4378  0.6301
-##  0.3680  0.2975  0.7336
-##  0.9193  0.4505  0.6952
+##  0.7455  0.3804  0.2387
+##  0.6164  0.9296  0.3853
+##  0.6021  0.7876  0.3077
 ## [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="intro.html#cb13-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.9193  0.6952
-##  0.4806  0.8404
+##  0.6021  0.3077
+##  0.4160  0.0530
 ## [ CPUFloatType{2,2} ]</code></pre>
 <p>위의 예제에서 벌써부터 일부 R유저들은 감격의 눈물을 흘릴 수 있다. 그렇다, Rtorch에서 텐서의 <strong>첫번째 위치는 1부터 시작</strong>한다. 이 너무나도 당연한 진리는 파이썬에서는 통하지 않는다.</p>
 </div>
@@ -392,7 +392,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"download": null,
 "toc": {
 "collapse": "subsection"
 }

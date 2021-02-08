@@ -1,6 +1,6 @@
 --- 
 title: "딥러닝 공략집 with R"
-author: "Issac Lee"
+author: "[슬기로운통계생활](https://www.youtube.com/c/statisticsplaybook)"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook

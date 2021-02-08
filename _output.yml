@@ -4,11 +4,10 @@ bookdown::gitbook:
     toc:
       before: |
         <li><a href="./">딥러닝 공략집 with Rtorch</a></li>
-        <meta name="google-site-verification" content="z9CiKKDExNMW8gi4-dN3X6zGa1-OXeSaIpjGFgXgHEg" />
       after: |
         <li><a href="https://github.com/statisticsplaybook/r-torch-playbook" target="blank">Published with bookdown</a></li>
     edit: https://github.com/statisticsplaybook/r-torch-playbook/edit/master/%s
-    download: ["pdf", "epub"]
+#   download: ["pdf", "epub"]
 # bookdown::pdf_book:
 #   includes:
 #     in_header: preamble.tex
