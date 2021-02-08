@@ -4,21 +4,21 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 딥러닝 첫걸음, 텐서 (tensor) 만들기 | 딥러닝 공략집 with R</title>
-  <meta name="description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
+  <title>Chapter 2 딥러닝 첫걸음, 텐서 (tensor) 만들기 | 딥러닝 끝판왕을 깨기위한 torch 공략집</title>
+  <meta name="description" content="R 딥러닝 라이브러리 torch 공략집" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 딥러닝 첫걸음, 텐서 (tensor) 만들기 | 딥러닝 공략집 with R" />
+  <meta property="og:title" content="Chapter 2 딥러닝 첫걸음, 텐서 (tensor) 만들기 | 딥러닝 끝판왕을 깨기위한 torch 공략집" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
+  <meta property="og:description" content="R 딥러닝 라이브러리 torch 공략집" />
   <meta name="github-repo" content="statisticsplaybook/r-torch-playbook" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 딥러닝 첫걸음, 텐서 (tensor) 만들기 | 딥러닝 공략집 with R" />
+  <meta name="twitter:title" content="Chapter 2 딥러닝 첫걸음, 텐서 (tensor) 만들기 | 딥러닝 끝판왕을 깨기위한 torch 공략집" />
   
-  <meta name="twitter:description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
+  <meta name="twitter:description" content="R 딥러닝 라이브러리 torch 공략집" />
   
 
 <meta name="author" content="Issac Lee" />
@@ -170,7 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">딥러닝 공략집 with R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">딥러닝 끝판왕을 깨기위한 torch 공략집</a>
           </h1>
         </div>
 
@@ -215,31 +215,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="intro.html#cb7-1" aria-hidden="true" tabindex="-1"></a>rand_tensor <span class="ot">&lt;-</span>  <span class="fu">torch_rand</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
 <span id="cb7-2"><a href="intro.html#cb7-2" aria-hidden="true" tabindex="-1"></a>rand_tensor</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.8981  0.7593  0.6314
-##  0.8445  0.2038  0.5155
-##  0.4393  0.9471  0.8830
-##  0.5608  0.0314  0.1684
-##  0.1199  0.7980  0.7280
+##  0.6705  0.7834  0.7568
+##  0.3052  0.6665  0.9945
+##  0.9334  0.4878  0.9927
+##  0.4950  0.8922  0.3972
+##  0.7639  0.8252  0.4987
 ## [ CPUFloatType{5,3} ]</code></pre>
 <p>참고로 이렇게 만들어진 텐서에는 R에서 텐서과 어레이(array)에 접근할 때사용한 모든 문법들을 사용해서 접근할 수 있다.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="intro.html#cb9-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[,<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.7593
-##  0.2038
-##  0.9471
-##  0.0314
-##  0.7980
+##  0.7834
+##  0.6665
+##  0.4878
+##  0.8922
+##  0.8252
 ## [ CPUFloatType{5} ]</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="intro.html#cb11-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.8981  0.7593  0.6314
-##  0.8445  0.2038  0.5155
-##  0.4393  0.9471  0.8830
+##  0.6705  0.7834  0.7568
+##  0.3052  0.6665  0.9945
+##  0.9334  0.4878  0.9927
 ## [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="intro.html#cb13-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.4393  0.8830
-##  0.5608  0.1684
+##  0.9334  0.9927
+##  0.4950  0.3972
 ## [ CPUFloatType{2,2} ]</code></pre>
 <p>위의 예제에서 벌써부터 일부 R유저들은 감격의 눈물을 흘릴 수 있다. 그렇다, Rtorch에서 텐서의 <strong>첫번째 위치는 1부터 시작</strong>한다. 이 너무나도 당연한 진리는 파이썬에서는 통하지 않는다.</p>
 </div>
