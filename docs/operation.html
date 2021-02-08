@@ -187,14 +187,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="토치-torch-불러오기-및-준비물-준비" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> 토치 (torch) 불러오기 및 준비물 준비</h2>
 <p>토치 (torch) 를 불러오고, 이번 챕터에 사용될 텐서 A, B, 그리고 C를 준비하자. 지난 챕터에서 배운 난수를 이용한 텐서도 만들 예정이니 난수를 고정한다.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="operation.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span>
-<span id="cb1-2"><a href="operation.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="operation.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 난수 생성 시드 고정 </span></span>
-<span id="cb1-4"><a href="operation.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_manual_seed</span>(<span class="dv">2021</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="operation.html#cb2-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
-<span id="cb2-2"><a href="operation.html#cb2-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">4</span>, <span class="dv">3</span>)</span>
-<span id="cb2-3"><a href="operation.html#cb2-3" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
-<span id="cb2-4"><a href="operation.html#cb2-4" aria-hidden="true" tabindex="-1"></a>A; B; C</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="operation.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span>
+<span id="cb31-2"><a href="operation.html#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="operation.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 난수 생성 시드 고정 </span></span>
+<span id="cb31-4"><a href="operation.html#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_manual_seed</span>(<span class="dv">2021</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="operation.html#cb32-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb32-2"><a href="operation.html#cb32-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">4</span>, <span class="dv">3</span>)</span>
+<span id="cb32-3"><a href="operation.html#cb32-3" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb32-4"><a href="operation.html#cb32-4" aria-hidden="true" tabindex="-1"></a>A; B; C</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1
 ##  2
@@ -222,8 +222,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [ CPUFloatType{2,3,2} ]</code></pre>
 <p>만들어진 세 개의 텐서 결과를 살펴보면 다음과 같다.</p>
 <ol style="list-style-type: decimal">
-<li>텐서 A: 정수들로 구성이 되어있고, 12개의 원소들이 벡터를 이루고 있다.</li>
+<li>텐서 A: 정수들로 구성이 되어있고, 6개의 원소들이 벡터를 이루고 있다.</li>
 <li>텐서 B: 실수들로 구성이 되어있고, 12개의 원소들이 있지만, 모양이 4행 3열인 2차원 행렬의 모양을 하고 있다.</li>
+<li>텐서 C: 실수들로 구성이 되어있고, 총 원소 갯수는 똑같이 12개지만, 모양은 3행 2열의 행렬이 두개가 쌓여진 꼴의 3차원 배열 (array) 이다.</li>
 </ol>
 
 </div>
