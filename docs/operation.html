@@ -24,7 +24,7 @@
 <meta name="author" content="슬기로운통계생활" />
 
 
-<meta name="date" content="2021-02-08" />
+<meta name="date" content="2021-02-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -255,8 +255,77 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="모양-변환" class="section level3" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> 모양 변환</h3>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="operation.html#cb12-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> A<span class="sc">$</span><span class="fu">view</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
-<span id="cb12-2"><a href="operation.html#cb12-2" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
+<p>앞에서 텐서 A를 B와 같은 실수를 담을 수 있는 형으로 바꾸었다. 그렇다면 이 두 개를 더할 수 있을까? 답은 “아니올시다.” 이다. 왜냐하면 모양이 다르기 때문이다.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="operation.html#cb12-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> B</span></code></pre></div>
+<pre><code>## Error in (function (self, other, alpha) : The size of tensor a (6) must match the size of tensor b (3) at non-singleton dimension 1
+## Exception raised from infer_size at ../aten/src/ATen/ExpandUtils.cpp:24 (most recent call first):
+## frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) + 0x69 (0x7fbe5be62b89 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libc10.so)
+## frame #1: at::infer_size(c10::ArrayRef&lt;long&gt;, c10::ArrayRef&lt;long&gt;) + 0x552 (0x7fbe4b9b1382 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #2: at::TensorIterator::compute_shape(at::TensorIteratorConfig const&amp;) + 0xde (0x7fbe4beb3c2e in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #3: at::TensorIterator::build(at::TensorIteratorConfig&amp;) + 0x64 (0x7fbe4beb61e4 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #4: at::TensorIterator::TensorIterator(at::TensorIteratorConfig&amp;) + 0xdd (0x7fbe4beb699d in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #5: at::TensorIterator::binary_op(at::Tensor&amp;, at::Tensor const&amp;, at::Tensor const&amp;) + 0x130 (0x7fbe4beb6b30 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #6: at::native::add(at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar) + 0x53 (0x7fbe4bb69bc3 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #7: &lt;unknown function&gt; + 0x13311bd (0x7fbe4c1d01bd in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #8: &lt;unknown function&gt; + 0xaf2045 (0x7fbe4b991045 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #9: at::Tensor c10::Dispatcher::callWithDispatchKey&lt;at::Tensor, at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar&gt;(c10::TypedOperatorHandle&lt;at::Tensor (at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar)&gt; const&amp;, c10::DispatchKey, at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar) const + 0x27f (0x7fbe4c37b81f in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #10: at::add(at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar) + 0x123 (0x7fbe4c271fd3 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #11: &lt;unknown function&gt; + 0x2a0f2bb (0x7fbe4d8ae2bb in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #12: &lt;unknown function&gt; + 0xaf2045 (0x7fbe4b991045 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #13: at::Tensor c10::Dispatcher::callWithDispatchKey&lt;at::Tensor, at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar&gt;(c10::TypedOperatorHandle&lt;at::Tensor (at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar)&gt; const&amp;, c10::DispatchKey, at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar) const + 0x27f (0x7fbe4c37b81f in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #14: at::add(at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar) + 0x123 (0x7fbe4c271fd3 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #15: _lantern_add_tensor_tensor_scalar + 0x64 (0x7fbe5c1e40e4 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/liblantern.so)
+## frame #16: cpp_torch_namespace_add_self_Tensor_other_Tensor(Rcpp::XPtr&lt;XPtrTorchTensor, Rcpp::PreserveStorage, &amp;(void Rcpp::standard_delete_finalizer&lt;XPtrTorchTensor&gt;(XPtrTorchTensor*)), false&gt;, Rcpp::XPtr&lt;XPtrTorchTensor, Rcpp::PreserveStorage, &amp;(void Rcpp::standard_delete_finalizer&lt;XPtrTorchTensor&gt;(XPtrTorchTensor*)), false&gt;, Rcpp::XPtr&lt;XPtrTorchScalar, Rcpp::PreserveStorage, &amp;(void Rcpp::standard_delete_finalizer&lt;XPtrTorchScalar&gt;(XPtrTorchScalar*)), false&gt;) + 0x48 (0x7fbe5cb29fe8 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/libs/torchpkg.so)
+## frame #17: _torch_cpp_torch_namespace_add_self_Tensor_other_Tensor + 0x9c (0x7fbe5c8c200c in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/libs/torchpkg.so)
+## frame #18: &lt;unknown function&gt; + 0xf9310 (0x7fbe6fbb7310 in /usr/lib/R/lib/libR.so)
+## frame #19: &lt;unknown function&gt; + 0xf9826 (0x7fbe6fbb7826 in /usr/lib/R/lib/libR.so)
+## frame #20: &lt;unknown function&gt; + 0x137106 (0x7fbe6fbf5106 in /usr/lib/R/lib/libR.so)
+## frame #21: Rf_eval + 0x180 (0x7fbe6fc016f0 in /usr/lib/R/lib/libR.so)
+## frame #22: &lt;unknown function&gt; + 0x14550f (0x7fbe6fc0350f in /usr/lib/R/lib/libR.so)
+## frame #23: Rf_applyClosure + 0x1c7 (0x7fbe6fc042d7 in /usr/lib/R/lib/libR.so)
+## frame #24: Rf_eval + 0x353 (0x7fbe6fc018c3 in /usr/lib/R/lib/libR.so)
+## frame #25: &lt;unknown function&gt; + 0xc650d (0x7fbe6fb8450d in /usr/lib/R/lib/libR.so)
+## frame #26: &lt;unknown function&gt; + 0x137106 (0x7fbe6fbf5106 in /usr/lib/R/lib/libR.so)
+## frame #27: Rf_eval + 0x180 (0x7fbe6fc016f0 in /usr/lib/R/lib/libR.so)
+## frame #28: &lt;unknown function&gt; + 0x14550f (0x7fbe6fc0350f in /usr/lib/R/lib/libR.so)
+## frame #29: Rf_applyClosure + 0x1c7 (0x7fbe6fc042d7 in /usr/lib/R/lib/libR.so)
+## frame #30: &lt;unknown function&gt; + 0x13a989 (0x7fbe6fbf8989 in /usr/lib/R/lib/libR.so)
+## frame #31: Rf_eval + 0x180 (0x7fbe6fc016f0 in /usr/lib/R/lib/libR.so)
+## frame #32: &lt;unknown function&gt; + 0x14550f (0x7fbe6fc0350f in /usr/lib/R/lib/libR.so)
+## frame #33: Rf_applyClosure + 0x1c7 (0x7fbe6fc042d7 in /usr/lib/R/lib/libR.so)
+## frame #34: &lt;unknown function&gt; + 0x13a989 (0x7fbe6fbf8989 in /usr/lib/R/lib/libR.so)
+## frame #35: Rf_eval + 0x180 (0x7fbe6fc016f0 in /usr/lib/R/lib/libR.so)
+## frame #36: &lt;unknown function&gt; + 0x14550f (0x7fbe6fc0350f in /usr/lib/R/lib/libR.so)
+## frame #37: Rf_applyClosure + 0x1c7 (0x7fbe6fc042d7 in /usr/lib/R/lib/libR.so)
+## frame #38: &lt;unknown function&gt; + 0x13a989 (0x7fbe6fbf8989 in /usr/lib/R/lib/libR.so)
+## frame #39: Rf_eval + 0x180 (0x7fbe6fc016f0 in /usr/lib/R/lib/libR.so)
+## frame #40: &lt;unknown function&gt; + 0x14550f (0x7fbe6fc0350f in /usr/lib/R/lib/libR.so)
+## frame #41: Rf_applyClosure + 0x1c7 (0x7fbe6fc042d7 in /usr/lib/R/lib/libR.so)
+## frame #42: &lt;unknown function&gt; + 0x13a989 (0x7fbe6fbf8989 in /usr/lib/R/lib/libR.so)
+## frame #43: Rf_eval + 0x180 (0x7fbe6fc016f0 in /usr/lib/R/lib/libR.so)
+## frame #44: &lt;unknown function&gt; + 0x14550f (0x7fbe6fc0350f in /usr/lib/R/lib/libR.so)
+## frame #45: Rf_applyClosure + 0x1c7 (0x7fbe6fc042d7 in /usr/lib/R/lib/libR.so)
+## frame #46: &lt;unknown function&gt; + 0x12d83b (0x7fbe6fbeb83b in /usr/lib/R/lib/libR.so)
+## frame #47: &lt;unknown function&gt; + 0x9021b (0x7fbe6fb4e21b in /usr/lib/R/lib/libR.so)
+## frame #48: Rf_eval + 0x706 (0x7fbe6fc01c76 in /usr/lib/R/lib/libR.so)
+## frame #49: &lt;unknown function&gt; + 0x149782 (0x7fbe6fc07782 in /usr/lib/R/lib/libR.so)
+## frame #50: &lt;unknown function&gt; + 0x137106 (0x7fbe6fbf5106 in /usr/lib/R/lib/libR.so)
+## frame #51: Rf_eval + 0x180 (0x7fbe6fc016f0 in /usr/lib/R/lib/libR.so)
+## frame #52: &lt;unknown function&gt; + 0x14550f (0x7fbe6fc0350f in /usr/lib/R/lib/libR.so)
+## frame #53: Rf_applyClosure + 0x1c7 (0x7fbe6fc042d7 in /usr/lib/R/lib/libR.so)
+## frame #54: &lt;unknown function&gt; + 0x13a989 (0x7fbe6fbf8989 in /usr/lib/R/lib/libR.so)
+## frame #55: Rf_eval + 0x180 (0x7fbe6fc016f0 in /usr/lib/R/lib/libR.so)
+## frame #56: &lt;unknown function&gt; + 0x1440ac (0x7fbe6fc020ac in /usr/lib/R/lib/libR.so)
+## frame #57: Rf_eval + 0x454 (0x7fbe6fc019c4 in /usr/lib/R/lib/libR.so)
+## frame #58: &lt;unknown function&gt; + 0x14a22c (0x7fbe6fc0822c in /usr/lib/R/lib/libR.so)
+## frame #59: &lt;unknown function&gt; + 0x1871fd (0x7fbe6fc451fd in /usr/lib/R/lib/libR.so)
+## frame #60: &lt;unknown function&gt; + 0x1353c4 (0x7fbe6fbf33c4 in /usr/lib/R/lib/libR.so)
+## frame #61: Rf_eval + 0x180 (0x7fbe6fc016f0 in /usr/lib/R/lib/libR.so)
+## frame #62: &lt;unknown function&gt; + 0x14550f (0x7fbe6fc0350f in /usr/lib/R/lib/libR.so)
+## frame #63: Rf_applyClosure + 0x1c7 (0x7fbe6fc042d7 in /usr/lib/R/lib/libR.so)</code></pre>
+<p>모양이 다른 텐서를 더하려고 하면 R은 위에서 보듯 너무나 많은 에러를 쏟아낸다. 모양이 다른 두 텐서를 더하기 위해서는 모양을 같게 맞춰줘야 한다. A의 모양을 B의 모양과 같이 바꿔보도록 하자. 모양을 바꿀때는 <code>view()</code> 함수를 사용하고, 안에 모양의 형태를 벡터 형식으로 짚어 넣는다는 것을 기억하자.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="operation.html#cb14-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> A<span class="sc">$</span><span class="fu">view</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb14-2"><a href="operation.html#cb14-2" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1  2  3
 ##  4  5  6
@@ -264,7 +333,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="덧셈과-뺄셈" class="section level3" number="3.2.3">
 <h3><span class="header-section-number">3.2.3</span> 덧셈과 뺄셈</h3>
-<p>R에서 배운 vectorized 프로그래밍에 익숙하다면 텐서들의 연산이 아주 자연스럽게 느껴질 것이다. 크기가 같은 행렬 A, B는 다음과 같이 더하고 뺄 수 있다.</p>
+<p>앞에서 형(type)과 모양(shape)까지 맞춰놨으니, 텐서끼리의 덧셈을 할 수 있다.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="operation.html#cb16-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> B</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1.5134  2.7426  3.7159
+##  4.5705  5.1653  6.0443
+## [ CPUDoubleType{2,3} ]</code></pre>
+<p>사실, 텐서끼리의 연산은 모양만 맞으면 가능하다. 즉, 다음의 연산이 성립한다.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="operation.html#cb18-1" aria-hidden="true" tabindex="-1"></a>A_ <span class="ot">&lt;-</span> A<span class="sc">$</span><span class="fu">to</span>(<span class="at">dtype =</span> <span class="fu">torch_long</span>())</span>
+<span id="cb18-2"><a href="operation.html#cb18-2" aria-hidden="true" tabindex="-1"></a>A_ <span class="sc">+</span> B</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1.5134  2.7426  3.7159
+##  4.5705  5.1653  6.0443
+## [ CPUFloatType{2,3} ]</code></pre>
+<p>결과에서 알 수 있듯, 정수를 담을 수 있는 텐서와 실수를 담을 수 있는 텐서를 더하면, 결과는 실수를 담을 수 있는 텐서로 반환이 된다. 하지만, 필자는 이러한 코딩은 피해야 한다고 생각한다. 즉, 모든 연산을 할 경우, 명시적으로 형변환을 한 후 연산을 할 것을 권한다. 왜냐하면, 언제나 우리는 코드를 다른 사람이 보았을 때, 이해하기 쉽도록 짜는 것을 추구해야 한다. (코드는 하나의 자신의 생각을 적은 글이다.)</p>
 
 </div>
 </div>
