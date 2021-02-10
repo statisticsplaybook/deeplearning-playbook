@@ -175,11 +175,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.10" data-path="operation.html"><a href="operation.html#차원-텐서-끼리의-연산-내적과-외적"><i class="fa fa-check"></i><b>2.2.10</b> 1차원 텐서 끼리의 연산, 내적과 외적</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="텐서의-이동-cpu-iff-gpu.html"><a href="텐서의-이동-cpu-iff-gpu.html"><i class="fa fa-check"></i><b>3</b> 텐서의 이동 CPU <span class="math inline">\(\iff\)</span> GPU</a>
+<li class="chapter" data-level="3" data-path="텐서의-이동-cpu-leftrightarrow-gpu.html"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html"><i class="fa fa-check"></i><b>3</b> 텐서의 이동; CPU <span class="math inline">\(\leftrightarrow\)</span> GPU</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="텐서의-이동-cpu-iff-gpu.html"><a href="텐서의-이동-cpu-iff-gpu.html#gpu-사용-가능-체크"><i class="fa fa-check"></i><b>3.1</b> GPU 사용 가능 체크</a></li>
-<li class="chapter" data-level="3.2" data-path="텐서의-이동-cpu-iff-gpu.html"><a href="텐서의-이동-cpu-iff-gpu.html#cpu-to-gpu"><i class="fa fa-check"></i><b>3.2</b> CPU to GPU</a></li>
-<li class="chapter" data-level="3.3" data-path="텐서의-이동-cpu-iff-gpu.html"><a href="텐서의-이동-cpu-iff-gpu.html#gpu-to-cpu"><i class="fa fa-check"></i><b>3.3</b> GPU to CPU</a></li>
+<li class="chapter" data-level="3.1" data-path="텐서의-이동-cpu-leftrightarrow-gpu.html"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#gpu-사용-가능-체크"><i class="fa fa-check"></i><b>3.1</b> GPU 사용 가능 체크</a></li>
+<li class="chapter" data-level="3.2" data-path="텐서의-이동-cpu-leftrightarrow-gpu.html"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cpu-to-gpu"><i class="fa fa-check"></i><b>3.2</b> CPU to GPU</a></li>
+<li class="chapter" data-level="3.3" data-path="텐서의-이동-cpu-leftrightarrow-gpu.html"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#gpu-to-cpu"><i class="fa fa-check"></i><b>3.3</b> GPU to CPU</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -239,31 +239,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="intro.html#cb8-1" aria-hidden="true" tabindex="-1"></a>rand_tensor <span class="ot">&lt;-</span>  <span class="fu">torch_rand</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
 <span id="cb8-2"><a href="intro.html#cb8-2" aria-hidden="true" tabindex="-1"></a>rand_tensor</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.2117  0.7335  0.4033
-##  0.3414  0.3143  0.2592
-##  0.0112  0.9920  0.9388
-##  0.2523  0.2627  0.2483
-##  0.6070  0.0639  0.7073
+##  0.0940  0.8548  0.9829
+##  0.5278  0.2114  0.8010
+##  0.9602  0.8653  0.6625
+##  0.9441  0.6263  0.8013
+##  0.9823  0.6371  0.0284
 ## [ CPUFloatType{5,3} ]</code></pre>
 <p>참고로 이렇게 만들어진 텐서에는 R에서 텐서과 어레이(array)에 접근할 때사용한 모든 문법들을 사용해서 접근할 수 있다.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="intro.html#cb10-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[,<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.7335
-##  0.3143
-##  0.9920
-##  0.2627
-##  0.0639
+##  0.8548
+##  0.2114
+##  0.8653
+##  0.6263
+##  0.6371
 ## [ CPUFloatType{5} ]</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="intro.html#cb12-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.2117  0.7335  0.4033
-##  0.3414  0.3143  0.2592
-##  0.0112  0.9920  0.9388
+##  0.0940  0.8548  0.9829
+##  0.5278  0.2114  0.8010
+##  0.9602  0.8653  0.6625
 ## [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="intro.html#cb14-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.0112  0.9388
-##  0.2523  0.2483
+##  0.9602  0.6625
+##  0.9441  0.8013
 ## [ CPUFloatType{2,2} ]</code></pre>
 <p>위의 예제에서 벌써부터 일부 R유저들은 감격의 눈물을 흘릴 수 있다. 그렇다, Rtorch에서 텐서의 <strong>첫번째 위치는 1부터 시작</strong>한다. 이 너무나도 당연한 진리는 파이썬에서는 통하지 않는다.</p>
 </div>

@@ -1,4 +1,4 @@
-# 텐서의 이동 CPU $\iff$ GPU
+# 텐서의 이동; CPU $\leftrightarrow$  GPU
 
 ```{r include=FALSE}
 library(tidyverse)
