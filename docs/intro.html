@@ -51,6 +51,7 @@
 
 
 
+<meta name="google-site-verification" content="z9CiKKDExNMW8gi4-dN3X6zGa1-OXeSaIpjGFgXgHEg" />
 
 
 <style type="text/css">
@@ -214,11 +215,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-3"><a href="intro.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 텐서 x값 확인</span></span>
 <span id="cb3-4"><a href="intro.html#cb3-4" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0  0  0
-##  0  0  0
-##  0  0  0
-##  0  0  0
-##  0  0  0
+##  1.5936e+12  4.5821e-41  1.5936e+12
+##  4.5821e-41 -3.6065e-27  3.0875e-41
+## -3.6065e-27  3.0875e-41  0.0000e+00
+##  0.0000e+00  0.0000e+00  0.0000e+00
+##  0.0000e+00  0.0000e+00  0.0000e+00
 ## [ CPUFloatType{5,3} ]</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="intro.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 텐서 x의 크기 확인</span></span>
 <span id="cb5-2"><a href="intro.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(x)</span></code></pre></div>
@@ -231,31 +232,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="intro.html#cb7-1" aria-hidden="true" tabindex="-1"></a>rand_tensor <span class="ot">&lt;-</span>  <span class="fu">torch_rand</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
 <span id="cb7-2"><a href="intro.html#cb7-2" aria-hidden="true" tabindex="-1"></a>rand_tensor</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.6090  0.5644  0.5964
-##  0.5106  0.1046  0.3042
-##  0.2410  0.6043  0.4329
-##  0.0991  0.8045  0.1616
-##  0.5136  0.3190  0.9829
+##  0.4916  0.7603  0.6482
+##  0.9101  0.5896  0.1453
+##  0.2533  0.5358  0.6917
+##  0.8976  0.4194  0.8451
+##  0.6369  0.0266  0.7155
 ## [ CPUFloatType{5,3} ]</code></pre>
 <p>참고로 이렇게 만들어진 텐서에는 R에서 텐서과 어레이(array)에 접근할 때사용한 모든 문법들을 사용해서 접근할 수 있다.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="intro.html#cb9-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[,<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.5644
-##  0.1046
-##  0.6043
-##  0.8045
-##  0.3190
+##  0.7603
+##  0.5896
+##  0.5358
+##  0.4194
+##  0.0266
 ## [ CPUFloatType{5} ]</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="intro.html#cb11-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.6090  0.5644  0.5964
-##  0.5106  0.1046  0.3042
-##  0.2410  0.6043  0.4329
+##  0.4916  0.7603  0.6482
+##  0.9101  0.5896  0.1453
+##  0.2533  0.5358  0.6917
 ## [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="intro.html#cb13-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.2410  0.4329
-##  0.0991  0.1616
+##  0.2533  0.6917
+##  0.8976  0.8451
 ## [ CPUFloatType{2,2} ]</code></pre>
 <p>위의 예제에서 벌써부터 일부 R유저들은 감격의 눈물을 흘릴 수 있다. 그렇다, Rtorch에서 텐서의 <strong>첫번째 위치는 1부터 시작</strong>한다. 이 너무나도 당연한 진리는 파이썬에서는 통하지 않는다.</p>
 </div>

@@ -7,6 +7,8 @@ bookdown::gitbook:
       after: |
         <li><a href="https://github.com/statisticsplaybook/r-torch-playbook" target="blank">Published with bookdown</a></li>
     edit: https://github.com/statisticsplaybook/r-torch-playbook/edit/master/%s
+  includes:
+    in_header: [googlesearch.html]
 #   download: ["pdf", "epub"]
 # bookdown::pdf_book:
 #   includes:
