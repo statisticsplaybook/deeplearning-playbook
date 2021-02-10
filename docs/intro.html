@@ -24,7 +24,7 @@
 <meta name="author" content="슬기로운통계생활" />
 
 
-<meta name="date" content="2021-02-09" />
+<meta name="date" content="2021-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -170,6 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.7" data-path="operation.html"><a href="operation.html#텐서의-전치transpose"><i class="fa fa-check"></i><b>2.2.7</b> 텐서의 전치(transpose)</a></li>
 <li class="chapter" data-level="2.2.8" data-path="operation.html"><a href="operation.html#r에서의-3차원-배열"><i class="fa fa-check"></i><b>2.2.8</b> R에서의 3차원 배열</a></li>
 <li class="chapter" data-level="2.2.9" data-path="operation.html"><a href="operation.html#다차원-텐서와-1차원-벡터-텐서의-연산"><i class="fa fa-check"></i><b>2.2.9</b> 다차원 텐서와 1차원 벡터 텐서의 연산</a></li>
+<li class="chapter" data-level="2.2.10" data-path="operation.html"><a href="operation.html#차원-텐서-끼리의-연산-내적과-외적"><i class="fa fa-check"></i><b>2.2.10</b> 1차원 텐서 끼리의 연산, 내적과 외적</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -230,31 +231,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="intro.html#cb7-1" aria-hidden="true" tabindex="-1"></a>rand_tensor <span class="ot">&lt;-</span>  <span class="fu">torch_rand</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
 <span id="cb7-2"><a href="intro.html#cb7-2" aria-hidden="true" tabindex="-1"></a>rand_tensor</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.9902  0.7572  0.6394
-##  0.2873  0.0930  0.9322
-##  0.1480  0.5201  0.9818
-##  0.1521  0.1878  0.4555
-##  0.4541  0.1286  0.4769
+##  0.6090  0.5644  0.5964
+##  0.5106  0.1046  0.3042
+##  0.2410  0.6043  0.4329
+##  0.0991  0.8045  0.1616
+##  0.5136  0.3190  0.9829
 ## [ CPUFloatType{5,3} ]</code></pre>
 <p>참고로 이렇게 만들어진 텐서에는 R에서 텐서과 어레이(array)에 접근할 때사용한 모든 문법들을 사용해서 접근할 수 있다.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="intro.html#cb9-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[,<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.7572
-##  0.0930
-##  0.5201
-##  0.1878
-##  0.1286
+##  0.5644
+##  0.1046
+##  0.6043
+##  0.8045
+##  0.3190
 ## [ CPUFloatType{5} ]</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="intro.html#cb11-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.9902  0.7572  0.6394
-##  0.2873  0.0930  0.9322
-##  0.1480  0.5201  0.9818
+##  0.6090  0.5644  0.5964
+##  0.5106  0.1046  0.3042
+##  0.2410  0.6043  0.4329
 ## [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="intro.html#cb13-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.1480  0.9818
-##  0.1521  0.4555
+##  0.2410  0.4329
+##  0.0991  0.1616
 ## [ CPUFloatType{2,2} ]</code></pre>
 <p>위의 예제에서 벌써부터 일부 R유저들은 감격의 눈물을 흘릴 수 있다. 그렇다, Rtorch에서 텐서의 <strong>첫번째 위치는 1부터 시작</strong>한다. 이 너무나도 당연한 진리는 파이썬에서는 통하지 않는다.</p>
 </div>
