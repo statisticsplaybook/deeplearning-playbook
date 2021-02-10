@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>References | 딥러닝 공략집 with R</title>
+  <title>Chapter 3 텐서의 이동 CPU \(\iff\) GPU | 딥러닝 공략집 with R</title>
   <meta name="description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="References | 딥러닝 공략집 with R" />
+  <meta property="og:title" content="Chapter 3 텐서의 이동 CPU \(\iff\) GPU | 딥러닝 공략집 with R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="statisticsplaybook/r-torch-playbook" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | 딥러닝 공략집 with R" />
+  <meta name="twitter:title" content="Chapter 3 텐서의 이동 CPU \(\iff\) GPU | 딥러닝 공략집 with R" />
   
   <meta name="twitter:description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="텐서의-이동-cpu-iff-gpu.html"/>
-
+<link rel="prev" href="operation.html"/>
+<link rel="next" href="references.html"/>
 <script src="libs/header-attrs-2.6.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -202,17 +202,96 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="텐서의-이동-cpu-iff-gpu" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> 텐서의 이동 CPU <span class="math inline">\(\iff\)</span> GPU</h1>
+<p>딥러닝(deep learning)에서는 네트워크의 구조가 조금만 복잡해져도, 필요한 계산량이 엄청나게 늘어나기 때문에 GPU는 사실 필수적이다. <code>torch</code> 패키지에서는 텐서를 다룰때에 현재 다루는 텐서가 어디에 저장되어있는가에 대한 일종의 태그를 달아놓는다. 다음의 코드를 살펴보자.</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="텐서의-이동-cpu-iff-gpu.html#cb128-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb128-2"><a href="텐서의-이동-cpu-iff-gpu.html#cb128-2" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1
+##  2
+##  3
+##  4
+## [ CPULongType{4} ]</code></pre>
+<p><code>a</code>는 3이라는 상수가 담겨있는 텐서이다. 이 <code>a</code>를 콘솔에서 돌렸을때에 나오는 결과 <code>[ CPUFloatType{1} ]</code>를 통해서 우리는 a가 현재 CPU의 메모리를 이용하고 있으며, 모양은 <code>{1}</code>인 실수을 담은 텐서라는 것을 알 수 있다.</p>
+<div id="gpu-사용-가능-체크" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> GPU 사용 가능 체크</h2>
+<p>앞서 정의한 텐서 <code>a</code>를 GPU의 메모리로 옮기기 위해서는, 너무나 당연하게 GPU가 현재 시스템에서 접근 가능한지에 대하여 알아보아야한다. GPU 접근성은 <code>cuda_is_available()</code>을 사용한다.</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="텐서의-이동-cpu-iff-gpu.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cuda_is_available</span>()</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="cpu-to-gpu" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> CPU to GPU</h2>
+<p>이미 정의된 텐서 a를 GPU로 옮기려면 다음과 같이 <code>cuda()</code> 함수를 이용하면 된다.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="텐서의-이동-cpu-iff-gpu.html#cb132-1" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1
+##  2
+##  3
+##  4
+## [ CPULongType{4} ]</code></pre>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="텐서의-이동-cpu-iff-gpu.html#cb134-1" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">cuda</span>()</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1
+##  2
+##  3
+##  4
+## [ CUDALongType{4} ]</code></pre>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="텐서의-이동-cpu-iff-gpu.html#cb136-1" aria-hidden="true" tabindex="-1"></a>gpu <span class="ot">&lt;-</span> <span class="fu">torch_device</span>(<span class="st">&quot;cuda&quot;</span>)</span>
+<span id="cb136-2"><a href="텐서의-이동-cpu-iff-gpu.html#cb136-2" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">to</span>(<span class="at">device =</span> gpu)</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1
+##  2
+##  3
+##  4
+## [ CUDALongType{4} ]</code></pre>
+<p>옮길 때에 <code>dtype</code>을 사용하여 다음과 같이 자료형을 바꿔줄 수도 있다.</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="텐서의-이동-cpu-iff-gpu.html#cb138-1" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">to</span>(<span class="at">device =</span> gpu, <span class="at">dtype =</span> <span class="fu">torch_double</span>())</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1
+##  2
+##  3
+##  4
+## [ CUDADoubleType{4} ]</code></pre>
+</div>
+<div id="gpu-to-cpu" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> GPU to CPU</h2>
+<p>GPU 상에 직접 텐서를 만드는 방법은 다음과 같다.</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="텐서의-이동-cpu-iff-gpu.html#cb140-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">device=</span>gpu)</span>
+<span id="cb140-2"><a href="텐서의-이동-cpu-iff-gpu.html#cb140-2" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1
+##  2
+##  3
+##  4
+## [ CUDALongType{4} ]</code></pre>
+<p>이전 섹션에서 CPU에서 GPU로 옮기는 방법과 비슷하게 다음의 코드가 작동한다.</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="텐서의-이동-cpu-iff-gpu.html#cb142-1" aria-hidden="true" tabindex="-1"></a>b<span class="sc">$</span><span class="fu">cpu</span>()</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1
+##  2
+##  3
+##  4
+## [ CPULongType{4} ]</code></pre>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="텐서의-이동-cpu-iff-gpu.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to 함수 이용</span></span>
+<span id="cb144-2"><a href="텐서의-이동-cpu-iff-gpu.html#cb144-2" aria-hidden="true" tabindex="-1"></a>cpu <span class="ot">&lt;-</span> <span class="fu">torch_device</span>(<span class="st">&quot;cpu&quot;</span>)</span>
+<span id="cb144-3"><a href="텐서의-이동-cpu-iff-gpu.html#cb144-3" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">to</span>(<span class="at">device =</span> cpu)</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1
+##  2
+##  3
+##  4
+## [ CPULongType{4} ]</code></pre>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="텐서의-이동-cpu-iff-gpu.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="operation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -243,7 +322,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/statisticsplaybook/r-torch-playbook/edit/master/06-references.Rmd",
+"link": "https://github.com/statisticsplaybook/r-torch-playbook/edit/master/03-transferdevice.Rmd",
 "text": "Edit"
 },
 "history": {

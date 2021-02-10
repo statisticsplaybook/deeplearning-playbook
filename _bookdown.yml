@@ -3,6 +3,7 @@ output_dir: docs
 rmd_files: ["index.Rmd",
             "01-intro-to-tensor.Rmd",
             "02-tensor-calculation.Rmd",
+            "03-transferdevice.Rmd",
             "06-references.Rmd"]
 language:
   ui:

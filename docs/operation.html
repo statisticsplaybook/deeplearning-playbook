@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="intro.html"/>
-<link rel="next" href="references.html"/>
+<link rel="next" href="텐서의-이동-cpu-iff-gpu.html"/>
 <script src="libs/header-attrs-2.6.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -137,6 +137,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>들어가며</a>
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#설치하기"><i class="fa fa-check"></i>설치하기</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#기본-패키지"><i class="fa fa-check"></i>기본 패키지</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> 딥러닝 첫걸음, 텐서 (tensor) 만들기</a>
 <ul>
@@ -174,6 +175,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.10" data-path="operation.html"><a href="operation.html#차원-텐서-끼리의-연산-내적과-외적"><i class="fa fa-check"></i><b>2.2.10</b> 1차원 텐서 끼리의 연산, 내적과 외적</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="3" data-path="텐서의-이동-cpu-iff-gpu.html"><a href="텐서의-이동-cpu-iff-gpu.html"><i class="fa fa-check"></i><b>3</b> 텐서의 이동 CPU <span class="math inline">\(\iff\)</span> GPU</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="텐서의-이동-cpu-iff-gpu.html"><a href="텐서의-이동-cpu-iff-gpu.html#gpu-사용-가능-체크"><i class="fa fa-check"></i><b>3.1</b> GPU 사용 가능 체크</a></li>
+<li class="chapter" data-level="3.2" data-path="텐서의-이동-cpu-iff-gpu.html"><a href="텐서의-이동-cpu-iff-gpu.html#cpu-to-gpu"><i class="fa fa-check"></i><b>3.2</b> CPU to GPU</a></li>
+<li class="chapter" data-level="3.3" data-path="텐서의-이동-cpu-iff-gpu.html"><a href="텐서의-이동-cpu-iff-gpu.html#gpu-to-cpu"><i class="fa fa-check"></i><b>3.3</b> GPU to CPU</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/statisticsplaybook/r-torch-playbook" target="blank">Published with bookdown</a></li>
@@ -201,14 +208,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="토치-torch-불러오기-및-준비물-준비" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> 토치 (torch) 불러오기 및 준비물 준비</h2>
 <p>토치 (torch) 를 불러오고, 이번 챕터에 사용될 텐서 A, B, 그리고 C를 준비하자. 지난 챕터에서 배운 난수를 이용한 텐서도 만들 예정이니 난수를 고정한다.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="operation.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span>
-<span id="cb31-2"><a href="operation.html#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="operation.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 난수 생성 시드 고정 </span></span>
-<span id="cb31-4"><a href="operation.html#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_manual_seed</span>(<span class="dv">2021</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="operation.html#cb32-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
-<span id="cb32-2"><a href="operation.html#cb32-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb32-3"><a href="operation.html#cb32-3" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
-<span id="cb32-4"><a href="operation.html#cb32-4" aria-hidden="true" tabindex="-1"></a>A; B; C</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="operation.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span>
+<span id="cb32-2"><a href="operation.html#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="operation.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 난수 생성 시드 고정 </span></span>
+<span id="cb32-4"><a href="operation.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_manual_seed</span>(<span class="dv">2021</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="operation.html#cb33-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb33-2"><a href="operation.html#cb33-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb33-3"><a href="operation.html#cb33-3" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb33-4"><a href="operation.html#cb33-4" aria-hidden="true" tabindex="-1"></a>A; B; C</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1
 ##  2
@@ -244,13 +251,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="형type-변환" class="section level3" number="2.2.1">
 <h3><span class="header-section-number">2.2.1</span> 형(type) 변환</h3>
 <p>먼저 주목해야 할 것은 바로 텐서 A와 B의 자료형이 다르다는 것이다. 이게 무슨뜻이냐면 A에는 정수만이 담길 수 있고, B에는 실수만이 담길 수 있도록 설계가 되어있다는 것이다. 앞에서 확인한 자료형을 좀 더 명확하게 확인하기 위해서는 <code>type()</code> 사용한다.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="operation.html#cb36-1" aria-hidden="true" tabindex="-1"></a>A<span class="sc">$</span>dtype</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="operation.html#cb37-1" aria-hidden="true" tabindex="-1"></a>A<span class="sc">$</span>dtype</span></code></pre></div>
 <pre><code>## torch_Long</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="operation.html#cb38-1" aria-hidden="true" tabindex="-1"></a>B<span class="sc">$</span>dtype</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="operation.html#cb39-1" aria-hidden="true" tabindex="-1"></a>B<span class="sc">$</span>dtype</span></code></pre></div>
 <pre><code>## torch_Float</code></pre>
 <p>텐서 A를 실수형 텐서로 바꿔보자. 텐서의 형을 변환할 때에는 A텐서 안에 속성으로 들어가있는 to() 함수를 사용 (좀 더 어려운 관점에서는 OOP의 method를 사용) 해서 바꿔줄 수 있다.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="operation.html#cb40-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> A<span class="sc">$</span><span class="fu">to</span>(<span class="at">dtype =</span> <span class="fu">torch_double</span>())</span>
-<span id="cb40-2"><a href="operation.html#cb40-2" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="operation.html#cb41-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> A<span class="sc">$</span><span class="fu">to</span>(<span class="at">dtype =</span> <span class="fu">torch_double</span>())</span>
+<span id="cb41-2"><a href="operation.html#cb41-2" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1
 ##  2
@@ -264,82 +271,82 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="모양-변환" class="section level3" number="2.2.2">
 <h3><span class="header-section-number">2.2.2</span> 모양 변환</h3>
 <p>앞에서 텐서 A를 B와 같은 실수를 담을 수 있는 형으로 바꾸었다. 그렇다면 이 두 개를 더할 수 있을까? 답은 “아니올시다.” 이다. 왜냐하면 모양이 다르기 때문이다.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="operation.html#cb42-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> B</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="operation.html#cb43-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> B</span></code></pre></div>
 <pre><code>## Error in (function (self, other, alpha) : The size of tensor a (6) must match the size of tensor b (3) at non-singleton dimension 1
 ## Exception raised from infer_size at ../aten/src/ATen/ExpandUtils.cpp:24 (most recent call first):
-## frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) + 0x69 (0x7fbb4064db89 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libc10.so)
-## frame #1: at::infer_size(c10::ArrayRef&lt;long&gt;, c10::ArrayRef&lt;long&gt;) + 0x552 (0x7fbb3019c382 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #2: at::TensorIterator::compute_shape(at::TensorIteratorConfig const&amp;) + 0xde (0x7fbb3069ec2e in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #3: at::TensorIterator::build(at::TensorIteratorConfig&amp;) + 0x64 (0x7fbb306a11e4 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #4: at::TensorIterator::TensorIterator(at::TensorIteratorConfig&amp;) + 0xdd (0x7fbb306a199d in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #5: at::TensorIterator::binary_op(at::Tensor&amp;, at::Tensor const&amp;, at::Tensor const&amp;) + 0x130 (0x7fbb306a1b30 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #6: at::native::add(at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar) + 0x53 (0x7fbb30354bc3 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #7: &lt;unknown function&gt; + 0x13311bd (0x7fbb309bb1bd in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #8: &lt;unknown function&gt; + 0xaf2045 (0x7fbb3017c045 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #9: at::Tensor c10::Dispatcher::callWithDispatchKey&lt;at::Tensor, at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar&gt;(c10::TypedOperatorHandle&lt;at::Tensor (at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar)&gt; const&amp;, c10::DispatchKey, at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar) const + 0x27f (0x7fbb30b6681f in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #10: at::add(at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar) + 0x123 (0x7fbb30a5cfd3 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #11: &lt;unknown function&gt; + 0x2a0f2bb (0x7fbb320992bb in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #12: &lt;unknown function&gt; + 0xaf2045 (0x7fbb3017c045 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #13: at::Tensor c10::Dispatcher::callWithDispatchKey&lt;at::Tensor, at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar&gt;(c10::TypedOperatorHandle&lt;at::Tensor (at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar)&gt; const&amp;, c10::DispatchKey, at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar) const + 0x27f (0x7fbb30b6681f in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #14: at::add(at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar) + 0x123 (0x7fbb30a5cfd3 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #15: _lantern_add_tensor_tensor_scalar + 0x64 (0x7fbb409cf0e4 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/liblantern.so)
-## frame #16: cpp_torch_namespace_add_self_Tensor_other_Tensor(Rcpp::XPtr&lt;XPtrTorchTensor, Rcpp::PreserveStorage, &amp;(void Rcpp::standard_delete_finalizer&lt;XPtrTorchTensor&gt;(XPtrTorchTensor*)), false&gt;, Rcpp::XPtr&lt;XPtrTorchTensor, Rcpp::PreserveStorage, &amp;(void Rcpp::standard_delete_finalizer&lt;XPtrTorchTensor&gt;(XPtrTorchTensor*)), false&gt;, Rcpp::XPtr&lt;XPtrTorchScalar, Rcpp::PreserveStorage, &amp;(void Rcpp::standard_delete_finalizer&lt;XPtrTorchScalar&gt;(XPtrTorchScalar*)), false&gt;) + 0x48 (0x7fbb41314fe8 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/libs/torchpkg.so)
-## frame #17: _torch_cpp_torch_namespace_add_self_Tensor_other_Tensor + 0x9c (0x7fbb410ad00c in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/libs/torchpkg.so)
-## frame #18: &lt;unknown function&gt; + 0xf9310 (0x7fbb53c96310 in /usr/lib/R/lib/libR.so)
-## frame #19: &lt;unknown function&gt; + 0xf9826 (0x7fbb53c96826 in /usr/lib/R/lib/libR.so)
-## frame #20: &lt;unknown function&gt; + 0x137106 (0x7fbb53cd4106 in /usr/lib/R/lib/libR.so)
-## frame #21: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #22: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #23: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)
-## frame #24: Rf_eval + 0x353 (0x7fbb53ce08c3 in /usr/lib/R/lib/libR.so)
-## frame #25: &lt;unknown function&gt; + 0xc650d (0x7fbb53c6350d in /usr/lib/R/lib/libR.so)
-## frame #26: &lt;unknown function&gt; + 0x137106 (0x7fbb53cd4106 in /usr/lib/R/lib/libR.so)
-## frame #27: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #28: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #29: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)
-## frame #30: &lt;unknown function&gt; + 0x13a989 (0x7fbb53cd7989 in /usr/lib/R/lib/libR.so)
-## frame #31: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #32: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #33: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)
-## frame #34: &lt;unknown function&gt; + 0x13a989 (0x7fbb53cd7989 in /usr/lib/R/lib/libR.so)
-## frame #35: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #36: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #37: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)
-## frame #38: &lt;unknown function&gt; + 0x13a989 (0x7fbb53cd7989 in /usr/lib/R/lib/libR.so)
-## frame #39: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #40: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #41: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)
-## frame #42: &lt;unknown function&gt; + 0x13a989 (0x7fbb53cd7989 in /usr/lib/R/lib/libR.so)
-## frame #43: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #44: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #45: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)
-## frame #46: &lt;unknown function&gt; + 0x12d83b (0x7fbb53cca83b in /usr/lib/R/lib/libR.so)
-## frame #47: &lt;unknown function&gt; + 0x9021b (0x7fbb53c2d21b in /usr/lib/R/lib/libR.so)
-## frame #48: Rf_eval + 0x706 (0x7fbb53ce0c76 in /usr/lib/R/lib/libR.so)
-## frame #49: &lt;unknown function&gt; + 0x149782 (0x7fbb53ce6782 in /usr/lib/R/lib/libR.so)
-## frame #50: &lt;unknown function&gt; + 0x137106 (0x7fbb53cd4106 in /usr/lib/R/lib/libR.so)
-## frame #51: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #52: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #53: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)
-## frame #54: &lt;unknown function&gt; + 0x13a989 (0x7fbb53cd7989 in /usr/lib/R/lib/libR.so)
-## frame #55: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #56: &lt;unknown function&gt; + 0x1440ac (0x7fbb53ce10ac in /usr/lib/R/lib/libR.so)
-## frame #57: Rf_eval + 0x454 (0x7fbb53ce09c4 in /usr/lib/R/lib/libR.so)
-## frame #58: &lt;unknown function&gt; + 0x14a22c (0x7fbb53ce722c in /usr/lib/R/lib/libR.so)
-## frame #59: &lt;unknown function&gt; + 0x1871fd (0x7fbb53d241fd in /usr/lib/R/lib/libR.so)
-## frame #60: &lt;unknown function&gt; + 0x1353c4 (0x7fbb53cd23c4 in /usr/lib/R/lib/libR.so)
-## frame #61: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #62: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #63: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)</code></pre>
+## frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) + 0x69 (0x7f97b0a9db89 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libc10.so)
+## frame #1: at::infer_size(c10::ArrayRef&lt;long&gt;, c10::ArrayRef&lt;long&gt;) + 0x552 (0x7f97a05ec382 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #2: at::TensorIterator::compute_shape(at::TensorIteratorConfig const&amp;) + 0xde (0x7f97a0aeec2e in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #3: at::TensorIterator::build(at::TensorIteratorConfig&amp;) + 0x64 (0x7f97a0af11e4 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #4: at::TensorIterator::TensorIterator(at::TensorIteratorConfig&amp;) + 0xdd (0x7f97a0af199d in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #5: at::TensorIterator::binary_op(at::Tensor&amp;, at::Tensor const&amp;, at::Tensor const&amp;) + 0x130 (0x7f97a0af1b30 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #6: at::native::add(at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar) + 0x53 (0x7f97a07a4bc3 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #7: &lt;unknown function&gt; + 0x13311bd (0x7f97a0e0b1bd in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #8: &lt;unknown function&gt; + 0xaf2045 (0x7f97a05cc045 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #9: at::Tensor c10::Dispatcher::callWithDispatchKey&lt;at::Tensor, at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar&gt;(c10::TypedOperatorHandle&lt;at::Tensor (at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar)&gt; const&amp;, c10::DispatchKey, at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar) const + 0x27f (0x7f97a0fb681f in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #10: at::add(at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar) + 0x123 (0x7f97a0eacfd3 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #11: &lt;unknown function&gt; + 0x2a0f2bb (0x7f97a24e92bb in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #12: &lt;unknown function&gt; + 0xaf2045 (0x7f97a05cc045 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #13: at::Tensor c10::Dispatcher::callWithDispatchKey&lt;at::Tensor, at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar&gt;(c10::TypedOperatorHandle&lt;at::Tensor (at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar)&gt; const&amp;, c10::DispatchKey, at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar) const + 0x27f (0x7f97a0fb681f in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #14: at::add(at::Tensor const&amp;, at::Tensor const&amp;, c10::Scalar) + 0x123 (0x7f97a0eacfd3 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #15: _lantern_add_tensor_tensor_scalar + 0x64 (0x7f97b0e1f0e4 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/liblantern.so)
+## frame #16: cpp_torch_namespace_add_self_Tensor_other_Tensor(Rcpp::XPtr&lt;XPtrTorchTensor, Rcpp::PreserveStorage, &amp;(void Rcpp::standard_delete_finalizer&lt;XPtrTorchTensor&gt;(XPtrTorchTensor*)), false&gt;, Rcpp::XPtr&lt;XPtrTorchTensor, Rcpp::PreserveStorage, &amp;(void Rcpp::standard_delete_finalizer&lt;XPtrTorchTensor&gt;(XPtrTorchTensor*)), false&gt;, Rcpp::XPtr&lt;XPtrTorchScalar, Rcpp::PreserveStorage, &amp;(void Rcpp::standard_delete_finalizer&lt;XPtrTorchScalar&gt;(XPtrTorchScalar*)), false&gt;) + 0x48 (0x7f97b1764fe8 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/libs/torchpkg.so)
+## frame #17: _torch_cpp_torch_namespace_add_self_Tensor_other_Tensor + 0x9c (0x7f97b14fd00c in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/libs/torchpkg.so)
+## frame #18: &lt;unknown function&gt; + 0xf9310 (0x7f97c40e6310 in /usr/lib/R/lib/libR.so)
+## frame #19: &lt;unknown function&gt; + 0xf9826 (0x7f97c40e6826 in /usr/lib/R/lib/libR.so)
+## frame #20: &lt;unknown function&gt; + 0x137106 (0x7f97c4124106 in /usr/lib/R/lib/libR.so)
+## frame #21: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #22: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #23: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)
+## frame #24: Rf_eval + 0x353 (0x7f97c41308c3 in /usr/lib/R/lib/libR.so)
+## frame #25: &lt;unknown function&gt; + 0xc650d (0x7f97c40b350d in /usr/lib/R/lib/libR.so)
+## frame #26: &lt;unknown function&gt; + 0x137106 (0x7f97c4124106 in /usr/lib/R/lib/libR.so)
+## frame #27: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #28: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #29: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)
+## frame #30: &lt;unknown function&gt; + 0x13a989 (0x7f97c4127989 in /usr/lib/R/lib/libR.so)
+## frame #31: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #32: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #33: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)
+## frame #34: &lt;unknown function&gt; + 0x13a989 (0x7f97c4127989 in /usr/lib/R/lib/libR.so)
+## frame #35: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #36: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #37: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)
+## frame #38: &lt;unknown function&gt; + 0x13a989 (0x7f97c4127989 in /usr/lib/R/lib/libR.so)
+## frame #39: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #40: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #41: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)
+## frame #42: &lt;unknown function&gt; + 0x13a989 (0x7f97c4127989 in /usr/lib/R/lib/libR.so)
+## frame #43: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #44: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #45: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)
+## frame #46: &lt;unknown function&gt; + 0x12d83b (0x7f97c411a83b in /usr/lib/R/lib/libR.so)
+## frame #47: &lt;unknown function&gt; + 0x9021b (0x7f97c407d21b in /usr/lib/R/lib/libR.so)
+## frame #48: Rf_eval + 0x706 (0x7f97c4130c76 in /usr/lib/R/lib/libR.so)
+## frame #49: &lt;unknown function&gt; + 0x149782 (0x7f97c4136782 in /usr/lib/R/lib/libR.so)
+## frame #50: &lt;unknown function&gt; + 0x137106 (0x7f97c4124106 in /usr/lib/R/lib/libR.so)
+## frame #51: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #52: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #53: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)
+## frame #54: &lt;unknown function&gt; + 0x13a989 (0x7f97c4127989 in /usr/lib/R/lib/libR.so)
+## frame #55: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #56: &lt;unknown function&gt; + 0x1440ac (0x7f97c41310ac in /usr/lib/R/lib/libR.so)
+## frame #57: Rf_eval + 0x454 (0x7f97c41309c4 in /usr/lib/R/lib/libR.so)
+## frame #58: &lt;unknown function&gt; + 0x14a22c (0x7f97c413722c in /usr/lib/R/lib/libR.so)
+## frame #59: &lt;unknown function&gt; + 0x1871fd (0x7f97c41741fd in /usr/lib/R/lib/libR.so)
+## frame #60: &lt;unknown function&gt; + 0x1353c4 (0x7f97c41223c4 in /usr/lib/R/lib/libR.so)
+## frame #61: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #62: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #63: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)</code></pre>
 <p>모양이 다른 텐서를 더하려고 하면 R은 위에서 보듯 너무나 많은 에러를 쏟아낸다. 모양이 다른 두 텐서를 더하기 위해서는 모양을 같게 맞춰줘야 한다. A의 모양을 B의 모양과 같이 바꿔보도록 하자. 모양을 바꿀때는 <code>view()</code> 함수를 사용하고, 안에 모양의 형태를 벡터 형식으로 짚어 넣는다는 것을 기억하자.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="operation.html#cb44-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> A<span class="sc">$</span><span class="fu">view</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
-<span id="cb44-2"><a href="operation.html#cb44-2" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="operation.html#cb45-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> A<span class="sc">$</span><span class="fu">view</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb45-2"><a href="operation.html#cb45-2" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1  2  3
 ##  4  5  6
 ## [ CPUDoubleType{2,3} ]</code></pre>
 <p>한가지 짚고 넘어가야하는 기능이 있는데, R에서 행렬을 정의할 때, 주어진 원소벡터를 넣고, 가로행과 세로열 중 하나만 입력을 해도 잘 정의가 되는 것을 기억할 것이다. view 함수 역시 비슷한 기능이 있는데, 바로 <code>-1</code>을 이용해서 모양을 변환시키는 방법이다. 앞선 예제에서 2행 3열이 텐서를 1행의 가로 텐서로 변환 시키려면 다음과 같이 <code>view()</code> 함수의 입력값을 조정할 수 있다.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="operation.html#cb46-1" aria-hidden="true" tabindex="-1"></a>A<span class="sc">$</span><span class="fu">view</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="operation.html#cb47-1" aria-hidden="true" tabindex="-1"></a>A<span class="sc">$</span><span class="fu">view</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1  2  3  4  5  6
 ## [ CPUDoubleType{1,6} ]</code></pre>
@@ -347,19 +354,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="덧셈과-뺄셈" class="section level3" number="2.2.3">
 <h3><span class="header-section-number">2.2.3</span> 덧셈과 뺄셈</h3>
 <p>앞에서 형(type)과 모양(shape)까지 맞춰놨으니, 텐서끼리의 덧셈과 뺄셈을 할 수 있다.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="operation.html#cb48-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> B</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="operation.html#cb49-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> B</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1.5134  2.7426  3.7159
 ##  4.5705  5.1653  6.0443
 ## [ CPUDoubleType{2,3} ]</code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="operation.html#cb50-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">-</span> B</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="operation.html#cb51-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">-</span> B</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  0.4866  1.2574  2.2841
 ##  3.4295  4.8347  5.9557
 ## [ CPUDoubleType{2,3} ]</code></pre>
 <p>사실, 텐서끼리의 연산은 <strong>모양만 맞으면 가능</strong>하다. 즉, 다음의 연산이 성립한다.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="operation.html#cb52-1" aria-hidden="true" tabindex="-1"></a>A_ <span class="ot">&lt;-</span> A<span class="sc">$</span><span class="fu">to</span>(<span class="at">dtype =</span> <span class="fu">torch_long</span>())</span>
-<span id="cb52-2"><a href="operation.html#cb52-2" aria-hidden="true" tabindex="-1"></a>A_ <span class="sc">+</span> B</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="operation.html#cb53-1" aria-hidden="true" tabindex="-1"></a>A_ <span class="ot">&lt;-</span> A<span class="sc">$</span><span class="fu">to</span>(<span class="at">dtype =</span> <span class="fu">torch_long</span>())</span>
+<span id="cb53-2"><a href="operation.html#cb53-2" aria-hidden="true" tabindex="-1"></a>A_ <span class="sc">+</span> B</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1.5134  2.7426  3.7159
 ##  4.5705  5.1653  6.0443
@@ -369,22 +376,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="상수와의-연산" class="section level3" number="2.2.4">
 <h3><span class="header-section-number">2.2.4</span> 상수와의 연산</h3>
 <p>R에서와 마찬가지로, 텐서와 상수와의 사칙연산은 각 원소에 적용되는 것을 확인하자.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="operation.html#cb54-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> <span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="operation.html#cb55-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> <span class="dv">2</span></span></code></pre></div>
 <pre><code>## torch_tensor
 ##  3  4  5
 ##  6  7  8
 ## [ CPUDoubleType{2,3} ]</code></pre>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="operation.html#cb56-1" aria-hidden="true" tabindex="-1"></a>B<span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="operation.html#cb57-1" aria-hidden="true" tabindex="-1"></a>B<span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
 <pre><code>## torch_tensor
 ##  0.2636  0.5514  0.5125
 ##  0.3254  0.0273  0.0020
 ## [ CPUFloatType{2,3} ]</code></pre>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="operation.html#cb58-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">%/%</span> <span class="dv">3</span></span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="operation.html#cb59-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">%/%</span> <span class="dv">3</span></span></code></pre></div>
 <pre><code>## torch_tensor
 ##  0  0  1
 ##  1  1  2
 ## [ CPUDoubleType{2,3} ]</code></pre>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="operation.html#cb60-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">%%</span> <span class="dv">3</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="operation.html#cb61-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">%%</span> <span class="dv">3</span></span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1  2  0
 ##  1  2  0
@@ -393,23 +400,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="제곱근과-로그" class="section level3" number="2.2.5">
 <h3><span class="header-section-number">2.2.5</span> 제곱근과 로그</h3>
 <p>제곱근(square root)나 로그(log) 함수 역시 각 원소별 적용이 가능하다.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="operation.html#cb62-1" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="operation.html#cb63-1" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1  2  3
 ##  4  5  6
 ## [ CPUDoubleType{2,3} ]</code></pre>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="operation.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_sqrt</span>(A)</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="operation.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_sqrt</span>(A)</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1.0000  1.4142  1.7321
 ##  2.0000  2.2361  2.4495
 ## [ CPUDoubleType{2,3} ]</code></pre>
 <p>위의 연산이 에러가 나는 이유는 A가 정수를 담는 텐서였는데, 연산을 수행한 후에 실수가 담겨져서 나오는 에러이다. R과는 사뭇다른 예민한 아이 <code>torch</code>를 위해 형을 바꿔준 후에 연산을 실행하도록 하자.</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="operation.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_sqrt</span>(A<span class="sc">$</span><span class="fu">to</span>(<span class="at">dtype =</span> <span class="fu">torch_double</span>()))</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="operation.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_sqrt</span>(A<span class="sc">$</span><span class="fu">to</span>(<span class="at">dtype =</span> <span class="fu">torch_double</span>()))</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1.0000  1.4142  1.7321
 ##  2.0000  2.2361  2.4495
 ## [ CPUDoubleType{2,3} ]</code></pre>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="operation.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_log</span>(B)</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="operation.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_log</span>(B)</span></code></pre></div>
 <pre><code>## torch_tensor
 ## -0.6667 -0.2977 -0.3342
 ## -0.5613 -1.8002 -3.1166
@@ -418,38 +425,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="텐서의-곱셈" class="section level3" number="2.2.6">
 <h3><span class="header-section-number">2.2.6</span> 텐서의 곱셈</h3>
 <p>텐서의 곱셈 역시 모양이 맞아야 하므로, 3행 2열이 두개가 붙어있는 C에서 앞에 한장을 떼어내도록 하자.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="operation.html#cb70-1" aria-hidden="true" tabindex="-1"></a>B</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="operation.html#cb71-1" aria-hidden="true" tabindex="-1"></a>B</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  0.5134  0.7426  0.7159
 ##  0.5705  0.1653  0.0443
 ## [ CPUFloatType{2,3} ]</code></pre>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="operation.html#cb72-1" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> C[<span class="dv">1</span>,,]</span>
-<span id="cb72-2"><a href="operation.html#cb72-2" aria-hidden="true" tabindex="-1"></a>D</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="operation.html#cb73-1" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> C[<span class="dv">1</span>,,]</span>
+<span id="cb73-2"><a href="operation.html#cb73-2" aria-hidden="true" tabindex="-1"></a>D</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  0.9628  0.2943
 ##  0.0992  0.8096
 ##  0.0169  0.8222
 ## [ CPUFloatType{3,2} ]</code></pre>
 <p>텐서의 곱셈은 <code>torch_matmul()</code> 함수를 사용한다.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="operation.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 파이프 사용해도 무방하다.</span></span>
-<span id="cb74-2"><a href="operation.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="co"># B %&gt;% torch_matmul(D)</span></span>
-<span id="cb74-3"><a href="operation.html#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_matmul</span>(B, D)</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="operation.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 파이프 사용해도 무방하다.</span></span>
+<span id="cb75-2"><a href="operation.html#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="co"># B %&gt;% torch_matmul(D)</span></span>
+<span id="cb75-3"><a href="operation.html#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_matmul</span>(B, D)</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  0.5800  1.3409
 ##  0.5664  0.3381
 ## [ CPUFloatType{2,2} ]</code></pre>
 <p>토치의 텐서 곱셈은 다음과 같은 방법들도 있으니 알아두자.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="operation.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_mm</span>(B, D)</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="operation.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_mm</span>(B, D)</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  0.5800  1.3409
 ##  0.5664  0.3381
 ## [ CPUFloatType{2,2} ]</code></pre>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="operation.html#cb78-1" aria-hidden="true" tabindex="-1"></a>B<span class="sc">$</span><span class="fu">mm</span>(D)</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="operation.html#cb79-1" aria-hidden="true" tabindex="-1"></a>B<span class="sc">$</span><span class="fu">mm</span>(D)</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  0.5800  1.3409
 ##  0.5664  0.3381
 ## [ CPUFloatType{2,2} ]</code></pre>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="operation.html#cb80-1" aria-hidden="true" tabindex="-1"></a>B<span class="sc">$</span><span class="fu">matmul</span>(D)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="operation.html#cb81-1" aria-hidden="true" tabindex="-1"></a>B<span class="sc">$</span><span class="fu">matmul</span>(D)</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  0.5800  1.3409
 ##  0.5664  0.3381
@@ -458,34 +465,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="텐서의-전치transpose" class="section level3" number="2.2.7">
 <h3><span class="header-section-number">2.2.7</span> 텐서의 전치(transpose)</h3>
 <p>전치(transpose)는 주어진 텐서를 뒤집는 것인데, 다음의 문법 구조를 가지고 있다.</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="operation.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_transpose</span>(input, dim0, dim1)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="operation.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_transpose</span>(input, dim0, dim1)</span></code></pre></div>
 <p><code>dim0</code>, <code>dim1</code>는 바꿀 차원을 의미한다. ‘바꿀 차원은 두 개 밖에 없지 않나?’ 라고 생각할 수 있다. 2 차원 텐서의 경우에는 그렇다. 우리가 행렬을 전치하는 경우에는 transpose를 취하는 대상이 2차원이므로 지정해주는 차원이 정해져있다. 하지만, 텐서의 차원이 3차원 이상이 되면 전치를 해주는 차원을 지정해줘야한다.</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="operation.html#cb83-1" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="operation.html#cb84-1" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1  2  3
 ##  4  5  6
 ## [ CPUDoubleType{2,3} ]</code></pre>
 <p>위의 텐서 A의 차원은 행과 열, 즉, 2개이다. 다음의 코드들은 A 텐서의 첫번째 차원과 두번째 차원을 뒤집는 효과를 가져온다. 즉, 전치 텐서가 된다.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="operation.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_transpose</span>(A, <span class="dv">1</span>, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="operation.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_transpose</span>(A, <span class="dv">1</span>, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1  4
 ##  2  5
 ##  3  6
 ## [ CPUDoubleType{3,2} ]</code></pre>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="operation.html#cb87-1" aria-hidden="true" tabindex="-1"></a>A<span class="sc">$</span><span class="fu">transpose</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="operation.html#cb88-1" aria-hidden="true" tabindex="-1"></a>A<span class="sc">$</span><span class="fu">transpose</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1  4
 ##  2  5
 ##  3  6
 ## [ CPUDoubleType{3,2} ]</code></pre>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="operation.html#cb89-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">%&gt;%</span> <span class="fu">torch_transpose</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="operation.html#cb90-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">%&gt;%</span> <span class="fu">torch_transpose</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1  4
 ##  2  5
 ##  3  6
 ## [ CPUDoubleType{3,2} ]</code></pre>
 <p>3차원의 텐서를 살펴보자.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="operation.html#cb91-1" aria-hidden="true" tabindex="-1"></a>C</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="operation.html#cb92-1" aria-hidden="true" tabindex="-1"></a>C</span></code></pre></div>
 <pre><code>## torch_tensor
 ## (1,.,.) = 
 ##   0.9628  0.2943
@@ -498,7 +505,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   0.2959  0.7834
 ## [ CPUFloatType{2,3,2} ]</code></pre>
 <p>텐서 C는 위와 같이 2차원 텐서가 두 개 포개져 있다고 생각하면 된다. 텐서의 결과물을 잘 살펴보면, 제일 앞에 위치한 1, 2가 나타내는 것이 우리가 흔히 생각하는 2차원 텐서들의 색인(index) 역할을 한다는 것을 알 수 있다. 앞으로는 편의를 위해서 3차원 텐서의 색인 역할을 하는 차원을 깊이(depth)라고 부르도록 하자. 앞에서 주어진 텐서 C 안의 포개져있는 2차원 텐서들을 전치하기 위해서는 이들을 관할(?)하는 두번째와 세번째 차원을 바꿔줘야 한다.</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="operation.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_transpose</span>(C, <span class="dv">2</span>, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="operation.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_transpose</span>(C, <span class="dv">2</span>, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## torch_tensor
 ## (1,.,.) = 
 ##   0.9628  0.0992  0.0169
@@ -513,7 +520,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="r에서의-3차원-배열" class="section level3" number="2.2.8">
 <h3><span class="header-section-number">2.2.8</span> R에서의 3차원 배열</h3>
 <p>앞에서 다룬 <code>torch</code>에서의 3차원 텐서 부분은 <a href="https://rstudio.github.io/reticulate/articles/arrays.html">R에서 기본적으로 제공하는 array의 문법과 차이가 난다.</a> 다음의 코드를 살펴보자. 먼저 R에서 2행 3열의 행렬을 두 개 포개어 놓은 3차원 배열을 만드는 코드이다.</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="operation.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">array</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>)) </span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="operation.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">array</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>)) </span></code></pre></div>
 <pre><code>## , , 1
 ## 
 ##      [,1] [,2] [,3]
@@ -526,12 +533,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [1,]    7    9   11
 ## [2,]    8   10   12</code></pre>
 <p>필자는 참고로 <code>matrix()</code>를 만들때에도 <code>byrow</code> 옵션을 써서 만드는 것을 좋아하는데, <code>array()</code>에서 <code>byrow</code> 옵션 효과를 적용하려면 <code>aperm()</code> 함수를 사용해야 한다. 따라서, 좀 더 직관적으로 쓰기위해서 다음의 함수를 사용하자.</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="operation.html#cb97-1" aria-hidden="true" tabindex="-1"></a>array_3d_byrow <span class="ot">&lt;-</span> <span class="cf">function</span>(num_vec, nrow, ncol, ndeath){</span>
-<span id="cb97-2"><a href="operation.html#cb97-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aperm</span>(<span class="fu">array</span>(num_vec, <span class="fu">c</span>(ncol, nrow, ndeath)), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>))    </span>
-<span id="cb97-3"><a href="operation.html#cb97-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb97-4"><a href="operation.html#cb97-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-5"><a href="operation.html#cb97-5" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fu">array_3d_byrow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
-<span id="cb97-6"><a href="operation.html#cb97-6" aria-hidden="true" tabindex="-1"></a>E</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="operation.html#cb98-1" aria-hidden="true" tabindex="-1"></a>array_3d_byrow <span class="ot">&lt;-</span> <span class="cf">function</span>(num_vec, nrow, ncol, ndeath){</span>
+<span id="cb98-2"><a href="operation.html#cb98-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aperm</span>(<span class="fu">array</span>(num_vec, <span class="fu">c</span>(ncol, nrow, ndeath)), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>))    </span>
+<span id="cb98-3"><a href="operation.html#cb98-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb98-4"><a href="operation.html#cb98-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-5"><a href="operation.html#cb98-5" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fu">array_3d_byrow</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb98-6"><a href="operation.html#cb98-6" aria-hidden="true" tabindex="-1"></a>E</span></code></pre></div>
 <pre><code>## , , 1
 ## 
 ##      [,1] [,2] [,3]
@@ -544,7 +551,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [1,]    7    8    9
 ## [2,]   10   11   12</code></pre>
 <p>이러한 코드를 앞서 배웠던 <code>torch_tensor()</code> 함수에 넣어보자.</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="operation.html#cb99-1" aria-hidden="true" tabindex="-1"></a>E <span class="sc">%&gt;%</span> <span class="fu">torch_tensor</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="operation.html#cb100-1" aria-hidden="true" tabindex="-1"></a>E <span class="sc">%&gt;%</span> <span class="fu">torch_tensor</span>()</span></code></pre></div>
 <pre><code>## torch_tensor
 ## (1,.,.) = 
 ##   1  7
@@ -557,9 +564,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##    6  12
 ## [ CPULongType{2,3,2} ]</code></pre>
 <p>결과를 살펴보면, 우리가 예상했던 2행 3열의 텐서가 두개 겹쳐있는 텐서의 모양이 나오지 않는다는 것을 알 수 있다. 이유는 <code>torch</code>에서 정의된 3차원 텐서의 경우, 첫번째 차원이 텐서가 얼마나 겹쳐있는지를 나타내는 깊이(depth)를 나타내기 때문이다. 문제를 해결하기 위해서는 <code>aperm()</code> 사용해서 차원을 바꿔주면 된다.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="operation.html#cb101-1" aria-hidden="true" tabindex="-1"></a>E <span class="sc">%&gt;%</span> </span>
-<span id="cb101-2"><a href="operation.html#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aperm</span>(<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>)) <span class="sc">%&gt;%</span> <span class="co"># 3 번째 차원을 맨 앞으로, 나머지는 그대로</span></span>
-<span id="cb101-3"><a href="operation.html#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">torch_tensor</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="operation.html#cb102-1" aria-hidden="true" tabindex="-1"></a>E <span class="sc">%&gt;%</span> </span>
+<span id="cb102-2"><a href="operation.html#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aperm</span>(<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>)) <span class="sc">%&gt;%</span> <span class="co"># 3 번째 차원을 맨 앞으로, 나머지는 그대로</span></span>
+<span id="cb102-3"><a href="operation.html#cb102-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">torch_tensor</span>()</span></code></pre></div>
 <pre><code>## torch_tensor
 ## (1,.,.) = 
 ##   1  2  3
@@ -570,11 +577,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   10  11  12
 ## [ CPULongType{2,2,3} ]</code></pre>
 <p>위의 경우를 좀더 직관적인 함수명으로 바꿔서 사용하도록 하자.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="operation.html#cb103-1" aria-hidden="true" tabindex="-1"></a>array_to_torch <span class="ot">&lt;-</span> <span class="cf">function</span>(mat, <span class="at">n_dim =</span> <span class="dv">3</span>){</span>
-<span id="cb103-2"><a href="operation.html#cb103-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">torch_tensor</span>(<span class="fu">aperm</span>(mat, <span class="fu">c</span>(n_dim<span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>)))</span>
-<span id="cb103-3"><a href="operation.html#cb103-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb103-4"><a href="operation.html#cb103-4" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fu">array_to_torch</span>(E)</span>
-<span id="cb103-5"><a href="operation.html#cb103-5" aria-hidden="true" tabindex="-1"></a>E</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="operation.html#cb104-1" aria-hidden="true" tabindex="-1"></a>array_to_torch <span class="ot">&lt;-</span> <span class="cf">function</span>(mat, <span class="at">n_dim =</span> <span class="dv">3</span>){</span>
+<span id="cb104-2"><a href="operation.html#cb104-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">torch_tensor</span>(<span class="fu">aperm</span>(mat, <span class="fu">c</span>(n_dim<span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>)))</span>
+<span id="cb104-3"><a href="operation.html#cb104-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb104-4"><a href="operation.html#cb104-4" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fu">array_to_torch</span>(E)</span>
+<span id="cb104-5"><a href="operation.html#cb104-5" aria-hidden="true" tabindex="-1"></a>E</span></code></pre></div>
 <pre><code>## torch_tensor
 ## (1,.,.) = 
 ##   1  2  3
@@ -588,22 +595,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="다차원-텐서와-1차원-벡터-텐서의-연산" class="section level3" number="2.2.9">
 <h3><span class="header-section-number">2.2.9</span> 다차원 텐서와 1차원 벡터 텐서의 연산</h3>
 <p>R에서 우리가 아주 애용하는 기능 중 하나가 바로 <code>recycling</code> 개념이다. 즉, 길이 혹은 모양이 맞지 않는 개체(object)들을 연산할 때, 자동으로 길이와 모양을 맞춰서 연산을 해주는 기능인데, torch에서도 이러한 기능을 제공한다. 다음의 코드를 살펴보자.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="operation.html#cb105-1" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="operation.html#cb106-1" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1  2  3
 ##  4  5  6
 ## [ CPUDoubleType{2,3} ]</code></pre>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="operation.html#cb107-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="operation.html#cb108-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  2  4  6
 ##  5  7  9
 ## [ CPUDoubleType{2,3} ]</code></pre>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="operation.html#cb109-1" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="operation.html#cb110-1" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1  2  3
 ##  4  5  6
 ## [ CPUDoubleType{2,3} ]</code></pre>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="operation.html#cb111-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="operation.html#cb112-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  3  4  5
 ##  7  8  9
@@ -612,13 +619,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="차원-텐서-끼리의-연산-내적과-외적" class="section level3" number="2.2.10">
 <h3><span class="header-section-number">2.2.10</span> 1차원 텐서 끼리의 연산, 내적과 외적</h3>
 <p>1차원 텐서끼리의 연산도 2차원 텐서끼리의 연산과 마찬가지라고 생각하면 된다. 내적과 외적 역시 그냥 모양을 맞춰서 곱하면 된다.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="operation.html#cb113-1" aria-hidden="true" tabindex="-1"></a>A_1 <span class="ot">&lt;-</span> A<span class="sc">$</span><span class="fu">view</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>))</span>
-<span id="cb113-2"><a href="operation.html#cb113-2" aria-hidden="true" tabindex="-1"></a>A_1</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="operation.html#cb114-1" aria-hidden="true" tabindex="-1"></a>A_1 <span class="ot">&lt;-</span> A<span class="sc">$</span><span class="fu">view</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb114-2"><a href="operation.html#cb114-2" aria-hidden="true" tabindex="-1"></a>A_1</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1  2  3  4  5  6
 ## [ CPUDoubleType{1,6} ]</code></pre>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="operation.html#cb115-1" aria-hidden="true" tabindex="-1"></a>A_2 <span class="ot">&lt;-</span> A<span class="sc">$</span><span class="fu">view</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb115-2"><a href="operation.html#cb115-2" aria-hidden="true" tabindex="-1"></a>A_2</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="operation.html#cb116-1" aria-hidden="true" tabindex="-1"></a>A_2 <span class="ot">&lt;-</span> A<span class="sc">$</span><span class="fu">view</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb116-2"><a href="operation.html#cb116-2" aria-hidden="true" tabindex="-1"></a>A_2</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1
 ##  2
@@ -627,11 +634,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  5
 ##  6
 ## [ CPUDoubleType{6,1} ]</code></pre>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="operation.html#cb117-1" aria-hidden="true" tabindex="-1"></a>A_1<span class="sc">$</span><span class="fu">mm</span>(A_2)</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="operation.html#cb118-1" aria-hidden="true" tabindex="-1"></a>A_1<span class="sc">$</span><span class="fu">mm</span>(A_2)</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  91
 ## [ CPUDoubleType{1,1} ]</code></pre>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="operation.html#cb119-1" aria-hidden="true" tabindex="-1"></a>A_2<span class="sc">$</span><span class="fu">mm</span>(A_1)</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="operation.html#cb120-1" aria-hidden="true" tabindex="-1"></a>A_2<span class="sc">$</span><span class="fu">mm</span>(A_1)</span></code></pre></div>
 <pre><code>## torch_tensor
 ##   1   2   3   4   5   6
 ##   2   4   6   8  10  12
@@ -641,78 +648,78 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   6  12  18  24  30  36
 ## [ CPUDoubleType{6,6} ]</code></pre>
 <p>한가지 주의할 점은 1차원 텐서끼리의 연산이더라도 꼭 차원을 선언해줘서 열벡터와 행벡터를 분명히 해줘야 한다는 점이다.</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="operation.html#cb121-1" aria-hidden="true" tabindex="-1"></a>A_3 <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
-<span id="cb121-2"><a href="operation.html#cb121-2" aria-hidden="true" tabindex="-1"></a>A_1<span class="sc">$</span><span class="fu">mm</span>(A_3)</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="operation.html#cb122-1" aria-hidden="true" tabindex="-1"></a>A_3 <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb122-2"><a href="operation.html#cb122-2" aria-hidden="true" tabindex="-1"></a>A_1<span class="sc">$</span><span class="fu">mm</span>(A_3)</span></code></pre></div>
 <pre><code>## Error in (function (self, mat2) : mat2 must be a matrix
 ## Exception raised from mm_cpu at ../aten/src/ATen/native/LinearAlgebra.cpp:399 (most recent call first):
-## frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) + 0x69 (0x7fbb4064db89 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libc10.so)
-## frame #1: at::native::mm_cpu(at::Tensor const&amp;, at::Tensor const&amp;) + 0x334 (0x7fbb3049c194 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #2: &lt;unknown function&gt; + 0x133236d (0x7fbb309bc36d in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #3: &lt;unknown function&gt; + 0xaf1c34 (0x7fbb3017bc34 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #4: at::Tensor c10::Dispatcher::callWithDispatchKey&lt;at::Tensor, at::Tensor const&amp;, at::Tensor const&amp;&gt;(c10::TypedOperatorHandle&lt;at::Tensor (at::Tensor const&amp;, at::Tensor const&amp;)&gt; const&amp;, c10::DispatchKey, at::Tensor const&amp;, at::Tensor const&amp;) const + 0x1ce (0x7fbb30b6424e in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #5: at::mm(at::Tensor const&amp;, at::Tensor const&amp;) + 0xb7 (0x7fbb30a4a947 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #6: &lt;unknown function&gt; + 0x2a5db24 (0x7fbb320e7b24 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #7: &lt;unknown function&gt; + 0xaf1c34 (0x7fbb3017bc34 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #8: at::Tensor c10::Dispatcher::callWithDispatchKey&lt;at::Tensor, at::Tensor const&amp;, at::Tensor const&amp;&gt;(c10::TypedOperatorHandle&lt;at::Tensor (at::Tensor const&amp;, at::Tensor const&amp;)&gt; const&amp;, c10::DispatchKey, at::Tensor const&amp;, at::Tensor const&amp;) const + 0x1ce (0x7fbb30b6424e in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #9: at::Tensor::mm(at::Tensor const&amp;) const + 0xb7 (0x7fbb30ccdd67 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-## frame #10: _lantern_Tensor_mm_tensor_tensor + 0x4c (0x7fbb4098b79c in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/liblantern.so)
-## frame #11: cpp_torch_method_mm_self_Tensor_mat2_Tensor(Rcpp::XPtr&lt;XPtrTorchTensor, Rcpp::PreserveStorage, &amp;(void Rcpp::standard_delete_finalizer&lt;XPtrTorchTensor&gt;(XPtrTorchTensor*)), false&gt;, Rcpp::XPtr&lt;XPtrTorchTensor, Rcpp::PreserveStorage, &amp;(void Rcpp::standard_delete_finalizer&lt;XPtrTorchTensor&gt;(XPtrTorchTensor*)), false&gt;) + 0x2c (0x7fbb412bd4fc in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/libs/torchpkg.so)
-## frame #12: _torch_cpp_torch_method_mm_self_Tensor_mat2_Tensor + 0x82 (0x7fbb41062f22 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/libs/torchpkg.so)
-## frame #13: &lt;unknown function&gt; + 0xf932c (0x7fbb53c9632c in /usr/lib/R/lib/libR.so)
-## frame #14: &lt;unknown function&gt; + 0xf9826 (0x7fbb53c96826 in /usr/lib/R/lib/libR.so)
-## frame #15: &lt;unknown function&gt; + 0x137106 (0x7fbb53cd4106 in /usr/lib/R/lib/libR.so)
-## frame #16: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #17: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #18: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)
-## frame #19: Rf_eval + 0x353 (0x7fbb53ce08c3 in /usr/lib/R/lib/libR.so)
-## frame #20: &lt;unknown function&gt; + 0xc650d (0x7fbb53c6350d in /usr/lib/R/lib/libR.so)
-## frame #21: &lt;unknown function&gt; + 0x137106 (0x7fbb53cd4106 in /usr/lib/R/lib/libR.so)
-## frame #22: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #23: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #24: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)
-## frame #25: &lt;unknown function&gt; + 0x13a989 (0x7fbb53cd7989 in /usr/lib/R/lib/libR.so)
-## frame #26: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #27: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #28: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)
-## frame #29: &lt;unknown function&gt; + 0x13a989 (0x7fbb53cd7989 in /usr/lib/R/lib/libR.so)
-## frame #30: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #31: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #32: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)
-## frame #33: Rf_eval + 0x353 (0x7fbb53ce08c3 in /usr/lib/R/lib/libR.so)
-## frame #34: &lt;unknown function&gt; + 0x1470a2 (0x7fbb53ce40a2 in /usr/lib/R/lib/libR.so)
-## frame #35: Rf_eval + 0x572 (0x7fbb53ce0ae2 in /usr/lib/R/lib/libR.so)
-## frame #36: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #37: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)
-## frame #38: Rf_eval + 0x353 (0x7fbb53ce08c3 in /usr/lib/R/lib/libR.so)
-## frame #39: &lt;unknown function&gt; + 0x149782 (0x7fbb53ce6782 in /usr/lib/R/lib/libR.so)
-## frame #40: &lt;unknown function&gt; + 0x137106 (0x7fbb53cd4106 in /usr/lib/R/lib/libR.so)
-## frame #41: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #42: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #43: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)
-## frame #44: &lt;unknown function&gt; + 0x13a989 (0x7fbb53cd7989 in /usr/lib/R/lib/libR.so)
-## frame #45: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #46: &lt;unknown function&gt; + 0x1440ac (0x7fbb53ce10ac in /usr/lib/R/lib/libR.so)
-## frame #47: Rf_eval + 0x454 (0x7fbb53ce09c4 in /usr/lib/R/lib/libR.so)
-## frame #48: &lt;unknown function&gt; + 0x14a22c (0x7fbb53ce722c in /usr/lib/R/lib/libR.so)
-## frame #49: &lt;unknown function&gt; + 0x1871fd (0x7fbb53d241fd in /usr/lib/R/lib/libR.so)
-## frame #50: &lt;unknown function&gt; + 0x1353c4 (0x7fbb53cd23c4 in /usr/lib/R/lib/libR.so)
-## frame #51: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #52: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #53: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)
-## frame #54: &lt;unknown function&gt; + 0x13a989 (0x7fbb53cd7989 in /usr/lib/R/lib/libR.so)
-## frame #55: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #56: &lt;unknown function&gt; + 0x1440ac (0x7fbb53ce10ac in /usr/lib/R/lib/libR.so)
-## frame #57: &lt;unknown function&gt; + 0x1444e4 (0x7fbb53ce14e4 in /usr/lib/R/lib/libR.so)
-## frame #58: &lt;unknown function&gt; + 0x1377d4 (0x7fbb53cd47d4 in /usr/lib/R/lib/libR.so)
-## frame #59: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)
-## frame #60: &lt;unknown function&gt; + 0x14550f (0x7fbb53ce250f in /usr/lib/R/lib/libR.so)
-## frame #61: Rf_applyClosure + 0x1c7 (0x7fbb53ce32d7 in /usr/lib/R/lib/libR.so)
-## frame #62: &lt;unknown function&gt; + 0x13a989 (0x7fbb53cd7989 in /usr/lib/R/lib/libR.so)
-## frame #63: Rf_eval + 0x180 (0x7fbb53ce06f0 in /usr/lib/R/lib/libR.so)</code></pre>
+## frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;) + 0x69 (0x7f97b0a9db89 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libc10.so)
+## frame #1: at::native::mm_cpu(at::Tensor const&amp;, at::Tensor const&amp;) + 0x334 (0x7f97a08ec194 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #2: &lt;unknown function&gt; + 0x133236d (0x7f97a0e0c36d in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #3: &lt;unknown function&gt; + 0xaf1c34 (0x7f97a05cbc34 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #4: at::Tensor c10::Dispatcher::callWithDispatchKey&lt;at::Tensor, at::Tensor const&amp;, at::Tensor const&amp;&gt;(c10::TypedOperatorHandle&lt;at::Tensor (at::Tensor const&amp;, at::Tensor const&amp;)&gt; const&amp;, c10::DispatchKey, at::Tensor const&amp;, at::Tensor const&amp;) const + 0x1ce (0x7f97a0fb424e in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #5: at::mm(at::Tensor const&amp;, at::Tensor const&amp;) + 0xb7 (0x7f97a0e9a947 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #6: &lt;unknown function&gt; + 0x2a5db24 (0x7f97a2537b24 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #7: &lt;unknown function&gt; + 0xaf1c34 (0x7f97a05cbc34 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #8: at::Tensor c10::Dispatcher::callWithDispatchKey&lt;at::Tensor, at::Tensor const&amp;, at::Tensor const&amp;&gt;(c10::TypedOperatorHandle&lt;at::Tensor (at::Tensor const&amp;, at::Tensor const&amp;)&gt; const&amp;, c10::DispatchKey, at::Tensor const&amp;, at::Tensor const&amp;) const + 0x1ce (0x7f97a0fb424e in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #9: at::Tensor::mm(at::Tensor const&amp;) const + 0xb7 (0x7f97a111dd67 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
+## frame #10: _lantern_Tensor_mm_tensor_tensor + 0x4c (0x7f97b0ddb79c in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/liblantern.so)
+## frame #11: cpp_torch_method_mm_self_Tensor_mat2_Tensor(Rcpp::XPtr&lt;XPtrTorchTensor, Rcpp::PreserveStorage, &amp;(void Rcpp::standard_delete_finalizer&lt;XPtrTorchTensor&gt;(XPtrTorchTensor*)), false&gt;, Rcpp::XPtr&lt;XPtrTorchTensor, Rcpp::PreserveStorage, &amp;(void Rcpp::standard_delete_finalizer&lt;XPtrTorchTensor&gt;(XPtrTorchTensor*)), false&gt;) + 0x2c (0x7f97b170d4fc in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/libs/torchpkg.so)
+## frame #12: _torch_cpp_torch_method_mm_self_Tensor_mat2_Tensor + 0x82 (0x7f97b14b2f22 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/libs/torchpkg.so)
+## frame #13: &lt;unknown function&gt; + 0xf932c (0x7f97c40e632c in /usr/lib/R/lib/libR.so)
+## frame #14: &lt;unknown function&gt; + 0xf9826 (0x7f97c40e6826 in /usr/lib/R/lib/libR.so)
+## frame #15: &lt;unknown function&gt; + 0x137106 (0x7f97c4124106 in /usr/lib/R/lib/libR.so)
+## frame #16: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #17: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #18: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)
+## frame #19: Rf_eval + 0x353 (0x7f97c41308c3 in /usr/lib/R/lib/libR.so)
+## frame #20: &lt;unknown function&gt; + 0xc650d (0x7f97c40b350d in /usr/lib/R/lib/libR.so)
+## frame #21: &lt;unknown function&gt; + 0x137106 (0x7f97c4124106 in /usr/lib/R/lib/libR.so)
+## frame #22: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #23: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #24: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)
+## frame #25: &lt;unknown function&gt; + 0x13a989 (0x7f97c4127989 in /usr/lib/R/lib/libR.so)
+## frame #26: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #27: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #28: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)
+## frame #29: &lt;unknown function&gt; + 0x13a989 (0x7f97c4127989 in /usr/lib/R/lib/libR.so)
+## frame #30: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #31: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #32: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)
+## frame #33: Rf_eval + 0x353 (0x7f97c41308c3 in /usr/lib/R/lib/libR.so)
+## frame #34: &lt;unknown function&gt; + 0x1470a2 (0x7f97c41340a2 in /usr/lib/R/lib/libR.so)
+## frame #35: Rf_eval + 0x572 (0x7f97c4130ae2 in /usr/lib/R/lib/libR.so)
+## frame #36: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #37: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)
+## frame #38: Rf_eval + 0x353 (0x7f97c41308c3 in /usr/lib/R/lib/libR.so)
+## frame #39: &lt;unknown function&gt; + 0x149782 (0x7f97c4136782 in /usr/lib/R/lib/libR.so)
+## frame #40: &lt;unknown function&gt; + 0x137106 (0x7f97c4124106 in /usr/lib/R/lib/libR.so)
+## frame #41: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #42: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #43: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)
+## frame #44: &lt;unknown function&gt; + 0x13a989 (0x7f97c4127989 in /usr/lib/R/lib/libR.so)
+## frame #45: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #46: &lt;unknown function&gt; + 0x1440ac (0x7f97c41310ac in /usr/lib/R/lib/libR.so)
+## frame #47: Rf_eval + 0x454 (0x7f97c41309c4 in /usr/lib/R/lib/libR.so)
+## frame #48: &lt;unknown function&gt; + 0x14a22c (0x7f97c413722c in /usr/lib/R/lib/libR.so)
+## frame #49: &lt;unknown function&gt; + 0x1871fd (0x7f97c41741fd in /usr/lib/R/lib/libR.so)
+## frame #50: &lt;unknown function&gt; + 0x1353c4 (0x7f97c41223c4 in /usr/lib/R/lib/libR.so)
+## frame #51: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #52: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #53: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)
+## frame #54: &lt;unknown function&gt; + 0x13a989 (0x7f97c4127989 in /usr/lib/R/lib/libR.so)
+## frame #55: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #56: &lt;unknown function&gt; + 0x1440ac (0x7f97c41310ac in /usr/lib/R/lib/libR.so)
+## frame #57: &lt;unknown function&gt; + 0x1444e4 (0x7f97c41314e4 in /usr/lib/R/lib/libR.so)
+## frame #58: &lt;unknown function&gt; + 0x1377d4 (0x7f97c41247d4 in /usr/lib/R/lib/libR.so)
+## frame #59: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)
+## frame #60: &lt;unknown function&gt; + 0x14550f (0x7f97c413250f in /usr/lib/R/lib/libR.so)
+## frame #61: Rf_applyClosure + 0x1c7 (0x7f97c41332d7 in /usr/lib/R/lib/libR.so)
+## frame #62: &lt;unknown function&gt; + 0x13a989 (0x7f97c4127989 in /usr/lib/R/lib/libR.so)
+## frame #63: Rf_eval + 0x180 (0x7f97c41306f0 in /usr/lib/R/lib/libR.so)</code></pre>
 <p>위의 코드는 연산 에러가 나는데, 이유는 <code>A_3</code>의 모양이 <code>A_1</code>의 모양과 맞지 않기 때문이다.</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="operation.html#cb123-1" aria-hidden="true" tabindex="-1"></a>A_1<span class="sc">$</span><span class="fu">size</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="operation.html#cb124-1" aria-hidden="true" tabindex="-1"></a>A_1<span class="sc">$</span><span class="fu">size</span>()</span></code></pre></div>
 <pre><code>## [1] 1 6</code></pre>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="operation.html#cb125-1" aria-hidden="true" tabindex="-1"></a>A_3<span class="sc">$</span><span class="fu">size</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="operation.html#cb126-1" aria-hidden="true" tabindex="-1"></a>A_3<span class="sc">$</span><span class="fu">size</span>()</span></code></pre></div>
 <pre><code>## [1] 6</code></pre>
 
 </div>
@@ -724,7 +731,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="텐서의-이동-cpu-iff-gpu.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -774,6 +781,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

@@ -137,6 +137,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>들어가며</a>
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#설치하기"><i class="fa fa-check"></i>설치하기</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#기본-패키지"><i class="fa fa-check"></i>기본 패키지</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> 딥러닝 첫걸음, 텐서 (tensor) 만들기</a>
 <ul>
@@ -173,6 +174,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.9" data-path="operation.html"><a href="operation.html#다차원-텐서와-1차원-벡터-텐서의-연산"><i class="fa fa-check"></i><b>2.2.9</b> 다차원 텐서와 1차원 벡터 텐서의 연산</a></li>
 <li class="chapter" data-level="2.2.10" data-path="operation.html"><a href="operation.html#차원-텐서-끼리의-연산-내적과-외적"><i class="fa fa-check"></i><b>2.2.10</b> 1차원 텐서 끼리의 연산, 내적과 외적</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="텐서의-이동-cpu-iff-gpu.html"><a href="텐서의-이동-cpu-iff-gpu.html"><i class="fa fa-check"></i><b>3</b> 텐서의 이동 CPU <span class="math inline">\(\iff\)</span> GPU</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="텐서의-이동-cpu-iff-gpu.html"><a href="텐서의-이동-cpu-iff-gpu.html#gpu-사용-가능-체크"><i class="fa fa-check"></i><b>3.1</b> GPU 사용 가능 체크</a></li>
+<li class="chapter" data-level="3.2" data-path="텐서의-이동-cpu-iff-gpu.html"><a href="텐서의-이동-cpu-iff-gpu.html#cpu-to-gpu"><i class="fa fa-check"></i><b>3.2</b> CPU to GPU</a></li>
+<li class="chapter" data-level="3.3" data-path="텐서의-이동-cpu-iff-gpu.html"><a href="텐서의-이동-cpu-iff-gpu.html#gpu-to-cpu"><i class="fa fa-check"></i><b>3.3</b> GPU to CPU</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -215,6 +222,12 @@ Figure 0.1: deep-learning playbook
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;torch&quot;</span>)</span>
 <span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 혹은 개발버전을 다운 받고 싶다면</span></span>
 <span id="cb1-3"><a href="index.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::install_github(&quot;mlverse/torch&quot;)</span></span></code></pre></div>
+</div>
+<div id="기본-패키지" class="section level2 unnumbered">
+<h2>기본 패키지</h2>
+<p>앞으로의 내용에 있어서 다음의 두 패키지는 기본으로 불러와서 사용하는 것을 약속으로 한다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="index.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span></code></pre></div>
 
 </div>
 </div>
@@ -274,6 +287,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
