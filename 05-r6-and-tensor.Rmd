@@ -20,7 +20,17 @@ library(R6)
 
 ## 클래스(Class)와 멤버함수(Method), 그리고 필드(Field)
 
-`R6` 패키지에는 딱 하나의 함수가 존재한다. 바로 `R6Class()` 함수이다. 이 함수의 입력값은 두가지 인데, 첫번째는 클래스 이름 `clasename`이고, 두번째는 퍼블릭 `public` 인데, 우리가 만들 클래스에서 사용이 가능한 함수들(methods)과 변수(fields)들을 몽땅 다 떼려넣은 리스트(list) 형태가 들어간다. 한가지 꼭 짚고 넘어가야하는 것이 있는데, 바로 이름을 정하는 방식이다.
+`R6` 패키지에는 딱 하나의 함수가 존재한다. 바로 `R6Class()` 함수이다. 이 함수의 입력값은 두가지 인데, 첫번째는 클래스 이름 `clasename`이고, 두번째는 공개될 정보들을 담을 `public`이라는 입력값이다. `public`에는 우리가 만들 클래스에서 사용이 가능한 멤버함수들(methods)과 변수(fields)들을 몽땅 다 떼려넣은 리스트(list) 형태가 들어간다.
+
+```{r}
+ExampleClass <- R6Class(classname = "Example", public = list(
+    # 변수(fields) 정의
+    # 멤버함수(methods) 정의
+))
+ExampleClass
+```
+
+한가지 꼭 짚고 넘어가야하는 것이 있는데, 바로 이름을 정하는 방식이다.
 
 1. 클래스의 이름은 `UpperCamelCase` 형식으로 짓는다. 즉, 클래스의 이름을 선언할 때 띄어쓰기를 하지않고, 대신 대문자를 사용한다.
 2. 두번째 리스트에 들어가는 요소들의 이름은 `snake_case`를 사용한다. 즉, 모두 소문자를 유지하고, 띄어쓰기 대신에 밑줄을 사용하여 선언한다.
@@ -97,7 +107,7 @@ Student <- R6Class("Student", list(
     midterm = NA,
     final = NA,
     
-    # 클래스 안의 개체를 만들때 사용되는 initialize
+    # 클래스 안의 객체를 만들때 사용되는 initialize
     initialize = function(first, last, midterm, final){
         self$first = first
         self$last  = last
@@ -110,7 +120,7 @@ Student <- R6Class("Student", list(
 Student
 ```
 
-결과값을 유심히 살펴보면, `<Student> object generator` 라는 부분이 있는데, `Student` 라는 클래스는 개체(object)들을 만들어내는 생성자(generator)라는 것을 알 수 있다. 우리가 만들 `Student` 생성자를 통해서 도장을 찍듯, `new()` 함수를 사용하여 issac과 bomi를 다음과 같이 만들 수 있다. 
+결과값을 유심히 살펴보면, `<Student> object generator` 라는 부분이 있는데, `Student` 라는 클래스는 객체(object)들을 만들어내는 생성자(generator)라는 것을 알 수 있다. 우리가 만들 `Student` 생성자를 통해서 도장을 찍듯, `new()` 함수를 사용하여 issac과 bomi를 다음과 같이 만들 수 있다. 
 
 ```{r}
 issac <- Student$new("Issac", "Lee", 70, 50)
@@ -123,7 +133,7 @@ bomi
 
 ### print()를 사용한 결과물 정리
 
-정의된 클래스는 기본적으로 동작하는 함수들을 덮어서 쓸 수 있다. 예를들어 `print()`를 함수로 정의해버리면, base에 있는 `print()` 동작을 덮어서 쓸 수 있다. 즉, 기본 함수들 `print()`, `plot()` 같은 함수들을 우리가 정의한 클래스에서 나온 개체들에 적용했을때의 작동을 정해줄 수 있다는 것이다.
+정의된 클래스는 기본적으로 동작하는 함수들을 덮어서 쓸 수 있다. 예를들어 `print()`를 함수로 정의해버리면, base에 있는 `print()` 동작을 덮어서 쓸 수 있다. 즉, 기본 함수들 `print()`, `plot()` 같은 함수들을 우리가 정의한 클래스에서 나온 객체들에 적용했을때의 작동을 정해줄 수 있다는 것이다.
 
 ```{r}
 Student <- R6Class("Student", list(
@@ -134,7 +144,7 @@ Student <- R6Class("Student", list(
     midterm = NA,
     final = NA,
     
-    # 클래스 안의 개체를 만들때 사용되는 initialize
+    # 클래스 안의 객체를 만들때 사용되는 initialize
     initialize = function(first, last, midterm, final){
         self$first = first
         self$last  = last
@@ -158,7 +168,7 @@ soony <- Student$new("Soony", "Kim", 70, 20)
 soony
 ```
 
-`print()` 멤버 함수를 추가한 후에 만들어진 `soony`의 정보는 클래스안에 정의된 `print()`를 통해서 보여진다는 것을 확인할 수 있다. 한가지 주의할 점은 `print()`가 클래스 안에 정의되어 있지 않은 채로 생성된 `issac`과 `bomi`의 경우는 `print()`가 작동하지 않는다는 것이다. 즉, 클래스에 정의된 함수들은 개체가 클래스로부터 생성될 때, 따라와서 붙는다.
+`print()` 멤버 함수를 추가한 후에 만들어진 `soony`의 정보는 클래스안에 정의된 `print()`를 통해서 보여진다는 것을 확인할 수 있다. 한가지 주의할 점은 `print()`가 클래스 안에 정의되어 있지 않은 채로 생성된 `issac`과 `bomi`의 경우는 `print()`가 작동하지 않는다는 것이다. 즉, 클래스에 정의된 함수들은 객체가 클래스로부터 생성될 때, 따라와서 붙는다.
 
 ```{r error=TRUE}
 issac$print()
@@ -226,6 +236,100 @@ sanghoon$average
 sanghoon$calculate_total()
 sanghoon$total
 ```
+
+### 비공개(Private) 변수의 필요성
+
+앞에서 살펴본 `R6Class()` 함수의 두 가지 입력값은 클래스 이름(`classname`)과 공개정보(`public`) 였다. 클래스를 만들고 사용하다보면, 때로는 클래스 안의 함수들을 사용하기 위해서 만들어야하는 변수나 함수들이 있는데, 이러한 정보들은 굳이 클래스를 사용하는 사용자들에게 보여줄 필요가 없다. 우리네 인생도 그러하다. 우리는 때로는 너무 많은 정보 제공에 피로감과 불편을 겪는 경우가 많다. 따라서, 클래스에 대한 정보의 접근을 적절하게 조절할 필요가 있는데, 클래스의 정보들을 공개될 정보(public)와 비공개 정보(private)들로 분류함으로써 조절할 수 있다. 
+
+```{r}
+UspStudent <- R6Class("UspStudent",
+    inherit = Student,
+    public = list(
+        university_name = "University of Statistics Playbook",
+        class_year = NA,
+        calculate_average = function(){
+            private$.average <- mean(c(self$midterm, self$final))
+            cat("Average score is", private$.average)
+            invisible(self)
+        },
+        calculate_total = function(){
+            cat("The total score of midterm and final exam is calculated. \n")
+            super$calculate_total()
+
+        }
+    ),
+    private = list(
+        .average = NA    
+    )
+)
+
+taemo <- UspStudent$new("Taemo", "Bang", 80, 56)
+taemo$calculate_average()
+```
+
+위의 `UspStudent` 클래스에는 비공개 정보가 하나들어있다. 바로 중간 기말고사 점수의 평균을 저장하는 `average` 변수인데, 클래스의 정의시 `private()`에 감싸져서 입력이 되었음에 주목하자. 
+
+`average` 변수는 클래스 안에서의 멤버함수를 통해서 접근할 땐 `private$name` 형식으로 접근이 가능함에 반하여, 클래스를 사용하는 사용자 입장에서는 가려져서 보이지 않는 정보에 해당한다.
+
+```{r}
+taemo$.average
+```
+
+해들리 위캠의 말을 빌리면, 공개-비공개 정보의 구분은 큰 패키지나 클래스를 정의할 때 [가장 중요한 단계가 된다](https://adv-r.hadley.nz/r6.html#privacy). 왜냐하면 비공개 정보의 경우는 개발자의 입장에서 언제든지 수정할 수 있는 정보가 되지만, 공개된 멤버함수나 필드들에 대해서는 쉽게 바꿀 수가 없기 때문이다.
+
+    > 여기서 하나 짚고 넘어가면 좋은 것이 있는데, 바로 R에서의 이름 짓기 방식이다. R의 기본 함수들 중에서 .을 사용해서 지어진 경우가 있는데, 현재는 권장하지 않고 있다. 이유는 바로 비공개 정보를 갖는 변수나 함수들을 나타내는데에 .을 찍어서 나타내기 때문이다. `.average` 역시 변수의 이름에서 이 변수는 클래스 안에서만 접근이 가능하다는 것을 변수 이름만 보고도 알 수 있도록 만들어졌다.
+    
+### 활성 변수(active field)를 사용한 읽기 전용 변수
+
+[Advance R의 14장](https://adv-r.hadley.nz/r6.html#active-fields)의 내용을 보면, R6의 접근성을 다루면서 `active field`의 개념이 나온다. 자세한 내용이 궁금한 독자들은 찾아보기 바란다. `active field`의 좋은 점은 이것을 사용해서 클래스 사용자들에게 읽기 전용 정보를 제공해줄수 있기 때문이다.
+
+앞에서의 예를 들어보면 중간, 기말고사의 평균 정보는 클래스 사용자들에게 유요한 정보가 될 수 있다. 하지만, private으로 감싸버리면 사용자들은 이 정보에 접근을 할 수 없게 된다. 사용자는 평균 정보에 접근하고 싶어하지만, 개발자의 입장에서는 쉽게 공개정보로 바꾸기가 쉽지 않다. 왜냐하면 사용자들이 마음대로 평균 변수에 접근해서 정보를 변경시켜버리면 클래스에서 평균 정보를 가져다가 쓰는 멤버함수들이 잘 작동하지 않을 수 있기 때문이다. 이럴 경우 `active field`를 사용해서 average를 읽기전용으로만 접근 가능하도록 설계할 수 있다.
+
+```{r}
+UspStudent <- R6Class("UspStudent",
+    inherit = Student,
+    ## active field
+    active = list(
+        average = function(value) {
+            if (missing(value)) {
+                private$.average
+            } else {
+                stop("`$average` is read only", call. = FALSE)
+            }
+        }
+    ),
+    public = list(
+        university_name = "University of Statistics Playbook",
+        class_year = NA,
+        calculate_average = function(){
+            private$.average <- mean(c(self$midterm, self$final))
+            cat("Average score is", private$.average)
+            invisible(self)
+        },
+        calculate_total = function(){
+            cat("The total score of midterm and final exam is calculated. \n")
+            super$calculate_total()
+
+        }
+    ),
+    private = list(
+        .average = NA    
+    )
+)
+
+conie <- UspStudent$new("Connie", "", 78, 82)
+conie$calculate_average()
+conie$average
+```
+위에서 정의된 `UspStudent` 클래스에서는 사용자에게 평균값을 구하는 함수와 구한 평균값에 접근을 허용하지만, 사용자가 average값에 접근하여 바꾸려고 하면 에러를 뱉어내도록 설계가 되어있다.
+
+```{r error=TRUE}
+conie$average <- 60
+```
+
+## 텐서와 R6의 관계
+
+
 
 ## R6 관련자료
 
