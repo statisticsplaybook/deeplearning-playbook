@@ -204,7 +204,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="r6와-텐서.html"><a href="r6와-텐서.html"><i class="fa fa-check"></i><b>5</b> R6와 텐서</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="r6와-텐서.html"><a href="r6와-텐서.html#시작하기"><i class="fa fa-check"></i><b>5.1</b> 시작하기</a></li>
-<li class="chapter" data-level="5.2" data-path="r6와-텐서.html"><a href="r6와-텐서.html#클래스class와-방법method-그리고-필드field"><i class="fa fa-check"></i><b>5.2</b> 클래스(Class)와 방법(Method), 그리고 필드(Field)</a>
+<li class="chapter" data-level="5.2" data-path="r6와-텐서.html"><a href="r6와-텐서.html#클래스class와-멤버함수method-그리고-필드field"><i class="fa fa-check"></i><b>5.2</b> 클래스(Class)와 멤버함수(Method), 그리고 필드(Field)</a>
 <ul>
 <li class="chapter" data-level="5.2.1" data-path="r6와-텐서.html"><a href="r6와-텐서.html#클래스는-왜-필요할까"><i class="fa fa-check"></i><b>5.2.1</b> 클래스는 왜 필요할까?</a></li>
 <li class="chapter" data-level="5.2.2" data-path="r6와-텐서.html"><a href="r6와-텐서.html#학생자료-입력-예제"><i class="fa fa-check"></i><b>5.2.2</b> 학생자료 입력 예제</a></li>
@@ -246,8 +246,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="r6와-텐서.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;R6&quot;)</span></span>
 <span id="cb181-2"><a href="r6와-텐서.html#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R6)</span></code></pre></div>
 </div>
-<div id="클래스class와-방법method-그리고-필드field" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> 클래스(Class)와 방법(Method), 그리고 필드(Field)</h2>
+<div id="클래스class와-멤버함수method-그리고-필드field" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> 클래스(Class)와 멤버함수(Method), 그리고 필드(Field)</h2>
 <p><code>R6</code> 패키지에는 딱 하나의 함수가 존재한다. 바로 <code>R6Class()</code> 함수이다. 이 함수의 입력값은 두가지 인데, 첫번째는 클래스 이름 <code>clasename</code>이고, 두번째는 퍼블릭 <code>public</code> 인데, 우리가 만들 클래스에서 사용이 가능한 함수들(methods)과 변수(fields)들을 몽땅 다 떼려넣은 리스트(list) 형태가 들어간다. 한가지 꼭 짚고 넘어가야하는 것이 있는데, 바로 이름을 정하는 방식이다.</p>
 <ol style="list-style-type: decimal">
 <li>클래스의 이름은 <code>UpperCamelCase</code> 형식으로 짓는다. 즉, 클래스의 이름을 선언할 때 띄어쓰기를 하지않고, 대신 대문자를 사용한다.</li>
@@ -468,7 +468,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="상속inheritance---클래스-물려받기" class="section level3" number="5.2.6">
 <h3><span class="header-section-number">5.2.6</span> 상속(Inheritance) - 클래스 물려받기</h3>
 <p>OOP가 코드의 중복을 되도록 피할 수 있도록 설계되어 있다는 것을 어렴풋이나마 앞의 예제를 통하여 알 수 있을 것이다. 이러한 OOP의 코드 재사용 관점에서 상속(Inheritance)의 개념은 꽃 중에 꽃이라 불릴 만하다. 단 한 줄의 코드로 미리 작성해놓은 함수들에 접근이 가능하기 때문이다.</p>
-<p>상속(Inheritance)이라고 하면 뭔가 거창할 것 같지만, 그냥 미리 정의해둔 클래스의 정보(방법과 필드)를 다른 클래스를 정의할 때 받아올 수 있다는 말이다. 예를 들어보자.</p>
+<p>상속(Inheritance)이라고 하면 뭔가 거창할 것 같지만, 그냥 미리 정의해둔 클래스의 정보(멤버함수과 필드)를 다른 클래스를 정의할 때 받아올 수 있다는 말이다. 예를 들어보자.</p>
 <p>이제까지 사용해 온 학생 개념, <code>Student</code> 클래스를 좀 더 세분화를 한다면 학교별로 나눌 수 있을 것이다. <code>Student</code> 클래스를 상속받는 슬통대학교(University of Statistics Playbook; <code>USP</code>) 학생들을 위한 서브 클래스(<code>sub class</code>)는 다음과 같이 생성할 수 있다.</p>
 <div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="r6와-텐서.html#cb210-1" aria-hidden="true" tabindex="-1"></a>UspStudent <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(<span class="st">&quot;UspStudent&quot;</span>,</span>
 <span id="cb210-2"><a href="r6와-텐서.html#cb210-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit =</span> Student,</span>
@@ -494,7 +494,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     E-mail: sanghoon-park@gmail.com
 ##     Midterm Score : 80
 ##     Final Score: 56</code></pre>
-<p>새로 정의된 <code>UspStudent</code> 클래스는 상위 클래스인 <code>Student</code> 클래스의 방법들과 변수들을 그대로 물려받는다. 여기서 코드의 재사용성이 증가한다. 또한 상위 클래스가 가지고 있던 <code>calculate_total()</code> 방법에 접근하여, 새롭게 고쳐서 사용하는 것도 가능하다. 다음은 정의된 방법들을 사용하여 변수들에 계산을 해서 넣는 과정을 보여준다.</p>
+<p>새로 정의된 <code>UspStudent</code> 클래스는 상위 클래스인 <code>Student</code> 클래스의 멤버함수들과 변수들을 그대로 물려받는다. 여기서 코드의 재사용성이 증가한다. 또한 상위 클래스가 가지고 있던 <code>calculate_total()</code> 멤버함수에 접근하여, 새롭게 고쳐서 사용하는 것도 가능하다. 다음은 정의된 멤버함수들을 사용하여 변수들에 계산을 해서 넣는 과정을 보여준다.</p>
 <div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="r6와-텐서.html#cb212-1" aria-hidden="true" tabindex="-1"></a>sanghoon<span class="sc">$</span>university_name</span></code></pre></div>
 <pre><code>## [1] &quot;University of Statistics Playbook&quot;</code></pre>
 <div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="r6와-텐서.html#cb214-1" aria-hidden="true" tabindex="-1"></a>sanghoon<span class="sc">$</span><span class="fu">calculate_average</span>()</span>

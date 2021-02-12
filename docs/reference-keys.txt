@@ -40,7 +40,7 @@ gpu-to-cpu
 전체-표본-경로-1개만-생각해보기
 r6와-텐서
 시작하기
-클래스class와-방법method-그리고-필드field
+클래스class와-멤버함수method-그리고-필드field
 클래스는-왜-필요할까
 학생자료-입력-예제
 클래스class-정의하기
