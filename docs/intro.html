@@ -24,7 +24,7 @@
 <meta name="author" content="슬기로운통계생활" />
 
 
-<meta name="date" content="2021-02-11" />
+<meta name="date" content="2021-02-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -201,6 +201,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.3" data-path="순전파-forward-propagation.html"><a href="순전파-forward-propagation.html#전체-표본-경로-1개만-생각해보기"><i class="fa fa-check"></i><b>4.2.3</b> 전체 표본, 경로 1개만 생각해보기</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="5" data-path="r6와-텐서.html"><a href="r6와-텐서.html"><i class="fa fa-check"></i><b>5</b> R6와 텐서</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="r6와-텐서.html"><a href="r6와-텐서.html#시작하기"><i class="fa fa-check"></i><b>5.1</b> 시작하기</a></li>
+<li class="chapter" data-level="5.2" data-path="r6와-텐서.html"><a href="r6와-텐서.html#클래스class와-방법method-그리고-필드field"><i class="fa fa-check"></i><b>5.2</b> 클래스(Class)와 방법(Method), 그리고 필드(Field)</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="r6와-텐서.html"><a href="r6와-텐서.html#클래스는-왜-필요할까"><i class="fa fa-check"></i><b>5.2.1</b> 클래스는 왜 필요할까?</a></li>
+<li class="chapter" data-level="5.2.2" data-path="r6와-텐서.html"><a href="r6와-텐서.html#학생자료-입력-예제"><i class="fa fa-check"></i><b>5.2.2</b> 학생자료 입력 예제</a></li>
+<li class="chapter" data-level="5.2.3" data-path="r6와-텐서.html"><a href="r6와-텐서.html#클래스class-정의하기"><i class="fa fa-check"></i><b>5.2.3</b> 클래스(Class) 정의하기</a></li>
+<li class="chapter" data-level="5.2.4" data-path="r6와-텐서.html"><a href="r6와-텐서.html#print를-사용한-결과물-정리"><i class="fa fa-check"></i><b>5.2.4</b> print()를 사용한 결과물 정리</a></li>
+<li class="chapter" data-level="5.2.5" data-path="r6와-텐서.html"><a href="r6와-텐서.html#set을-이용한-클래스-조정"><i class="fa fa-check"></i><b>5.2.5</b> set을 이용한 클래스 조정</a></li>
+<li class="chapter" data-level="5.2.6" data-path="r6와-텐서.html"><a href="r6와-텐서.html#상속inheritance---클래스-물려받기"><i class="fa fa-check"></i><b>5.2.6</b> 상속(Inheritance) - 클래스 물려받기</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="r6와-텐서.html"><a href="r6와-텐서.html#r6-관련자료"><i class="fa fa-check"></i><b>5.3</b> R6 관련자료</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/statisticsplaybook/r-torch-playbook" target="blank">Published with bookdown</a></li>
@@ -242,11 +256,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-3"><a href="intro.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 텐서 x값 확인</span></span>
 <span id="cb4-4"><a href="intro.html#cb4-4" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0  0  0
-##  0  0  0
-##  0  0  0
-##  0  0  0
-##  0  0  0
+## 1e-07 *
+## -1.4338  0.0000 -1.4338
+##   0.0000 -0.0015  0.0000
+##  -0.0015  0.0000  0.0000
+##   0.0000  0.0000  0.0000
+##   0.0000  0.0000  0.0000
 ## [ CPUFloatType{5,3} ]</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 텐서 x의 크기 확인</span></span>
 <span id="cb6-2"><a href="intro.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(x)</span></code></pre></div>
@@ -259,31 +274,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="intro.html#cb8-1" aria-hidden="true" tabindex="-1"></a>rand_tensor <span class="ot">&lt;-</span>  <span class="fu">torch_rand</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
 <span id="cb8-2"><a href="intro.html#cb8-2" aria-hidden="true" tabindex="-1"></a>rand_tensor</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.5134  0.9565  0.7219
-##  0.7058  0.3256  0.9197
-##  0.2824  0.8209  0.8667
-##  0.8062  0.4426  0.4601
-##  0.7044  0.7899  0.7109
+##  0.5838  0.2138  0.4331
+##  0.8498  0.3088  0.5459
+##  0.7542  0.5721  0.0048
+##  0.7916  0.2465  0.0515
+##  0.8156  0.5042  0.4999
 ## [ CPUFloatType{5,3} ]</code></pre>
 <p>참고로 이렇게 만들어진 텐서에는 R에서 텐서과 어레이(array)에 접근할 때사용한 모든 문법들을 사용해서 접근할 수 있다.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="intro.html#cb10-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[,<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.9565
-##  0.3256
-##  0.8209
-##  0.4426
-##  0.7899
+##  0.2138
+##  0.3088
+##  0.5721
+##  0.2465
+##  0.5042
 ## [ CPUFloatType{5} ]</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="intro.html#cb12-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.5134  0.9565  0.7219
-##  0.7058  0.3256  0.9197
-##  0.2824  0.8209  0.8667
+##  0.5838  0.2138  0.4331
+##  0.8498  0.3088  0.5459
+##  0.7542  0.5721  0.0048
 ## [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="intro.html#cb14-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.2824  0.8667
-##  0.8062  0.4601
+##  0.7542  0.0048
+##  0.7916  0.0515
 ## [ CPUFloatType{2,2} ]</code></pre>
 <p>위의 예제에서 벌써부터 일부 R유저들은 감격의 눈물을 흘릴 수 있다. 그렇다, Rtorch에서 텐서의 <strong>첫번째 위치는 1부터 시작</strong>한다. 이 너무나도 당연한 진리는 파이썬에서는 통하지 않는다.</p>
 </div>

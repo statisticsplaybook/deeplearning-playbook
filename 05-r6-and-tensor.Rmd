@@ -1,0 +1,233 @@
+# R6와 텐서
+
+![](https://r6.r-lib.org/reference/figures/logo.png)
+
+```{r include=FALSE}
+library(tidyverse)
+library(torch)
+```
+
+`torch`의 코드를 살펴보면 우리가 늘상 사용하던 R의 패키지들과는 어딘가 다른점이 있다고 느껴질 것이다. 이것의 근본적인 이유는 바로 torch 패키지가 계체지향언어 (Object Oriented Programming; OOP)를 할 수 있도록 해주는 `R6` 패키지를 기반으로 하고있기 때문이다. 좀 더 직접적으로 말하면, `torch`의 텐서와 신경망들이 `R6` 패키지의 클래스들로 정의되어 있기 때문에, 일반적인 R 패키지들보다 `$`을 통한 함수(OOP에서는 method 라고 부른다.) 접근이 가능하다. 어떤 이야기인지 한번 좀 더 깊게 들어가보자.
+
+## 시작하기
+
+여느 패키지와 다를바가 없다. `R6` 패키지를 설치하도록 하자.
+
+```{r}
+# install.packages("R6")
+library(R6)
+```
+
+## 클래스(Class)와 방법(Method), 그리고 필드(Field)
+
+`R6` 패키지에는 딱 하나의 함수가 존재한다. 바로 `R6Class()` 함수이다. 이 함수의 입력값은 두가지 인데, 첫번째는 클래스 이름 `clasename`이고, 두번째는 퍼블릭 `public` 인데, 우리가 만들 클래스에서 사용이 가능한 함수들(methods)과 변수(fields)들을 몽땅 다 떼려넣은 리스트(list) 형태가 들어간다. 한가지 꼭 짚고 넘어가야하는 것이 있는데, 바로 이름을 정하는 방식이다.
+
+1. 클래스의 이름은 `UpperCamelCase` 형식으로 짓는다. 즉, 클래스의 이름을 선언할 때 띄어쓰기를 하지않고, 대신 대문자를 사용한다.
+2. 두번째 리스트에 들어가는 요소들의 이름은 `snake_case`를 사용한다. 즉, 모두 소문자를 유지하고, 띄어쓰기 대신에 밑줄을 사용하여 선언한다.
+
+이렇게 규칙을 따라서 작성하게 되면, 나중에 다른 사람이 짜놓은 코드를 보게 되더라도, 선언된 이름의 구조를 보고, 이게 클래스인지, 클래스 안에 정의된 함수 혹은 변수인지를 구분 할 수 있어서 좋다.
+
+### 클래스는 왜 필요할까?
+
+필자도 클래스의 개념을 처음 들었을때 대체 이게 무슨 소리인지.. 했던 기억이 있다. 심지어 필자의 경우 R밖에 모르던 터여서, OOP가 필요가 있는지에 대한 의문까지 들 정도였으니, (사실 지금도 생각이 많이 바뀌지 않았다.) 머리에 아예 들어오지를 않았다. 
+
+그런 필자를 클래스 개념에 대하여 한방에 이해시킨 예제가 바로 학생 클래스이다. 자고로 모든 개념은 예를 들어 설명을 하는 것이 아주 효과적이라고 필자는 믿고있다.
+
+    > 목표: OOP의 개념와 왜 사용을 하는지에 대하여 이해한다.
+
+### 학생자료 입력 예제
+    
+다음의 코드를 생각해보자.
+
+```{r}
+student <- function(){
+    list()
+}
+issac <- student()
+bomi <- student()
+issac
+bomi
+```
+
+student라는 함수는 빈 리스트를 반환을 하는데, 우리가 이 함수를 사용하여 `issac`과 `bomi`라는 학생의 정보를 담는 리스트를 만들 수 있다. 만약 우리가 다음과 같은 추가 정보를 저장하려고 한다고 가정해보자.
+
+* issac
+    - last name: Lee
+    - first name: Issac
+    - email: issac-lee@gmail.com
+    - midterm: 70
+    - final: 50
+* bomi
+    - last name: Kim
+    - first name: Bomi
+    - email: bomi-kim@gmail.com
+    - midterm: 65
+    - final: 80
+
+위의 정보를 저장하기 위해서는 다음과 같이 `$` 기호를 통하여 저장할 수 있다.
+
+```{r}
+issac$first <- "Issac"
+issac$last <- "Lee"
+issac$email <- "issac-lee@gmail.com"
+issac$midterm <- 70
+issac$final <- 50
+
+bomi$first <- "Bomi"
+bomi$last <- "Kim"
+bomi$email <- "bomi-kim@gmail.com"
+bomi$midterm <- 65
+bomi$final <- 80
+issac
+bomi
+```
+
+위의 코드는 OOP관점에서 상당히 중복 코드가 많은 비효율적인 코드이다. 이러한 코드를 우리가 배운 `R6Class()`를 사용하여 어떻게 줄일 수 있는지 알아보자.
+
+### 클래스(Class) 정의하기
+
+앞에서 우리는 `issac`과 `bomi`라는 변수를 생성했는데, 둘의 공통점은 학생이라는 점이었다. 사실 앞선 코드를 작성을 한다는 것은 `issac`과 `bomi` 뿐 아니라 엄청 많은 수의 학생들에 대한 데이터를 다루고 있는 상황일 수도 있다. 우리들이 써놓은 코드를 잘 뜯어보니, 학생 데이터로 입력되는 각 개인들은 성과 이름, 이메일, 그리고, 중간, 기말고사 점수의 정보들을 가지고 있다. 즉, 학생, `Student`, 라는 클래스는 항상 성(last)과 이름(first), 중간(midterm), 기말고사(final) 성적이 저장되어 있고, 이메일의 경우 이름과 성을 이용해서 작성을 하되, 모두 소문자로 입력된 자료 형태를 가지고 있는 구조를 갖는 어떤 추상적인 개념이라는 것을 알 수 있다. 이러한 정보를 사용하여 우리는 다음과 같이 `Student` 클래스를 선언 할 수 있다.
+
+```{r}
+Student <- R6Class("Student", list(
+    # 필요한 변수 (field) 선언
+    first = NULL,
+    last = NULL,
+    email = NULL,
+    midterm = NA,
+    final = NA,
+    
+    # 클래스 안의 개체를 만들때 사용되는 initialize
+    initialize = function(first, last, midterm, final){
+        self$first = first
+        self$last  = last
+        self$email = glue::glue("{tolower(first)}-{tolower(last)}@gmail.com")
+        self$midterm = midterm
+        self$final = final
+    }    
+))
+
+Student
+```
+
+결과값을 유심히 살펴보면, `<Student> object generator` 라는 부분이 있는데, `Student` 라는 클래스는 개체(object)들을 만들어내는 생성자(generator)라는 것을 알 수 있다. 우리가 만들 `Student` 생성자를 통해서 도장을 찍듯, `new()` 함수를 사용하여 issac과 bomi를 다음과 같이 만들 수 있다. 
+
+```{r}
+issac <- Student$new("Issac", "Lee", 70, 50)
+bomi <- Student$new("Bomi", "Kim", 65, 80)
+issac
+bomi
+```
+
+즉, OOP의 장점은 공을 들여 한번 클래스를 잘 만들어놓으면, 한번 작성된 함수나 변수들의 재 사용율이 엄청 좋아지는 것이다.
+
+### print()를 사용한 결과물 정리
+
+정의된 클래스는 기본적으로 동작하는 함수들을 덮어서 쓸 수 있다. 예를들어 `print()`를 함수로 정의해버리면, base에 있는 `print()` 동작을 덮어서 쓸 수 있다. 즉, 기본 함수들 `print()`, `plot()` 같은 함수들을 우리가 정의한 클래스에서 나온 개체들에 적용했을때의 작동을 정해줄 수 있다는 것이다.
+
+```{r}
+Student <- R6Class("Student", list(
+    # 필요한 변수 (field) 선언
+    first = NULL,
+    last = NULL,
+    email = NULL,
+    midterm = NA,
+    final = NA,
+    
+    # 클래스 안의 개체를 만들때 사용되는 initialize
+    initialize = function(first, last, midterm, final){
+        self$first = first
+        self$last  = last
+        self$email = glue::glue("{tolower(first)}-{tolower(last)}@gmail.com")
+        self$midterm = midterm
+        self$final = final
+    },
+    print = function(...){
+        cat("Student: \n")
+        cat(glue::glue("
+                Name  : {self$first} {self$last}
+                E-mail: {self$email}
+                Midterm Score : {self$midterm}
+                Final Score: {self$final}
+            "))
+        invisible(self)
+    }
+))
+
+soony <- Student$new("Soony", "Kim", 70, 20)
+soony
+```
+
+`print()` 메서드를 추가한 후에 만들어진 `soony`의 정보는 클래스안에 정의된 `print()`를 통해서 보여진다는 것을 확인할 수 있다. 한가지 주의할 점은 `print()`가 클래스 안에 정의되어 있지 않은 채로 생성된 `issac`과 `bomi`의 경우는 `print()`가 작동하지 않는다는 것이다. 즉, 클래스에 정의된 함수들은 개체가 클래스로부터 생성될 때, 따라와서 붙는다.
+
+```{r error=TRUE}
+issac$print()
+soony$print()
+```
+
+### set을 이용한 클래스 조정
+
+앞에서 우리는 `print()` 함수를 추가하기 위하여 전체 클래스를 다시 정의하였다. 하지만, 이렇게 클래스안에 함수를 추가하기 위해서 전체 클래스를 다시 정의하기보단, `set()`을 이용해서 변수나 함수를 추가할 수 있다.
+
+```{r}
+Student$set("public", "total", NA)
+Student$set("public", "calculate_total", function(){
+    self$total <- self$midterm + self$final
+    invisible(self)
+})
+```
+
+`invisible()` 함수는 결과를 반환하되, 결과물을 보여주지 않는 것인데, 클래스에서 함수를 정의할 때에 반드시 `invisible(self)`를 반환해줘야만 한다. 따라서 함수이지만, 함수와는 다른 이 클래스 안의 함수들을 메서드 `method()`라고 다른 이름을 붙여서 부른다.
+
+```{r}
+jelly <- Student$new("Jelly", "Lee", 35, 23)
+jelly
+jelly$total
+jelly$calculate_total()
+jelly$total
+```
+
+### 상속(Inheritance) - 클래스 물려받기
+
+OOP가 코드의 중복을 되도록 피할 수 있도록 설계되어 있다는 것을 어렴풋이나마 앞의 예제를 통하여 알 수 있을 것이다. 이러한 OOP의 코드 재사용 관점에서 상속(Inheritance)의 개념은 꽃 중에 꽃이라 불릴 만하다. 단 한 줄의 코드로 미리 작성해놓은 함수들에 접근이 가능하기 때문이다.
+
+상속(Inheritance)이라고 하면 뭔가 거창할 것 같지만, 그냥 미리 정의해둔 클래스의 정보(방법과 필드)를 다른 클래스를 정의할 때 받아올 수 있다는 말이다. 예를 들어보자.
+
+이제까지 사용해 온 학생 개념, `Student` 클래스를 좀 더 세분화를 한다면 학교별로 나눌 수 있을 것이다. `Student` 클래스를 상속받는 슬통대학교(University of Statistics Playbook; `USP`) 학생들을 위한 서브 클래스(`sub class`)는 다음과 같이 생성할 수 있다.
+
+```{r}
+UspStudent <- R6Class("UspStudent",
+    inherit = Student,
+    public = list(
+        university_name = "University of Statistics Playbook",
+        class_year = NA,
+        average = NA,
+        calculate_average = function(){
+            self$average <- mean(c(self$midterm, self$final))
+            invisible(self)
+        },
+        calculate_total = function(){
+            cat("The total score of midterm and final exam is calculated. \n")
+            super$calculate_total()
+        }
+    )
+)
+
+sanghoon <- UspStudent$new("Sanghoon", "Park", 80, 56)
+sanghoon
+```
+
+새로 정의된 `UspStudent` 클래스는 상위 클래스인 `Student` 클래스의 방법들과 변수들을 그대로 물려받는다. 여기서 코드의 재사용성이 증가한다. 또한 상위 클래스가 가지고 있던 `calculate_total()` 방법에 접근하여, 새롭게 고쳐서 사용하는 것도 가능하다. 다음은 정의된 방법들을 사용하여 변수들에 계산을 해서 넣는 과정을 보여준다.
+
+```{r}
+sanghoon$university_name
+sanghoon$calculate_average()
+sanghoon$average
+sanghoon$calculate_total()
+sanghoon$total
+```
+
+## R6 관련자료
+
+R6에 대한 더 깊은 내용은 Hadley Wickham의 [Advanced R](https://adv-r.hadley.nz/index.html)과 [R6 패키지의 웹사이트](https://r6.r-lib.org/)를 참고하도록 하자.
+
