@@ -211,12 +211,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.3" data-path="r6와-텐서.html"><a href="r6와-텐서.html#클래스class-정의하기"><i class="fa fa-check"></i><b>5.2.3</b> 클래스(Class) 정의하기</a></li>
 <li class="chapter" data-level="5.2.4" data-path="r6와-텐서.html"><a href="r6와-텐서.html#print를-사용한-결과물-정리"><i class="fa fa-check"></i><b>5.2.4</b> print()를 사용한 결과물 정리</a></li>
 <li class="chapter" data-level="5.2.5" data-path="r6와-텐서.html"><a href="r6와-텐서.html#set을-이용한-클래스-조정"><i class="fa fa-check"></i><b>5.2.5</b> set을 이용한 클래스 조정</a></li>
-<li class="chapter" data-level="5.2.6" data-path="r6와-텐서.html"><a href="r6와-텐서.html#상속inheritance---클래스-물려받기"><i class="fa fa-check"></i><b>5.2.6</b> 상속(Inheritance) - 클래스 물려받기</a></li>
-<li class="chapter" data-level="5.2.7" data-path="r6와-텐서.html"><a href="r6와-텐서.html#비공개private-변수의-필요성"><i class="fa fa-check"></i><b>5.2.7</b> 비공개(Private) 변수의 필요성</a></li>
-<li class="chapter" data-level="5.2.8" data-path="r6와-텐서.html"><a href="r6와-텐서.html#활성-변수active-field를-사용한-읽기-전용-변수"><i class="fa fa-check"></i><b>5.2.8</b> 활성 변수(active field)를 사용한 읽기 전용 변수</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="r6와-텐서.html"><a href="r6와-텐서.html#텐서와-r6의-관계"><i class="fa fa-check"></i><b>5.3</b> 텐서와 R6의 관계</a></li>
-<li class="chapter" data-level="5.4" data-path="r6와-텐서.html"><a href="r6와-텐서.html#r6-관련자료"><i class="fa fa-check"></i><b>5.4</b> R6 관련자료</a></li>
+<li class="chapter" data-level="5.3" data-path="r6와-텐서.html"><a href="r6와-텐서.html#상속inheritance---클래스-물려받기"><i class="fa fa-check"></i><b>5.3</b> 상속(Inheritance) - 클래스 물려받기</a></li>
+<li class="chapter" data-level="5.4" data-path="r6와-텐서.html"><a href="r6와-텐서.html#공개public정보와-비공개private-정보의-필요성"><i class="fa fa-check"></i><b>5.4</b> 공개(Public)정보와 비공개(Private) 정보의 필요성</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="r6와-텐서.html"><a href="r6와-텐서.html#활성-변수active-field를-사용한-읽기-전용-변수"><i class="fa fa-check"></i><b>5.4.1</b> 활성 변수(active field)를 사용한 읽기 전용 변수</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="r6와-텐서.html"><a href="r6와-텐서.html#텐서와-r6의-관계"><i class="fa fa-check"></i><b>5.5</b> 텐서와 R6의 관계</a></li>
+<li class="chapter" data-level="5.6" data-path="r6와-텐서.html"><a href="r6와-텐서.html#r6-관련자료"><i class="fa fa-check"></i><b>5.6</b> R6 관련자료</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -481,8 +483,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb210-2"><a href="r6와-텐서.html#cb210-2" aria-hidden="true" tabindex="-1"></a>jelly<span class="sc">$</span>total</span></code></pre></div>
 <pre><code>## [1] 58</code></pre>
 </div>
-<div id="상속inheritance---클래스-물려받기" class="section level3" number="5.2.6">
-<h3><span class="header-section-number">5.2.6</span> 상속(Inheritance) - 클래스 물려받기</h3>
+</div>
+<div id="상속inheritance---클래스-물려받기" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> 상속(Inheritance) - 클래스 물려받기</h2>
 <p>OOP가 코드의 중복을 되도록 피할 수 있도록 설계되어 있다는 것을 어렴풋이나마 앞의 예제를 통하여 알 수 있을 것이다. 이러한 OOP의 코드 재사용 관점에서 상속(Inheritance)의 개념은 꽃 중에 꽃이라 불릴 만하다. 단 한 줄의 코드로 미리 작성해놓은 함수들에 접근이 가능하기 때문이다.</p>
 <p>상속(Inheritance)이라고 하면 뭔가 거창할 것 같지만, 그냥 미리 정의해둔 클래스의 정보(멤버함수과 필드)를 다른 클래스를 정의할 때 받아올 수 있다는 말이다. 예를 들어보자.</p>
 <p>이제까지 사용해 온 학생 개념, <code>Student</code> 클래스를 좀 더 세분화를 한다면 학교별로 나눌 수 있을 것이다. <code>Student</code> 클래스를 상속받는 슬통대학교(University of Statistics Playbook; <code>USP</code>) 학생들을 위한 서브 클래스(<code>sub class</code>)는 다음과 같이 생성할 수 있다.</p>
@@ -521,8 +524,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="r6와-텐서.html#cb220-1" aria-hidden="true" tabindex="-1"></a>sanghoon<span class="sc">$</span>total</span></code></pre></div>
 <pre><code>## [1] 136</code></pre>
 </div>
-<div id="비공개private-변수의-필요성" class="section level3" number="5.2.7">
-<h3><span class="header-section-number">5.2.7</span> 비공개(Private) 변수의 필요성</h3>
+<div id="공개public정보와-비공개private-정보의-필요성" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> 공개(Public)정보와 비공개(Private) 정보의 필요성</h2>
 <p>앞에서 살펴본 <code>R6Class()</code> 함수의 두 가지 입력값은 클래스 이름(<code>classname</code>)과 공개정보(<code>public</code>) 였다. 클래스를 만들고 사용하다보면, 때로는 클래스 안의 함수들을 사용하기 위해서 만들어야하는 변수나 함수들이 있는데, 이러한 정보들은 굳이 클래스를 사용하는 사용자들에게 보여줄 필요가 없다. 우리네 인생도 그러하다. 우리는 때로는 너무 많은 정보 제공에 피로감과 불편을 겪는 경우가 많다. 따라서, 클래스에 대한 정보의 접근을 적절하게 조절할 필요가 있는데, 클래스의 정보들을 공개될 정보(public)와 비공개 정보(private)들로 분류함으로써 조절할 수 있다.</p>
 <div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="r6와-텐서.html#cb222-1" aria-hidden="true" tabindex="-1"></a>UspStudent <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(<span class="st">&quot;UspStudent&quot;</span>,</span>
 <span id="cb222-2"><a href="r6와-텐서.html#cb222-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit =</span> Student,</span>
@@ -554,9 +557,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## NULL</code></pre>
 <p>해들리 위캠의 말을 빌리면, 공개-비공개 정보의 구분은 큰 패키지나 클래스를 정의할 때 <a href="https://adv-r.hadley.nz/r6.html#privacy">가장 중요한 단계가 된다</a>. 왜냐하면 비공개 정보의 경우는 개발자의 입장에서 언제든지 수정할 수 있는 정보가 되지만, 공개된 멤버함수나 필드들에 대해서는 쉽게 바꿀 수가 없기 때문이다.</p>
 <pre><code>&gt; 여기서 하나 짚고 넘어가면 좋은 것이 있는데, 바로 R에서의 이름 짓기 방식이다. R의 기본 함수들 중에서 .을 사용해서 지어진 경우가 있는데, 현재는 권장하지 않고 있다. 이유는 바로 비공개 정보를 갖는 변수나 함수들을 나타내는데에 .을 찍어서 나타내기 때문이다. `.average` 역시 변수의 이름에서 이 변수는 클래스 안에서만 접근이 가능하다는 것을 변수 이름만 보고도 알 수 있도록 만들어졌다.</code></pre>
-</div>
-<div id="활성-변수active-field를-사용한-읽기-전용-변수" class="section level3" number="5.2.8">
-<h3><span class="header-section-number">5.2.8</span> 활성 변수(active field)를 사용한 읽기 전용 변수</h3>
+<div id="활성-변수active-field를-사용한-읽기-전용-변수" class="section level3" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> 활성 변수(active field)를 사용한 읽기 전용 변수</h3>
 <p><a href="https://adv-r.hadley.nz/r6.html#active-fields">Advance R의 14장</a>의 내용을 보면, R6의 접근성을 다루면서 <code>active field</code>의 개념이 나온다. 자세한 내용이 궁금한 독자들은 찾아보기 바란다. <code>active field</code>의 좋은 점은 이것을 사용해서 클래스 사용자들에게 읽기 전용 정보를 제공해줄수 있기 때문이다.</p>
 <p>앞에서의 예를 들어보면 중간, 기말고사의 평균 정보는 클래스 사용자들에게 유요한 정보가 될 수 있다. 하지만, private으로 감싸버리면 사용자들은 이 정보에 접근을 할 수 없게 된다. 사용자는 평균 정보에 접근하고 싶어하지만, 개발자의 입장에서는 쉽게 공개정보로 바꾸기가 쉽지 않다. 왜냐하면 사용자들이 마음대로 평균 변수에 접근해서 정보를 변경시켜버리면 클래스에서 평균 정보를 가져다가 쓰는 멤버함수들이 잘 작동하지 않을 수 있기 때문이다. 이럴 경우 <code>active field</code>를 사용해서 average를 읽기전용으로만 접근 가능하도록 설계할 수 있다.</p>
 <div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="r6와-텐서.html#cb227-1" aria-hidden="true" tabindex="-1"></a>UspStudent <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(<span class="st">&quot;UspStudent&quot;</span>,</span>
@@ -600,11 +602,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## Error: `$average` is read only</code></pre>
 </div>
 </div>
-<div id="텐서와-r6의-관계" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> 텐서와 R6의 관계</h2>
+<div id="텐서와-r6의-관계" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> 텐서와 R6의 관계</h2>
 </div>
-<div id="r6-관련자료" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> R6 관련자료</h2>
+<div id="r6-관련자료" class="section level2" number="5.6">
+<h2><span class="header-section-number">5.6</span> R6 관련자료</h2>
 <p>R6에 대한 더 깊은 내용은 Hadley Wickham의 <a href="https://adv-r.hadley.nz/index.html">Advanced R</a>과 <a href="https://r6.r-lib.org/">R6 패키지의 웹사이트</a>를 참고하도록 하자.</p>
 
 </div>

@@ -47,7 +47,7 @@ r6와-텐서
 print를-사용한-결과물-정리
 set을-이용한-클래스-조정
 상속inheritance---클래스-물려받기
-비공개private-변수의-필요성
+공개public정보와-비공개private-정보의-필요성
 활성-변수active-field를-사용한-읽기-전용-변수
 텐서와-r6의-관계
 r6-관련자료
