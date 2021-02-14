@@ -45,6 +45,10 @@ gpu-to-cpu
 함수-만들기-및-오차-그래프
 autograd-기능-없이-기울기-구하기
 자동미분autograd-기능
+자동-미분-관련-함수들
+detach
+requires_grad-변수와-requires_grad_true
+with_no_grad
 경사하강법
 시각화
 r6와-텐서
