@@ -208,6 +208,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.3" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#함수-만들기-및-오차-그래프"><i class="fa fa-check"></i><b>5.3</b> 함수 만들기 및 오차 그래프</a></li>
 <li class="chapter" data-level="5.4" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#autograd-기능-없이-기울기-구하기"><i class="fa fa-check"></i><b>5.4</b> Autograd 기능 없이 기울기 구하기</a></li>
 <li class="chapter" data-level="5.5" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#자동미분autograd-기능"><i class="fa fa-check"></i><b>5.5</b> 자동미분(Autograd) 기능</a></li>
+<li class="chapter" data-level="5.6" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#경사하강법"><i class="fa fa-check"></i><b>5.6</b> 경사하강법</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#시각화"><i class="fa fa-check"></i><b>5.6.1</b> 시각화</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="r6와-텐서.html"><a href="r6와-텐서.html"><i class="fa fa-check"></i><b>6</b> R6와 텐서</a>
 <ul>
@@ -251,6 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="미분-자동추적-기능-autograd-에-대하여" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> 미분 자동추적 기능 (Autograd) 에 대하여</h1>
+<p>이번 장에서는 <code>torch</code> 및 다른 딥러닝 라이브러리의 근본을 이루는 기능인 미분 자동 추적 기능에 대하여 알아보도록 하자. 예를 들어 설명하는 것을 좋아하므로, 이번 챕터에 쓸 예제 함수를 먼저 정의하자.</p>
 <div id="예제-함수" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> 예제 함수</h2>
 <p><span class="math inline">\(n\)</span>개의 데이터 <span class="math inline">\(x_1, ..., x_n\)</span>이 주어졌다고 할 때, 우리는 다음의 함수 <span class="math inline">\(f\)</span>를 정의 할 수 있다.</p>
@@ -325,8 +330,9 @@ Figure 5.1: <span class="math inline">\(\mu\)</span> 값에 따른 <code>myf</co
 <p>우리가 임의로 정한 시작점 <span class="math inline">\(\mu_i\)</span>에서 목표인 <span class="math inline">\(\mu_{*}\)</span>까지 찾아가기 위해서 경사하강법을 통하면 다음의 과정을 <span class="math inline">\(\mu\)</span>값이 수렴할 때까지 반복하면 된다.</p>
 <p><span class="math display">\[
 {\displaystyle \mathbf {\mu} _{i+1}=\mathbf {\mu} _{i}-\gamma _{i}\nabla f(\mathbf {\mu} _{i})}, \quad i \in \mathbb{N}
-\]</span>
-위의 수식에서 <span class="math inline">\(\gamma _{i}\)</span>은 탐색을 할 때 움직이는 거리 (step size)라고 부르고, 딥러닝 분야에서는 나중에 학습률(learning rate)의 개념이 된다. 또한, <span class="math inline">\(\nabla f(\mathbf {\mu} _{i})\)</span> 부분이 바로 기울기값을 나타내는 부분이다.</p>
+(\#eq:grad_decent)
+\]</span></p>
+<p>위의 수식에서 <span class="math inline">\(\gamma _{i}\)</span>은 탐색을 할 때 움직이는 거리 (step size)라고 부르고, 딥러닝 분야에서는 나중에 학습률(learning rate)의 개념이 된다. 또한, <span class="math inline">\(\nabla f(\mathbf {\mu} _{i})\)</span> 부분이 바로 기울기값을 나타내는 부분이다.</p>
 </div>
 <div id="autograd-기능-없이-기울기-구하기" class="section level2" number="5.4">
 <h2><span class="header-section-number">5.4</span> Autograd 기능 없이 기울기 구하기</h2>
@@ -352,7 +358,7 @@ f&#39;(\beta) &amp; =\frac{d}{d\beta}\left(\frac{1}{n}\sum_{i=1}^{n}\left(x_{i}-
 <span id="cb190-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb190-3" aria-hidden="true" tabindex="-1"></a>my_intercept <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">f</span>(mu) <span class="sc">-</span> <span class="fu">f_prime</span>(mu) <span class="sc">*</span> mu)</span>
 <span id="cb190-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb190-4" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb190-5"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb190-5" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_abline</span>(<span class="at">slope =</span> my_slope,</span>
-<span id="cb190-6"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb190-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">intercept =</span> my_intercept, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<span id="cb190-6"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb190-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">intercept =</span> my_intercept, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
 </div>
 <div id="자동미분autograd-기능" class="section level2" number="5.5">
@@ -380,7 +386,50 @@ f&#39;(\beta) &amp; =\frac{d}{d\beta}\left(\frac{1}{n}\sum_{i=1}^{n}\left(x_{i}-
 ## -5.6133
 ## [ CPUFloatType{1} ]</code></pre>
 <p>앞에서 구한 <code>f_prime(2.5)</code>값이 동일하게 <code>mu$grad</code>에 담겨 있다는 것을 알 수 있다.</p>
+</div>
+<div id="경사하강법" class="section level2" number="5.6">
+<h2><span class="header-section-number">5.6</span> 경사하강법</h2>
+<p>이왕 자동 미분기능을 알았으니, 이 기능을 이용하여 식 @ref(eq:grad_decent)의 경사하강법으로 함수값을 최소로 만드는 <span class="math inline">\(\mu\)</span> 값을 찾아보도록 하자.</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-1" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb200-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb200-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 시작값 0.5</span></span>
+<span id="cb200-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-4" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fl">0.5</span>, <span class="at">requires_grad=</span><span class="cn">TRUE</span>)</span>
+<span id="cb200-5"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb200-6"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-6" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb200-7"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-7" aria-hidden="true" tabindex="-1"></a>result[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mu)</span>
+<span id="cb200-8"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb200-9"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">100</span>) {</span>
+<span id="cb200-10"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-10" aria-hidden="true" tabindex="-1"></a>    result[i] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mu)</span>
+<span id="cb200-11"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb200-12"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-12" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">mean</span>((x <span class="sc">-</span> mu)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb200-13"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-13" aria-hidden="true" tabindex="-1"></a>    y<span class="sc">$</span><span class="fu">backward</span>()</span>
+<span id="cb200-14"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-14" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb200-15"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">with_no_grad</span>({</span>
+<span id="cb200-16"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-16" aria-hidden="true" tabindex="-1"></a>        mu<span class="sc">$</span><span class="fu">sub_</span>(learning_rate <span class="sc">*</span> mu<span class="sc">$</span>grad)</span>
+<span id="cb200-17"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-17" aria-hidden="true" tabindex="-1"></a>        mu<span class="sc">$</span>grad<span class="sc">$</span><span class="fu">zero_</span>()        </span>
+<span id="cb200-18"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-18" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb200-19"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb200-20"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb200-21"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb200-21" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(result)</span></code></pre></div>
+<pre><code>## [1] 5.306654 5.306654 5.306654 5.306654 5.306654 5.306654</code></pre>
+<p><code>with_no_grad({})</code>의 경우, 안에 들어있는 코드들 중 미분 추적 태그가 붙어있는 경우라도 미분 추척 기능을 활성화하지 않는다. <code>mu$grad$zero_()</code> 부분은 미분값을 초기화 해주는 부분이라고 이해하면 좋다. 그렇지 않을 경우 이전의 값이 남아있어서 계속 누적이 되게 된다.</p>
+<div id="시각화" class="section level3" number="5.6.1">
+<h3><span class="header-section-number">5.6.1</span> 시각화</h3>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb202-1" aria-hidden="true" tabindex="-1"></a>mu_points <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> result, </span>
+<span id="cb202-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb202-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> <span class="fu">map_dbl</span>(result, <span class="sc">~</span><span class="fu">as.numeric</span>(<span class="fu">f</span>(<span class="at">mu =</span> .x))))</span>
+<span id="cb202-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb202-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span></span>
+<span id="cb202-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb202-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> mu_points, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<p>이 챕터의 제일 첫부분에서 말했든 이론적인 정답은 데이터의 표본평균이 함수값을 최소로 만드는 값이다. 실제로 그렇게 나왔는지 확인해보면 두 값이 같다는 것을 알 수 있다.</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb203-1" aria-hidden="true" tabindex="-1"></a>result[<span class="dv">100</span>]</span></code></pre></div>
+<pre><code>## [1] 5.306654</code></pre>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb205-1" aria-hidden="true" tabindex="-1"></a>x<span class="sc">$</span><span class="fu">mean</span>()</span></code></pre></div>
+<pre><code>## torch_tensor
+## 5.30665
+## [ CPUFloatType{} ]</code></pre>
+<p>이것으로 자동 미분 기능에 대하여 알아보았다. 이 기능을 활용하면 훨씬 복잡한 구조의 함수(예를 들어 딥러닝에서의 신경망 같은)에 대한 미분값 역시도 쉽게 구할 수 있다.</p>
 
+</div>
 </div>
 </div>
             </section>
