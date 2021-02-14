@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 텐서의 이동; CPU \(\leftrightarrow\) GPU | 딥러닝 공략집 with R</title>
+  <title>Chapter 5 미분 자동추적 기능 (Autograd) 에 대하여 | 딥러닝 공략집 with R</title>
   <meta name="description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 텐서의 이동; CPU \(\leftrightarrow\) GPU | 딥러닝 공략집 with R" />
+  <meta property="og:title" content="Chapter 5 미분 자동추적 기능 (Autograd) 에 대하여 | 딥러닝 공략집 with R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="statisticsplaybook/r-torch-playbook" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 텐서의 이동; CPU \(\leftrightarrow\) GPU | 딥러닝 공략집 with R" />
+  <meta name="twitter:title" content="Chapter 5 미분 자동추적 기능 (Autograd) 에 대하여 | 딥러닝 공략집 with R" />
   
   <meta name="twitter:description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="operation.html"/>
-<link rel="next" href="순전파-forward-propagation.html"/>
+<link rel="prev" href="순전파-forward-propagation.html"/>
+<link rel="next" href="r6와-텐서.html"/>
 <script src="libs/header-attrs-2.6.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -249,86 +249,137 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="텐서의-이동-cpu-leftrightarrow-gpu" class="section level1" number="3">
-<h1><span class="header-section-number">Chapter 3</span> 텐서의 이동; CPU <span class="math inline">\(\leftrightarrow\)</span> GPU</h1>
-<p>딥러닝(deep learning)에서는 네트워크의 구조가 조금만 복잡해져도, 필요한 계산량이 엄청나게 늘어나기 때문에 GPU는 사실 필수적이다. <code>torch</code> 패키지에서는 텐서를 다룰때에 현재 다루는 텐서가 어디에 저장되어있는가에 대한 일종의 태그를 달아놓는다. 다음의 코드를 살펴보자.</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb128-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
-<span id="cb128-2"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb128-2" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
-<pre><code>## torch_tensor
-##  1
-##  2
-##  3
-##  4
-## [ CPULongType{4} ]</code></pre>
-<p><code>a</code>는 3이라는 상수가 담겨있는 텐서이다. 이 <code>a</code>를 콘솔에서 돌렸을때에 나오는 결과 <code>[ CPUFloatType{1} ]</code>를 통해서 우리는 a가 현재 CPU의 메모리를 이용하고 있으며, 모양은 <code>{1}</code>인 실수을 담은 텐서라는 것을 알 수 있다.</p>
-<div id="gpu-사용-가능-체크" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> GPU 사용 가능 체크</h2>
-<p>앞서 정의한 텐서 <code>a</code>를 GPU의 메모리로 옮기기 위해서는, 너무나 당연하게 GPU가 현재 시스템에서 접근 가능한지에 대하여 알아보아야한다. GPU 접근성은 <code>cuda_is_available()</code>을 사용한다.</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cuda_is_available</span>()</span></code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
+<div id="미분-자동추적-기능-autograd-에-대하여" class="section level1" number="5">
+<h1><span class="header-section-number">Chapter 5</span> 미분 자동추적 기능 (Autograd) 에 대하여</h1>
+<div id="예제-함수" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> 예제 함수</h2>
+<p><span class="math inline">\(n\)</span>개의 데이터 <span class="math inline">\(x_1, ..., x_n\)</span>이 주어졌다고 할 때, 우리는 다음의 함수 <span class="math inline">\(f\)</span>를 정의 할 수 있다.</p>
+<p><span class="math display">\[
+f(\mu) = \frac{1}{n}\sum_{i=1}^{n}(x_i - \mu)^2
+\]</span></p>
+<p>위의 함수는 다음과 같이 해석해 볼 수 있다. <span class="math inline">\(x\)</span> 데이터에 담겨있는 정보를 단 하나의 지표 <span class="math inline">\(\mu\)</span>로 압축해서 나타낸다고 할 때, 함수 <span class="math inline">\(f\)</span>는 각 관찰값에 대한 오차들, <span class="math inline">\(x_i - \mu\)</span>,의 제곱의 평균을 나타낸다.</p>
+<p>통계학에서는 나름 유명한 함수인데, 왜냐하면 위의 함수값을 최소화시키는 <span class="math inline">\(\mu\)</span>를 찾게되면 표본평균(<span class="math inline">\(\bar{x}\)</span>) 나오기 때문이다. 오늘은 이 함수를 통하여 <code>torch</code>의 자동 미분 기능에 대하여 알아보고자 한다.</p>
 </div>
-<div id="cpu-to-gpu" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> CPU to GPU</h2>
-<p>이미 정의된 텐서 a를 GPU로 옮기려면 다음과 같이 <code>cuda()</code> 함수를 이용하면 된다.</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb132-1" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
+<div id="데이터-생성" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> 데이터 생성</h2>
+<p><code>torch</code>패키지를 불러 임의로 난수를 발생시킨 후, 텐서 <code>x</code>에 집어넣도록 하자.</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb181-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span>
+<span id="cb181-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb181-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb181-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb181-4" aria-hidden="true" tabindex="-1"></a><span class="co"># set seed in torch</span></span>
+<span id="cb181-5"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb181-5" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_manual_seed</span>(<span class="dv">2021</span>)</span>
+<span id="cb181-6"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb181-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb181-7"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb181-7" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">7</span>) <span class="sc">*</span> <span class="dv">10</span></span>
+<span id="cb181-8"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb181-8" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>## torch_tensor
-##  1
-##  2
-##  3
-##  4
-## [ CPULongType{4} ]</code></pre>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb134-1" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">cuda</span>()</span></code></pre></div>
-<pre><code>## torch_tensor
-##  1
-##  2
-##  3
-##  4
-## [ CUDALongType{4} ]</code></pre>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb136-1" aria-hidden="true" tabindex="-1"></a>gpu <span class="ot">&lt;-</span> <span class="fu">torch_device</span>(<span class="st">&quot;cuda&quot;</span>)</span>
-<span id="cb136-2"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb136-2" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">to</span>(<span class="at">device =</span> gpu)</span></code></pre></div>
-<pre><code>## torch_tensor
-##  1
-##  2
-##  3
-##  4
-## [ CUDALongType{4} ]</code></pre>
-<p>옮길 때에 <code>dtype</code>을 사용하여 다음과 같이 자료형을 바꿔줄 수도 있다.</p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb138-1" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">to</span>(<span class="at">device =</span> gpu, <span class="at">dtype =</span> <span class="fu">torch_double</span>())</span></code></pre></div>
-<pre><code>## torch_tensor
-##  1
-##  2
-##  3
-##  4
-## [ CUDADoubleType{4} ]</code></pre>
+##  5.1339
+##  7.4256
+##  7.1589
+##  5.7047
+##  1.6527
+##  0.4431
+##  9.6277
+## [ CPUFloatType{7} ]</code></pre>
+<p>위의 코드에서 쓰인 함수 두 개를 알아보자.</p>
+<ul>
+<li><code>torch_manual_seed()</code>: <code>base</code> 패키지의 <code>set.seed()</code> 함수와 같다. 시뮬레이션 할 때 시드를 고정하는 역할을 한다.</li>
+<li><code>torch_rand()</code>: <code>base</code> 패키지에서 <code>runif()</code> 함수와 같다. 균등분포(Uniform distribution) 분포에서 원하는 갯수만큼 표본을 뽑는다.</li>
+</ul>
 </div>
-<div id="gpu-to-cpu" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> GPU to CPU</h2>
-<p>GPU 상에 직접 텐서를 만드는 방법은 다음과 같다.</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb140-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">device=</span>gpu)</span>
-<span id="cb140-2"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb140-2" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
+<div id="함수-만들기-및-오차-그래프" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> 함수 만들기 및 오차 그래프</h2>
+<p>앞에서 살펴본 함수 <span class="math inline">\(f\)</span>는 모수(<span class="math inline">\(\mu\)</span>)를 입력값으로 하는 함수이므로, 다음과 같이 함수를 정의 할 수 있다.</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb183-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(mu){</span>
+<span id="cb183-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb183-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>((x <span class="sc">-</span> mu)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb183-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb183-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb183-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb183-4" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## torch_tensor
-##  1
-##  2
-##  3
-##  4
-## [ CUDALongType{4} ]</code></pre>
-<p>이전 섹션에서 CPU에서 GPU로 옮기는 방법과 비슷하게 다음의 코드가 작동한다.</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb142-1" aria-hidden="true" tabindex="-1"></a>b<span class="sc">$</span><span class="fu">cpu</span>()</span></code></pre></div>
+## 20.0462
+## [ CPUFloatType{} ]</code></pre>
+<p>위에서 알 수 있듯, <span class="math inline">\(\mu\)</span> 값이 2인 경우에 대한 오차들의 제곱의 평균값은 20.0462이다. 여러 <span class="math inline">\(\mu\)</span> 값에 대하여 <code>f</code> 함수의 값을 구해보자.</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb185-1" aria-hidden="true" tabindex="-1"></a>mu_vec <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="fl">0.02</span>)</span>
+<span id="cb185-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb185-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(mu_vec, <span class="sc">~</span><span class="fu">as.numeric</span>(<span class="fu">f</span>(<span class="at">mu =</span> .x)))</span>
+<span id="cb185-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb185-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(result)</span></code></pre></div>
+<pre><code>## [1] 37.27285 37.06098 36.84991 36.63964 36.43018 36.22152</code></pre>
+<p>위의 두 정보를 이용해서 <code>f</code>의 모양이 어떻게 생겼는지 그려보면 다음과 같이 2차원 곡선을 띄고있다는 것을 알 수 있다.</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb187-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb187-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latex2exp)</span>
+<span id="cb187-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb187-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb187-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb187-4" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_igray</span>())</span>
+<span id="cb187-5"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb187-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb187-6"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb187-6" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> mu_vec, </span>
+<span id="cb187-7"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb187-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> result)</span>
+<span id="cb187-8"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb187-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb187-9"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb187-9" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> plot_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb187-10"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb187-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb187-11"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb187-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">TeX</span>(<span class="st">&quot;$</span><span class="sc">\\</span><span class="st">mu$&quot;</span>),</span>
+<span id="cb187-12"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb187-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="fu">TeX</span>(<span class="st">&quot;$f(</span><span class="sc">\\</span><span class="st">mu)$&quot;</span>))</span>
+<span id="cb187-13"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb187-13" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:f-errormean"></span>
+<img src="bookdown-demo_files/figure-html/f-errormean-1.png" alt="$\mu$ 값에 따른 `myf` 함수값의 변화" width="100%" />
+<p class="caption">
+Figure 5.1: <span class="math inline">\(\mu\)</span> 값에 따른 <code>myf</code> 함수값의 변화
+</p>
+</div>
+<p>우리의 목표는 바로 저 곡선을 최소로 만드는 <span class="math inline">\(\mu\)</span> 값이 무엇인지 찾아내는 것이다. 이 최소값을 찾기위해서는 <a href="https://ko.wikipedia.org/wiki/%EA%B2%BD%EC%82%AC_%ED%95%98%EA%B0%95%EB%B2%95">경사하강법</a> 같은 방법을 사용해야 하는데, 이러한 알고리즘들의 핵심은 바로 주어진 <span class="math inline">\(\mu\)</span>값에 대응하는 기울기값을 구하는 것이다.</p>
+<p>우리가 임의로 정한 시작점 <span class="math inline">\(\mu_i\)</span>에서 목표인 <span class="math inline">\(\mu_{*}\)</span>까지 찾아가기 위해서 경사하강법을 통하면 다음의 과정을 <span class="math inline">\(\mu\)</span>값이 수렴할 때까지 반복하면 된다.</p>
+<p><span class="math display">\[
+{\displaystyle \mathbf {\mu} _{i+1}=\mathbf {\mu} _{i}-\gamma _{i}\nabla f(\mathbf {\mu} _{i})}, \quad i \in \mathbb{N}
+\]</span>
+위의 수식에서 <span class="math inline">\(\gamma _{i}\)</span>은 탐색을 할 때 움직이는 거리 (step size)라고 부르고, 딥러닝 분야에서는 나중에 학습률(learning rate)의 개념이 된다. 또한, <span class="math inline">\(\nabla f(\mathbf {\mu} _{i})\)</span> 부분이 바로 기울기값을 나타내는 부분이다.</p>
+</div>
+<div id="autograd-기능-없이-기울기-구하기" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Autograd 기능 없이 기울기 구하기</h2>
+<p>먼저 <code>torch</code>의 자동기울기 기능를 사용해서 기울기값 계산을 하기에 앞서, 계산 결과를 구해보자. <span class="math inline">\(y\)</span>를 <span class="math inline">\(\beta\)</span>에 대하여 미분하면 다음과 같다.</p>
+<p><span class="math display">\[
+\begin{align*}
+f&#39;(\beta) &amp; =\frac{d}{d\beta}\left(\frac{1}{n}\sum_{i=1}^{n}\left(x_{i}-\beta\right)^{2}\right)\\
+ &amp; =\frac{1}{n}\sum_{i=1}^{n}\frac{d}{d\beta}\left(x_{i}-\beta\right)^{2}\\
+ &amp; =-\frac{1}{n}\sum_{i=1}^{n}2\left(x_{i}-\beta\right)
+\end{align*}
+\]</span></p>
+<p>따라서 <code>mu</code>값이 <code>2.5</code>로 주어졌을때, 기울기 값은 다음과 같다.</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb188-1" aria-hidden="true" tabindex="-1"></a>f_prime <span class="ot">&lt;-</span> <span class="cf">function</span>(mu){</span>
+<span id="cb188-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb188-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span><span class="fu">mean</span>(<span class="dv">2</span><span class="sc">*</span>(x <span class="sc">-</span> mu))</span>
+<span id="cb188-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb188-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb188-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb188-4" aria-hidden="true" tabindex="-1"></a><span class="fu">f_prime</span>(<span class="fl">2.5</span>)</span></code></pre></div>
 <pre><code>## torch_tensor
-##  1
-##  2
-##  3
-##  4
-## [ CPULongType{4} ]</code></pre>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to 함수 이용</span></span>
-<span id="cb144-2"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb144-2" aria-hidden="true" tabindex="-1"></a>cpu <span class="ot">&lt;-</span> <span class="fu">torch_device</span>(<span class="st">&quot;cpu&quot;</span>)</span>
-<span id="cb144-3"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb144-3" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">to</span>(<span class="at">device =</span> cpu)</span></code></pre></div>
+## -5.61331
+## [ CPUFloatType{} ]</code></pre>
+<p>이것이 실제로 그러한지 그림을 그려보자.</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb190-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
+<span id="cb190-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb190-2" aria-hidden="true" tabindex="-1"></a>my_slope <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">f_prime</span>(mu))</span>
+<span id="cb190-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb190-3" aria-hidden="true" tabindex="-1"></a>my_intercept <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">f</span>(mu) <span class="sc">-</span> <span class="fu">f_prime</span>(mu) <span class="sc">*</span> mu)</span>
+<span id="cb190-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb190-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb190-5"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb190-5" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_abline</span>(<span class="at">slope =</span> my_slope,</span>
+<span id="cb190-6"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb190-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">intercept =</span> my_intercept, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+</div>
+<div id="자동미분autograd-기능" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> 자동미분(Autograd) 기능</h2>
+<p><code>torch</code>에는 우리가 계산한 기울기 구하는 과정들을 자동으로 해주는 기능이 있다. 바로 자동미분 (Auto gradient) 기능이다. 기울기값 계산을 위해서 해야할 일은 기울기 계산기능을 <code>activate</code> 해주는 옵션을 실행시켜주기만 하면 된다.</p>
+<p>함수는 <span class="math inline">\(\mu\)</span>에 대한 함수이므로, 기울기값을 추적할 텐서 <span class="math inline">\(\mu\)</span>를 선언할 때 <code>requires_grad = TRUE</code> 옵션을 붙여줘서 선언하면 끝이다. 이 옵션이 활성화 되면 <code>torch</code>는 이 변수와 관련된 다른 변수들에 대하여 기울기값을 자동으로 추적한다. 추후 복잡한 신경망을 다루는 딥러닝 분야에서는 기울기를 구하는 것이 학습에 아주 핵심적인 기능이고, 이러한 기울기를 구하는 이러한 기울기를 계산하는 방법을 역전파 (backpropagation)라고 부른다.</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb191-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fl">2.5</span>, <span class="at">requires_grad=</span><span class="cn">TRUE</span>)</span>
+<span id="cb191-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb191-2" aria-hidden="true" tabindex="-1"></a>mu</span></code></pre></div>
 <pre><code>## torch_tensor
-##  1
-##  2
-##  3
-##  4
-## [ CPULongType{4} ]</code></pre>
+##  2.5000
+## [ CPUFloatType{1} ]</code></pre>
+<p><code>mu</code> 텐서가 기울기 추적 옵션을 달고 있어서, 이와 관련되어 생성되는 모든 텐서에 기울기 추적 옵션 grad_fn 태그가 달려서 생성된다. 다음과 같이 y를 정의를 하면, y에도 역시 grad_fn이 붙어서 생성되는 것을 알 수 있다.</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb193-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">mean</span>((x <span class="sc">-</span> mu)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb193-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb193-2" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span>grad_fn</span></code></pre></div>
+<pre><code>## MeanBackward0</code></pre>
+<p>기울기 값 계산을 위해서 해야 할 일은 기울기 계산을 <code>activate</code> 해주는 함수를 실행시켜주기만 하면 된다. y에 대한 베타의 기울기 값을 구하는 것이므로, 다음과 같이 <code>backward()</code>를 이용하여 역전파(backward propagation)를 통하여 기울기 계산을 한다.</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb195-1" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span><span class="fu">backward</span>()</span></code></pre></div>
+<p>자동 기울기 추적 기능을 사용한 auto grad가 구한 베타의 기울기값이 우리가 구한 값과 동일한지 확인해보자.</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">f_prime</span>(<span class="fl">2.5</span>)</span></code></pre></div>
+<pre><code>## torch_tensor
+## -5.61331
+## [ CPUFloatType{} ]</code></pre>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb198-1" aria-hidden="true" tabindex="-1"></a>mu<span class="sc">$</span>grad</span></code></pre></div>
+<pre><code>## torch_tensor
+## -5.6133
+## [ CPUFloatType{1} ]</code></pre>
+<p>앞에서 구한 <code>f_prime(2.5)</code>값이 동일하게 <code>mu$grad</code>에 담겨 있다는 것을 알 수 있다.</p>
 
 </div>
 </div>
@@ -337,8 +388,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="operation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="순전파-forward-propagation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="순전파-forward-propagation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r6와-텐서.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -369,7 +420,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/statisticsplaybook/r-torch-playbook/edit/master/03-transferdevice.Rmd",
+"link": "https://github.com/statisticsplaybook/r-torch-playbook/edit/master/05-autograd.Rmd",
 "text": "Edit"
 },
 "history": {

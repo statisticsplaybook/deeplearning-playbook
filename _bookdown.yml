@@ -5,6 +5,7 @@ rmd_files: ["index.Rmd",
             "02-tensor-calculation.Rmd",
             "03-transferdevice.Rmd",
             "04-forward-propagation.Rmd",
+            "05-autograd.Rmd",
             "05-r6-and-tensor.Rmd",
             "06-references.Rmd"]
 language:

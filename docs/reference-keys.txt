@@ -2,6 +2,7 @@ fig:thumnail
 fig:neuralnet-example
 fig:neuralnet-path
 fig:neuralnet-allpath
+fig:f-errormean
 intro
 torch와의-첫만남
 텐서-tensor-만들기
@@ -37,7 +38,13 @@ gpu-to-cpu
 순전파forward-propagation
 표본-1개-경로-1개만-생각해보기
 개의-표본-경로-한꺼번에-생각하기
-전체-표본-경로-1개만-생각해보기
+전체-표본-경로-전체-생각해보기
+미분-자동추적-기능-autograd-에-대하여
+예제-함수
+데이터-생성
+함수-만들기-및-오차-그래프
+autograd-기능-없이-기울기-구하기
+자동미분autograd-기능
 r6와-텐서
 시작하기
 클래스class와-멤버함수method-그리고-필드field
