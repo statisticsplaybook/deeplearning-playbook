@@ -8,6 +8,7 @@ rmd_files: ["index.Rmd",
             "05-forward-propagation.Rmd",
             "06-autograd.Rmd",
             "07-myfirst-nn.Rmd",
+            "08-train-mynn.Rmd",
             "references.Rmd"]
 language:
   ui:
