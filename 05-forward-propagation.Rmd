@@ -1,4 +1,4 @@
-# 순전파 (Forward propagation)
+# 순전파 (Forward propagation) {#forward}
 
 ```{r include=FALSE}
 library(tidyverse)

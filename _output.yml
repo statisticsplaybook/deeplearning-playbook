@@ -3,7 +3,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">딥러닝 공략집 with Rtorch</a></li>
+        <li><a href="./">딥러닝 공략집 with R</a></li>
       after: |
         <li><a href="https://github.com/statisticsplaybook/r-torch-playbook" target="blank">Published with bookdown</a></li>
     edit: https://github.com/statisticsplaybook/r-torch-playbook/edit/master/%s

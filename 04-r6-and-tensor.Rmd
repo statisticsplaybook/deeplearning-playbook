@@ -1,4 +1,4 @@
-# R6와 텐서
+# R6와 텐서 {#r6}
 
 ![](https://r6.r-lib.org/reference/figures/logo.png)
 

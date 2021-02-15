@@ -4,10 +4,11 @@ rmd_files: ["index.Rmd",
             "01-intro-to-tensor.Rmd",
             "02-tensor-calculation.Rmd",
             "03-transferdevice.Rmd",
-            "04-forward-propagation.Rmd",
-            "05-autograd.Rmd",
-            "05-r6-and-tensor.Rmd",
-            "06-references.Rmd"]
+            "04-r6-and-tensor.Rmd",
+            "05-forward-propagation.Rmd",
+            "06-autograd.Rmd",
+            "07-myfirst-nn.Rmd",
+            "references.Rmd"]
 language:
   ui:
     chapter_name: "Chapter "

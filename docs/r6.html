@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 R6와 텐서 | 딥러닝 공략집 with R</title>
+  <meta name="description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 R6와 텐서 | 딥러닝 공략집 with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
+  <meta name="github-repo" content="statisticsplaybook/r-torch-playbook" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 R6와 텐서 | 딥러닝 공략집 with R" />
+  
+  <meta name="twitter:description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
+  
+
+<meta name="author" content="슬기로운통계생활" />
+
+
+<meta name="date" content="2021-02-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="텐서의-이동-cpu-leftrightarrow-gpu.html"/>
+<link rel="next" href="forward.html"/>
+<script src="libs/header-attrs-2.6.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<meta name="google-site-verification" content="z9CiKKDExNMW8gi4-dN3X6zGa1-OXeSaIpjGFgXgHEg" />
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6MYZBEL4H2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-6MYZBEL4H2');
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">딥러닝 공략집 with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>들어가며</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#설치하기"><i class="fa fa-check"></i>설치하기</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#기본-패키지"><i class="fa fa-check"></i>기본 패키지</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> 딥러닝 첫걸음, 텐서 (tensor) 만들기</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#torch와의-첫만남"><i class="fa fa-check"></i><b>1.1</b> <code>torch</code>와의 첫만남</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#텐서-tensor-만들기"><i class="fa fa-check"></i><b>1.2</b> 텐서 (tensor) 만들기</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="intro.html"><a href="intro.html#빈-텐서-만들기"><i class="fa fa-check"></i><b>1.2.1</b> 빈 텐서 만들기</a></li>
+<li class="chapter" data-level="1.2.2" data-path="intro.html"><a href="intro.html#랜덤-텐서"><i class="fa fa-check"></i><b>1.2.2</b> 랜덤 텐서</a></li>
+<li class="chapter" data-level="1.2.3" data-path="intro.html"><a href="intro.html#단위-텐서"><i class="fa fa-check"></i><b>1.2.3</b> 단위 텐서</a></li>
+<li class="chapter" data-level="1.2.4" data-path="intro.html"><a href="intro.html#영0-텐서"><i class="fa fa-check"></i><b>1.2.4</b> 영(0) 텐서</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#고급기술-영리하게-만들기"><i class="fa fa-check"></i><b>1.3</b> 고급기술: 영리하게 만들기</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="intro.html"><a href="intro.html#텐서-직접선언"><i class="fa fa-check"></i><b>1.3.1</b> 텐서 직접선언</a></li>
+<li class="chapter" data-level="1.3.2" data-path="intro.html"><a href="intro.html#연산자-사용"><i class="fa fa-check"></i><b>1.3.2</b> <code>:</code> 연산자 사용</a></li>
+<li class="chapter" data-level="1.3.3" data-path="intro.html"><a href="intro.html#seq-함수-사용"><i class="fa fa-check"></i><b>1.3.3</b> <code>seq()</code> 함수 사용</a></li>
+<li class="chapter" data-level="1.3.4" data-path="intro.html"><a href="intro.html#연산자-사용-1"><i class="fa fa-check"></i><b>1.3.4</b> <code>%&gt;%</code> 연산자 사용</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#텐서와-행렬은-같을까"><i class="fa fa-check"></i><b>1.4</b> 텐서와 행렬은 같을까?</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="operation.html"><a href="operation.html"><i class="fa fa-check"></i><b>2</b> 텐서 (tensor) 연산</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="operation.html"><a href="operation.html#토치-torch-불러오기-및-준비물-준비"><i class="fa fa-check"></i><b>2.1</b> 토치 (torch) 불러오기 및 준비물 준비</a></li>
+<li class="chapter" data-level="2.2" data-path="operation.html"><a href="operation.html#텐서의-연산"><i class="fa fa-check"></i><b>2.2</b> 텐서의 연산</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="operation.html"><a href="operation.html#형type-변환"><i class="fa fa-check"></i><b>2.2.1</b> 형(type) 변환</a></li>
+<li class="chapter" data-level="2.2.2" data-path="operation.html"><a href="operation.html#모양-변환"><i class="fa fa-check"></i><b>2.2.2</b> 모양 변환</a></li>
+<li class="chapter" data-level="2.2.3" data-path="operation.html"><a href="operation.html#덧셈과-뺄셈"><i class="fa fa-check"></i><b>2.2.3</b> 덧셈과 뺄셈</a></li>
+<li class="chapter" data-level="2.2.4" data-path="operation.html"><a href="operation.html#상수와의-연산"><i class="fa fa-check"></i><b>2.2.4</b> 상수와의 연산</a></li>
+<li class="chapter" data-level="2.2.5" data-path="operation.html"><a href="operation.html#제곱근과-로그"><i class="fa fa-check"></i><b>2.2.5</b> 제곱근과 로그</a></li>
+<li class="chapter" data-level="2.2.6" data-path="operation.html"><a href="operation.html#텐서의-곱셈"><i class="fa fa-check"></i><b>2.2.6</b> 텐서의 곱셈</a></li>
+<li class="chapter" data-level="2.2.7" data-path="operation.html"><a href="operation.html#텐서의-전치transpose"><i class="fa fa-check"></i><b>2.2.7</b> 텐서의 전치(transpose)</a></li>
+<li class="chapter" data-level="2.2.8" data-path="operation.html"><a href="operation.html#r에서의-3차원-배열"><i class="fa fa-check"></i><b>2.2.8</b> R에서의 3차원 배열</a></li>
+<li class="chapter" data-level="2.2.9" data-path="operation.html"><a href="operation.html#다차원-텐서와-1차원-벡터-텐서의-연산"><i class="fa fa-check"></i><b>2.2.9</b> 다차원 텐서와 1차원 벡터 텐서의 연산</a></li>
+<li class="chapter" data-level="2.2.10" data-path="operation.html"><a href="operation.html#차원-텐서-끼리의-연산-내적과-외적"><i class="fa fa-check"></i><b>2.2.10</b> 1차원 텐서 끼리의 연산, 내적과 외적</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="텐서의-이동-cpu-leftrightarrow-gpu.html"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html"><i class="fa fa-check"></i><b>3</b> 텐서의 이동; CPU <span class="math inline">\(\leftrightarrow\)</span> GPU</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="텐서의-이동-cpu-leftrightarrow-gpu.html"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#gpu-사용-가능-체크"><i class="fa fa-check"></i><b>3.1</b> GPU 사용 가능 체크</a></li>
+<li class="chapter" data-level="3.2" data-path="텐서의-이동-cpu-leftrightarrow-gpu.html"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cpu-to-gpu"><i class="fa fa-check"></i><b>3.2</b> CPU to GPU</a></li>
+<li class="chapter" data-level="3.3" data-path="텐서의-이동-cpu-leftrightarrow-gpu.html"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#gpu-to-cpu"><i class="fa fa-check"></i><b>3.3</b> GPU to CPU</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="r6.html"><a href="r6.html"><i class="fa fa-check"></i><b>4</b> R6와 텐서</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="r6.html"><a href="r6.html#시작하기"><i class="fa fa-check"></i><b>4.1</b> 시작하기</a></li>
+<li class="chapter" data-level="4.2" data-path="r6.html"><a href="r6.html#클래스class와-멤버함수method-그리고-필드field"><i class="fa fa-check"></i><b>4.2</b> 클래스(Class)와 멤버함수(Method), 그리고 필드(Field)</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="r6.html"><a href="r6.html#클래스는-왜-필요할까"><i class="fa fa-check"></i><b>4.2.1</b> 클래스는 왜 필요할까?</a></li>
+<li class="chapter" data-level="4.2.2" data-path="r6.html"><a href="r6.html#학생자료-입력-예제"><i class="fa fa-check"></i><b>4.2.2</b> 학생자료 입력 예제</a></li>
+<li class="chapter" data-level="4.2.3" data-path="r6.html"><a href="r6.html#클래스class-정의하기"><i class="fa fa-check"></i><b>4.2.3</b> 클래스(Class) 정의하기</a></li>
+<li class="chapter" data-level="4.2.4" data-path="r6.html"><a href="r6.html#print를-사용한-결과물-정리"><i class="fa fa-check"></i><b>4.2.4</b> print()를 사용한 결과물 정리</a></li>
+<li class="chapter" data-level="4.2.5" data-path="r6.html"><a href="r6.html#set을-이용한-클래스-조정"><i class="fa fa-check"></i><b>4.2.5</b> set을 이용한 클래스 조정</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="r6.html"><a href="r6.html#상속inheritance---클래스-물려받기"><i class="fa fa-check"></i><b>4.3</b> 상속(Inheritance) - 클래스 물려받기</a></li>
+<li class="chapter" data-level="4.4" data-path="r6.html"><a href="r6.html#공개public정보와-비공개private-정보의-필요성"><i class="fa fa-check"></i><b>4.4</b> 공개(Public)정보와 비공개(Private) 정보의 필요성</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="r6.html"><a href="r6.html#활성-변수active-field를-사용한-읽기-전용-변수"><i class="fa fa-check"></i><b>4.4.1</b> 활성 변수(active field)를 사용한 읽기 전용 변수</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="r6.html"><a href="r6.html#텐서와-r6의-관계"><i class="fa fa-check"></i><b>4.5</b> 텐서와 R6의 관계</a></li>
+<li class="chapter" data-level="4.6" data-path="r6.html"><a href="r6.html#r6-관련자료"><i class="fa fa-check"></i><b>4.6</b> R6 관련자료</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="forward.html"><a href="forward.html"><i class="fa fa-check"></i><b>5</b> 순전파 (Forward propagation)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="forward.html"><a href="forward.html#신경망의-구조"><i class="fa fa-check"></i><b>5.1</b> 신경망의 구조</a></li>
+<li class="chapter" data-level="5.2" data-path="forward.html"><a href="forward.html#순전파forward-propagation"><i class="fa fa-check"></i><b>5.2</b> 순전파(Forward propagation)</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="forward.html"><a href="forward.html#표본-1개-경로-1개만-생각해보기"><i class="fa fa-check"></i><b>5.2.1</b> 표본 1개, 경로 1개만 생각해보기</a></li>
+<li class="chapter" data-level="5.2.2" data-path="forward.html"><a href="forward.html#개의-표본-경로-한꺼번에-생각하기"><i class="fa fa-check"></i><b>5.2.2</b> 1개의 표본, 경로 한꺼번에 생각하기</a></li>
+<li class="chapter" data-level="5.2.3" data-path="forward.html"><a href="forward.html#전체-표본-경로-전체-생각해보기"><i class="fa fa-check"></i><b>5.2.3</b> 전체 표본, 경로 전체 생각해보기</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html"><i class="fa fa-check"></i><b>6</b> 미분 자동추적 기능 (Autograd) 에 대하여</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#예제-함수"><i class="fa fa-check"></i><b>6.1</b> 예제 함수</a></li>
+<li class="chapter" data-level="6.2" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#데이터-생성"><i class="fa fa-check"></i><b>6.2</b> 데이터 생성</a></li>
+<li class="chapter" data-level="6.3" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#함수-만들기-및-오차-그래프"><i class="fa fa-check"></i><b>6.3</b> 함수 만들기 및 오차 그래프</a></li>
+<li class="chapter" data-level="6.4" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#autograd-기능-없이-기울기-구하기"><i class="fa fa-check"></i><b>6.4</b> Autograd 기능 없이 기울기 구하기</a></li>
+<li class="chapter" data-level="6.5" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#자동미분autograd-기능"><i class="fa fa-check"></i><b>6.5</b> 자동미분(Autograd) 기능</a></li>
+<li class="chapter" data-level="6.6" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#자동-미분-관련-함수들"><i class="fa fa-check"></i><b>6.6</b> 자동 미분 관련 함수들</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#detach"><i class="fa fa-check"></i><b>6.6.1</b> <code>$detach()</code></a></li>
+<li class="chapter" data-level="6.6.2" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#requires_grad-변수와-requires_grad_true"><i class="fa fa-check"></i><b>6.6.2</b> <code>$requires_grad</code> 변수와 <code>$requires_grad_(TRUE)</code></a></li>
+<li class="chapter" data-level="6.6.3" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#with_no_grad"><i class="fa fa-check"></i><b>6.6.3</b> <code>with_no_grad({})</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#경사하강법"><i class="fa fa-check"></i><b>6.7</b> 경사하강법</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#시각화"><i class="fa fa-check"></i><b>6.7.1</b> 시각화</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html"><i class="fa fa-check"></i><b>7</b> <code>torch_nn</code> 모듈로 첫 신경망 정의하기</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#신경망-정의-custom-nn-modules"><i class="fa fa-check"></i><b>7.1</b> 신경망 정의 (Custom nn Modules)</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#nn_module과-클래스-상속"><i class="fa fa-check"></i><b>7.1.1</b> <code>nn_module</code>과 클래스 상속</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#nn_linear-클래스"><i class="fa fa-check"></i><b>7.2</b> <code>nn_linear</code> 클래스</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#bias-없는-경우"><i class="fa fa-check"></i><b>7.2.1</b> bias 없는 경우</a></li>
+<li class="chapter" data-level="7.2.2" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#bias-있는-경우"><i class="fa fa-check"></i><b>7.2.2</b> bias 있는 경우</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#순전파forward-propagation-정의"><i class="fa fa-check"></i><b>7.3</b> 순전파(Forward propagation) 정의</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/statisticsplaybook/r-torch-playbook" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">딥러닝 공략집 with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="r6" class="section level1" number="4">
+<h1><span class="header-section-number">Chapter 4</span> R6와 텐서</h1>
+<p><img src="https://r6.r-lib.org/reference/figures/logo.png" /></p>
+<p><code>torch</code>의 코드를 살펴보면 우리가 늘상 사용하던 R의 패키지들과는 어딘가 다른점이 있다고 느껴질 것이다. 이것의 근본적인 이유는 바로 torch 패키지가 객체지향언어 (Object Oriented Programming; OOP)를 할 수 있도록 해주는 <code>R6</code> 패키지를 기반으로 하고있기 때문이다. 좀 더 직접적으로 말하면, <code>torch</code>의 텐서와 신경망들이 <code>R6</code> 패키지의 클래스들로 정의되어 있기 때문에, 일반적인 R 패키지들보다 <code>$</code>을 통한 함수(OOP에서는 method 라고 부른다.) 접근이 가능하다. 어떤 이야기인지 한번 좀 더 깊게 들어가보자.</p>
+<div id="시작하기" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> 시작하기</h2>
+<p>여느 패키지와 다를바가 없다. <code>R6</code> 패키지를 설치하도록 하자.</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="r6.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;R6&quot;)</span></span>
+<span id="cb146-2"><a href="r6.html#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R6)</span></code></pre></div>
+</div>
+<div id="클래스class와-멤버함수method-그리고-필드field" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> 클래스(Class)와 멤버함수(Method), 그리고 필드(Field)</h2>
+<p><code>R6</code> 패키지에는 딱 하나의 함수가 존재한다. 바로 <code>R6Class()</code> 함수이다. 이 함수의 입력값은 두가지 인데, 첫번째는 클래스 이름 <code>clasename</code>이고, 두번째는 공개될 정보들을 담을 <code>public</code>이라는 입력값이다. <code>public</code>에는 우리가 만들 클래스에서 사용이 가능한 멤버함수들(methods)과 변수(fields)들을 몽땅 다 떼려넣은 리스트(list) 형태가 들어간다.</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="r6.html#cb147-1" aria-hidden="true" tabindex="-1"></a>ExampleClass <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(<span class="at">classname =</span> <span class="st">&quot;Example&quot;</span>, <span class="at">public =</span> <span class="fu">list</span>(</span>
+<span id="cb147-2"><a href="r6.html#cb147-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 변수(fields) 정의</span></span>
+<span id="cb147-3"><a href="r6.html#cb147-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 멤버함수(methods) 정의</span></span>
+<span id="cb147-4"><a href="r6.html#cb147-4" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb147-5"><a href="r6.html#cb147-5" aria-hidden="true" tabindex="-1"></a>ExampleClass</span></code></pre></div>
+<pre><code>## &lt;Example&gt; object generator
+##   Public:
+##     clone: function (deep = FALSE) 
+##   Parent env: &lt;environment: R_GlobalEnv&gt;
+##   Locked objects: TRUE
+##   Locked class: FALSE
+##   Portable: TRUE</code></pre>
+<p>한가지 꼭 짚고 넘어가야하는 것이 있는데, 바로 이름을 정하는 방식이다.</p>
+<ol style="list-style-type: decimal">
+<li>클래스의 이름은 <code>UpperCamelCase</code> 형식으로 짓는다. 즉, 클래스의 이름을 선언할 때 띄어쓰기를 하지않고, 대신 대문자를 사용한다.</li>
+<li>두번째 리스트에 들어가는 요소들의 이름은 <code>snake_case</code>를 사용한다. 즉, 모두 소문자를 유지하고, 띄어쓰기 대신에 밑줄을 사용하여 선언한다.</li>
+</ol>
+<p>이렇게 규칙을 따라서 작성하게 되면, 나중에 다른 사람이 짜놓은 코드를 보게 되더라도, 선언된 이름의 구조를 보고, 이게 클래스인지, 클래스 안에 정의된 함수 혹은 변수인지를 구분 할 수 있어서 좋다.</p>
+<div id="클래스는-왜-필요할까" class="section level3" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> 클래스는 왜 필요할까?</h3>
+<p>필자도 클래스의 개념을 처음 들었을때 대체 이게 무슨 소리인지.. 했던 기억이 있다. 심지어 필자의 경우 R밖에 모르던 터여서, OOP가 필요가 있는지에 대한 의문까지 들 정도였으니, (사실 지금도 생각이 많이 바뀌지 않았다.) 머리에 아예 들어오지를 않았다.</p>
+<p>그런 필자를 클래스 개념에 대하여 한방에 이해시킨 예제가 바로 학생 클래스이다. 자고로 모든 개념은 예를 들어 설명을 하는 것이 아주 효과적이라고 필자는 믿고있다.</p>
+<pre><code>&gt; 목표: OOP의 개념와 왜 사용을 하는지에 대하여 이해한다.</code></pre>
+</div>
+<div id="학생자료-입력-예제" class="section level3" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> 학생자료 입력 예제</h3>
+<p>다음의 코드를 생각해보자.</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="r6.html#cb150-1" aria-hidden="true" tabindex="-1"></a>student <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
+<span id="cb150-2"><a href="r6.html#cb150-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>()</span>
+<span id="cb150-3"><a href="r6.html#cb150-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb150-4"><a href="r6.html#cb150-4" aria-hidden="true" tabindex="-1"></a>issac <span class="ot">&lt;-</span> <span class="fu">student</span>()</span>
+<span id="cb150-5"><a href="r6.html#cb150-5" aria-hidden="true" tabindex="-1"></a>bomi <span class="ot">&lt;-</span> <span class="fu">student</span>()</span>
+<span id="cb150-6"><a href="r6.html#cb150-6" aria-hidden="true" tabindex="-1"></a>issac</span></code></pre></div>
+<pre><code>## list()</code></pre>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="r6.html#cb152-1" aria-hidden="true" tabindex="-1"></a>bomi</span></code></pre></div>
+<pre><code>## list()</code></pre>
+<p>student라는 함수는 빈 리스트를 반환을 하는데, 우리가 이 함수를 사용하여 <code>issac</code>과 <code>bomi</code>라는 학생의 정보를 담는 리스트를 만들 수 있다. 만약 우리가 다음과 같은 추가 정보를 저장하려고 한다고 가정해보자.</p>
+<ul>
+<li>issac
+<ul>
+<li>last name: Lee</li>
+<li>first name: Issac</li>
+<li>email: <a href="mailto:issac-lee@gmail.com" class="email">issac-lee@gmail.com</a></li>
+<li>midterm: 70</li>
+<li>final: 50</li>
+</ul></li>
+<li>bomi
+<ul>
+<li>last name: Kim</li>
+<li>first name: Bomi</li>
+<li>email: <a href="mailto:bomi-kim@gmail.com" class="email">bomi-kim@gmail.com</a></li>
+<li>midterm: 65</li>
+<li>final: 80</li>
+</ul></li>
+</ul>
+<p>위의 정보를 저장하기 위해서는 다음과 같이 <code>$</code> 기호를 통하여 저장할 수 있다.</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="r6.html#cb154-1" aria-hidden="true" tabindex="-1"></a>issac<span class="sc">$</span>first <span class="ot">&lt;-</span> <span class="st">&quot;Issac&quot;</span></span>
+<span id="cb154-2"><a href="r6.html#cb154-2" aria-hidden="true" tabindex="-1"></a>issac<span class="sc">$</span>last <span class="ot">&lt;-</span> <span class="st">&quot;Lee&quot;</span></span>
+<span id="cb154-3"><a href="r6.html#cb154-3" aria-hidden="true" tabindex="-1"></a>issac<span class="sc">$</span>email <span class="ot">&lt;-</span> <span class="st">&quot;issac-lee@gmail.com&quot;</span></span>
+<span id="cb154-4"><a href="r6.html#cb154-4" aria-hidden="true" tabindex="-1"></a>issac<span class="sc">$</span>midterm <span class="ot">&lt;-</span> <span class="dv">70</span></span>
+<span id="cb154-5"><a href="r6.html#cb154-5" aria-hidden="true" tabindex="-1"></a>issac<span class="sc">$</span>final <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb154-6"><a href="r6.html#cb154-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-7"><a href="r6.html#cb154-7" aria-hidden="true" tabindex="-1"></a>bomi<span class="sc">$</span>first <span class="ot">&lt;-</span> <span class="st">&quot;Bomi&quot;</span></span>
+<span id="cb154-8"><a href="r6.html#cb154-8" aria-hidden="true" tabindex="-1"></a>bomi<span class="sc">$</span>last <span class="ot">&lt;-</span> <span class="st">&quot;Kim&quot;</span></span>
+<span id="cb154-9"><a href="r6.html#cb154-9" aria-hidden="true" tabindex="-1"></a>bomi<span class="sc">$</span>email <span class="ot">&lt;-</span> <span class="st">&quot;bomi-kim@gmail.com&quot;</span></span>
+<span id="cb154-10"><a href="r6.html#cb154-10" aria-hidden="true" tabindex="-1"></a>bomi<span class="sc">$</span>midterm <span class="ot">&lt;-</span> <span class="dv">65</span></span>
+<span id="cb154-11"><a href="r6.html#cb154-11" aria-hidden="true" tabindex="-1"></a>bomi<span class="sc">$</span>final <span class="ot">&lt;-</span> <span class="dv">80</span></span>
+<span id="cb154-12"><a href="r6.html#cb154-12" aria-hidden="true" tabindex="-1"></a>issac</span></code></pre></div>
+<pre><code>## $first
+## [1] &quot;Issac&quot;
+## 
+## $last
+## [1] &quot;Lee&quot;
+## 
+## $email
+## [1] &quot;issac-lee@gmail.com&quot;
+## 
+## $midterm
+## [1] 70
+## 
+## $final
+## [1] 50</code></pre>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="r6.html#cb156-1" aria-hidden="true" tabindex="-1"></a>bomi</span></code></pre></div>
+<pre><code>## $first
+## [1] &quot;Bomi&quot;
+## 
+## $last
+## [1] &quot;Kim&quot;
+## 
+## $email
+## [1] &quot;bomi-kim@gmail.com&quot;
+## 
+## $midterm
+## [1] 65
+## 
+## $final
+## [1] 80</code></pre>
+<p>위의 코드는 OOP관점에서 상당히 중복 코드가 많은 비효율적인 코드이다. 이러한 코드를 우리가 배운 <code>R6Class()</code>를 사용하여 어떻게 줄일 수 있는지 알아보자.</p>
+</div>
+<div id="클래스class-정의하기" class="section level3" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> 클래스(Class) 정의하기</h3>
+<p>앞에서 우리는 <code>issac</code>과 <code>bomi</code>라는 변수를 생성했는데, 둘의 공통점은 학생이라는 점이었다. 사실 앞선 코드를 작성을 한다는 것은 <code>issac</code>과 <code>bomi</code> 뿐 아니라 엄청 많은 수의 학생들에 대한 데이터를 다루고 있는 상황일 수도 있다. 우리들이 써놓은 코드를 잘 뜯어보니, 학생 데이터로 입력되는 각 개인들은 성과 이름, 이메일, 그리고, 중간, 기말고사 점수의 정보들을 가지고 있다. 즉, 학생, <code>Student</code>, 라는 클래스는 항상 성(last)과 이름(first), 중간(midterm), 기말고사(final) 성적이 저장되어 있고, 이메일의 경우 이름과 성을 이용해서 작성을 하되, 모두 소문자로 입력된 자료 형태를 가지고 있는 구조를 갖는 어떤 추상적인 개념이라는 것을 알 수 있다. 이러한 정보를 사용하여 우리는 다음과 같이 <code>Student</code> 클래스를 선언 할 수 있다.</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="r6.html#cb158-1" aria-hidden="true" tabindex="-1"></a>Student <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(<span class="st">&quot;Student&quot;</span>, <span class="fu">list</span>(</span>
+<span id="cb158-2"><a href="r6.html#cb158-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 필요한 변수 (field) 선언</span></span>
+<span id="cb158-3"><a href="r6.html#cb158-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">first =</span> <span class="cn">NULL</span>,</span>
+<span id="cb158-4"><a href="r6.html#cb158-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">last =</span> <span class="cn">NULL</span>,</span>
+<span id="cb158-5"><a href="r6.html#cb158-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">email =</span> <span class="cn">NULL</span>,</span>
+<span id="cb158-6"><a href="r6.html#cb158-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">midterm =</span> <span class="cn">NA</span>,</span>
+<span id="cb158-7"><a href="r6.html#cb158-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">final =</span> <span class="cn">NA</span>,</span>
+<span id="cb158-8"><a href="r6.html#cb158-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb158-9"><a href="r6.html#cb158-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 클래스 안의 객체를 만들때 사용되는 initialize</span></span>
+<span id="cb158-10"><a href="r6.html#cb158-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">initialize =</span> <span class="cf">function</span>(first, last, midterm, final){</span>
+<span id="cb158-11"><a href="r6.html#cb158-11" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>first <span class="ot">=</span> first</span>
+<span id="cb158-12"><a href="r6.html#cb158-12" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>last  <span class="ot">=</span> last</span>
+<span id="cb158-13"><a href="r6.html#cb158-13" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>email <span class="ot">=</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;{tolower(first)}-{tolower(last)}@gmail.com&quot;</span>)</span>
+<span id="cb158-14"><a href="r6.html#cb158-14" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>midterm <span class="ot">=</span> midterm</span>
+<span id="cb158-15"><a href="r6.html#cb158-15" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>final <span class="ot">=</span> final</span>
+<span id="cb158-16"><a href="r6.html#cb158-16" aria-hidden="true" tabindex="-1"></a>    }    </span>
+<span id="cb158-17"><a href="r6.html#cb158-17" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb158-18"><a href="r6.html#cb158-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-19"><a href="r6.html#cb158-19" aria-hidden="true" tabindex="-1"></a>Student</span></code></pre></div>
+<pre><code>## &lt;Student&gt; object generator
+##   Public:
+##     first: NULL
+##     last: NULL
+##     email: NULL
+##     midterm: NA
+##     final: NA
+##     initialize: function (first, last, midterm, final) 
+##     clone: function (deep = FALSE) 
+##   Parent env: &lt;environment: R_GlobalEnv&gt;
+##   Locked objects: TRUE
+##   Locked class: FALSE
+##   Portable: TRUE</code></pre>
+<p>결과값을 유심히 살펴보면, <code>&lt;Student&gt; object generator</code> 라는 부분이 있는데, <code>Student</code> 라는 클래스는 객체(object)들을 만들어내는 생성자(generator)라는 것을 알 수 있다. 우리가 만들 <code>Student</code> 생성자를 통해서 도장을 찍듯, <code>new()</code> 함수를 사용하여 issac과 bomi를 다음과 같이 만들 수 있다.</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="r6.html#cb160-1" aria-hidden="true" tabindex="-1"></a>issac <span class="ot">&lt;-</span> Student<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;Issac&quot;</span>, <span class="st">&quot;Lee&quot;</span>, <span class="dv">70</span>, <span class="dv">50</span>)</span>
+<span id="cb160-2"><a href="r6.html#cb160-2" aria-hidden="true" tabindex="-1"></a>bomi <span class="ot">&lt;-</span> Student<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;Bomi&quot;</span>, <span class="st">&quot;Kim&quot;</span>, <span class="dv">65</span>, <span class="dv">80</span>)</span>
+<span id="cb160-3"><a href="r6.html#cb160-3" aria-hidden="true" tabindex="-1"></a>issac</span></code></pre></div>
+<pre><code>## &lt;Student&gt;
+##   Public:
+##     clone: function (deep = FALSE) 
+##     email: issac-lee@gmail.com
+##     final: 50
+##     first: Issac
+##     initialize: function (first, last, midterm, final) 
+##     last: Lee
+##     midterm: 70</code></pre>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="r6.html#cb162-1" aria-hidden="true" tabindex="-1"></a>bomi</span></code></pre></div>
+<pre><code>## &lt;Student&gt;
+##   Public:
+##     clone: function (deep = FALSE) 
+##     email: bomi-kim@gmail.com
+##     final: 80
+##     first: Bomi
+##     initialize: function (first, last, midterm, final) 
+##     last: Kim
+##     midterm: 65</code></pre>
+<p>즉, OOP의 장점은 공을 들여 한번 클래스를 잘 만들어놓으면, 한번 작성된 함수나 변수들의 재 사용율이 엄청 좋아지는 것이다.</p>
+</div>
+<div id="print를-사용한-결과물-정리" class="section level3" number="4.2.4">
+<h3><span class="header-section-number">4.2.4</span> print()를 사용한 결과물 정리</h3>
+<p>정의된 클래스는 기본적으로 동작하는 함수들을 덮어서 쓸 수 있다. 예를들어 <code>print()</code>를 함수로 정의해버리면, base에 있는 <code>print()</code> 동작을 덮어서 쓸 수 있다. 즉, 기본 함수들 <code>print()</code>, <code>plot()</code> 같은 함수들을 우리가 정의한 클래스에서 나온 객체들에 적용했을때의 작동을 정해줄 수 있다는 것이다.</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="r6.html#cb164-1" aria-hidden="true" tabindex="-1"></a>Student <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(<span class="st">&quot;Student&quot;</span>, <span class="fu">list</span>(</span>
+<span id="cb164-2"><a href="r6.html#cb164-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 필요한 변수 (field) 선언</span></span>
+<span id="cb164-3"><a href="r6.html#cb164-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">first =</span> <span class="cn">NULL</span>,</span>
+<span id="cb164-4"><a href="r6.html#cb164-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">last =</span> <span class="cn">NULL</span>,</span>
+<span id="cb164-5"><a href="r6.html#cb164-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">email =</span> <span class="cn">NULL</span>,</span>
+<span id="cb164-6"><a href="r6.html#cb164-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">midterm =</span> <span class="cn">NA</span>,</span>
+<span id="cb164-7"><a href="r6.html#cb164-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">final =</span> <span class="cn">NA</span>,</span>
+<span id="cb164-8"><a href="r6.html#cb164-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb164-9"><a href="r6.html#cb164-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 클래스 안의 객체를 만들때 사용되는 initialize</span></span>
+<span id="cb164-10"><a href="r6.html#cb164-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">initialize =</span> <span class="cf">function</span>(first, last, midterm, final){</span>
+<span id="cb164-11"><a href="r6.html#cb164-11" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>first <span class="ot">=</span> first</span>
+<span id="cb164-12"><a href="r6.html#cb164-12" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>last  <span class="ot">=</span> last</span>
+<span id="cb164-13"><a href="r6.html#cb164-13" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>email <span class="ot">=</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;{tolower(first)}-{tolower(last)}@gmail.com&quot;</span>)</span>
+<span id="cb164-14"><a href="r6.html#cb164-14" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>midterm <span class="ot">=</span> midterm</span>
+<span id="cb164-15"><a href="r6.html#cb164-15" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>final <span class="ot">=</span> final</span>
+<span id="cb164-16"><a href="r6.html#cb164-16" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb164-17"><a href="r6.html#cb164-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">print =</span> <span class="cf">function</span>(...){</span>
+<span id="cb164-18"><a href="r6.html#cb164-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">&quot;Student: </span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb164-19"><a href="r6.html#cb164-19" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;</span></span>
+<span id="cb164-20"><a href="r6.html#cb164-20" aria-hidden="true" tabindex="-1"></a><span class="st">                Name  : {self$first} {self$last}</span></span>
+<span id="cb164-21"><a href="r6.html#cb164-21" aria-hidden="true" tabindex="-1"></a><span class="st">                E-mail: {self$email}</span></span>
+<span id="cb164-22"><a href="r6.html#cb164-22" aria-hidden="true" tabindex="-1"></a><span class="st">                Midterm Score : {self$midterm}</span></span>
+<span id="cb164-23"><a href="r6.html#cb164-23" aria-hidden="true" tabindex="-1"></a><span class="st">                Final Score: {self$final}</span></span>
+<span id="cb164-24"><a href="r6.html#cb164-24" aria-hidden="true" tabindex="-1"></a><span class="st">            &quot;</span>))</span>
+<span id="cb164-25"><a href="r6.html#cb164-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">invisible</span>(self)</span>
+<span id="cb164-26"><a href="r6.html#cb164-26" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb164-27"><a href="r6.html#cb164-27" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb164-28"><a href="r6.html#cb164-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb164-29"><a href="r6.html#cb164-29" aria-hidden="true" tabindex="-1"></a>soony <span class="ot">&lt;-</span> Student<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;Soony&quot;</span>, <span class="st">&quot;Kim&quot;</span>, <span class="dv">70</span>, <span class="dv">20</span>)</span>
+<span id="cb164-30"><a href="r6.html#cb164-30" aria-hidden="true" tabindex="-1"></a>soony</span></code></pre></div>
+<pre><code>## Student: 
+##     Name  : Soony Kim
+##     E-mail: soony-kim@gmail.com
+##     Midterm Score : 70
+##     Final Score: 20</code></pre>
+<p><code>print()</code> 멤버 함수를 추가한 후에 만들어진 <code>soony</code>의 정보는 클래스안에 정의된 <code>print()</code>를 통해서 보여진다는 것을 확인할 수 있다. 한가지 주의할 점은 <code>print()</code>가 클래스 안에 정의되어 있지 않은 채로 생성된 <code>issac</code>과 <code>bomi</code>의 경우는 <code>print()</code>가 작동하지 않는다는 것이다. 즉, 클래스에 정의된 함수들은 객체가 클래스로부터 생성될 때, 따라와서 붙는다.</p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="r6.html#cb166-1" aria-hidden="true" tabindex="-1"></a>issac<span class="sc">$</span><span class="fu">print</span>()</span></code></pre></div>
+<pre><code>## Error in eval(expr, envir, enclos): attempt to apply non-function</code></pre>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="r6.html#cb168-1" aria-hidden="true" tabindex="-1"></a>soony<span class="sc">$</span><span class="fu">print</span>()</span></code></pre></div>
+<pre><code>## Student: 
+##     Name  : Soony Kim
+##     E-mail: soony-kim@gmail.com
+##     Midterm Score : 70
+##     Final Score: 20</code></pre>
+</div>
+<div id="set을-이용한-클래스-조정" class="section level3" number="4.2.5">
+<h3><span class="header-section-number">4.2.5</span> set을 이용한 클래스 조정</h3>
+<p>앞에서 우리는 <code>print()</code> 함수를 추가하기 위하여 전체 클래스를 다시 정의하였다. 하지만, 이렇게 클래스안에 함수를 추가하기 위해서 전체 클래스를 다시 정의하기보단, <code>set()</code>을 이용해서 변수나 함수를 추가할 수 있다.</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="r6.html#cb170-1" aria-hidden="true" tabindex="-1"></a>Student<span class="sc">$</span><span class="fu">set</span>(<span class="st">&quot;public&quot;</span>, <span class="st">&quot;total&quot;</span>, <span class="cn">NA</span>)</span>
+<span id="cb170-2"><a href="r6.html#cb170-2" aria-hidden="true" tabindex="-1"></a>Student<span class="sc">$</span><span class="fu">set</span>(<span class="st">&quot;public&quot;</span>, <span class="st">&quot;calculate_total&quot;</span>, <span class="cf">function</span>(){</span>
+<span id="cb170-3"><a href="r6.html#cb170-3" aria-hidden="true" tabindex="-1"></a>    self<span class="sc">$</span>total <span class="ot">&lt;-</span> self<span class="sc">$</span>midterm <span class="sc">+</span> self<span class="sc">$</span>final</span>
+<span id="cb170-4"><a href="r6.html#cb170-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">invisible</span>(self)</span>
+<span id="cb170-5"><a href="r6.html#cb170-5" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<p><code>invisible()</code> 함수는 결과를 반환하되, 결과물을 보여주지 않는 것인데, 클래스에서 함수를 정의할 때에 반드시 <code>invisible(self)</code>를 반환해줘야만 한다. 따라서 함수이지만, 함수와는 다른 이 클래스 안의 함수들을 멤버함수 <code>method()</code>라고하여 일반 함수와 구분을 지어서 부른다.</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="r6.html#cb171-1" aria-hidden="true" tabindex="-1"></a>jelly <span class="ot">&lt;-</span> Student<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;Jelly&quot;</span>, <span class="st">&quot;Lee&quot;</span>, <span class="dv">35</span>, <span class="dv">23</span>)</span>
+<span id="cb171-2"><a href="r6.html#cb171-2" aria-hidden="true" tabindex="-1"></a>jelly</span></code></pre></div>
+<pre><code>## Student: 
+##     Name  : Jelly Lee
+##     E-mail: jelly-lee@gmail.com
+##     Midterm Score : 35
+##     Final Score: 23</code></pre>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="r6.html#cb173-1" aria-hidden="true" tabindex="-1"></a>jelly<span class="sc">$</span>total</span></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="r6.html#cb175-1" aria-hidden="true" tabindex="-1"></a>jelly<span class="sc">$</span><span class="fu">calculate_total</span>()</span>
+<span id="cb175-2"><a href="r6.html#cb175-2" aria-hidden="true" tabindex="-1"></a>jelly<span class="sc">$</span>total</span></code></pre></div>
+<pre><code>## [1] 58</code></pre>
+</div>
+</div>
+<div id="상속inheritance---클래스-물려받기" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> 상속(Inheritance) - 클래스 물려받기</h2>
+<p>OOP가 코드의 중복을 되도록 피할 수 있도록 설계되어 있다는 것을 어렴풋이나마 앞의 예제를 통하여 알 수 있을 것이다. 이러한 OOP의 코드 재사용 관점에서 상속(Inheritance)의 개념은 꽃 중에 꽃이라 불릴 만하다. 단 한 줄의 코드로 미리 작성해놓은 함수들에 접근이 가능하기 때문이다.</p>
+<p>상속(Inheritance)이라고 하면 뭔가 거창할 것 같지만, 그냥 미리 정의해둔 클래스의 정보(멤버함수과 필드)를 다른 클래스를 정의할 때 받아올 수 있다는 말이다. 예를 들어보자.</p>
+<p>이제까지 사용해 온 학생 개념, <code>Student</code> 클래스를 좀 더 세분화를 한다면 학교별로 나눌 수 있을 것이다. <code>Student</code> 클래스를 상속받는 슬통대학교(University of Statistics Playbook; <code>USP</code>) 학생들을 위한 서브 클래스(<code>sub class</code>)는 다음과 같이 생성할 수 있다.</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="r6.html#cb177-1" aria-hidden="true" tabindex="-1"></a>UspStudent <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(<span class="st">&quot;UspStudent&quot;</span>,</span>
+<span id="cb177-2"><a href="r6.html#cb177-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit =</span> Student,</span>
+<span id="cb177-3"><a href="r6.html#cb177-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">public =</span> <span class="fu">list</span>(</span>
+<span id="cb177-4"><a href="r6.html#cb177-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">university_name =</span> <span class="st">&quot;University of Statistics Playbook&quot;</span>,</span>
+<span id="cb177-5"><a href="r6.html#cb177-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">class_year =</span> <span class="cn">NA</span>,</span>
+<span id="cb177-6"><a href="r6.html#cb177-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">average =</span> <span class="cn">NA</span>,</span>
+<span id="cb177-7"><a href="r6.html#cb177-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">calculate_average =</span> <span class="cf">function</span>(){</span>
+<span id="cb177-8"><a href="r6.html#cb177-8" aria-hidden="true" tabindex="-1"></a>            self<span class="sc">$</span>average <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">c</span>(self<span class="sc">$</span>midterm, self<span class="sc">$</span>final))</span>
+<span id="cb177-9"><a href="r6.html#cb177-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">invisible</span>(self)</span>
+<span id="cb177-10"><a href="r6.html#cb177-10" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb177-11"><a href="r6.html#cb177-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">calculate_total =</span> <span class="cf">function</span>(){</span>
+<span id="cb177-12"><a href="r6.html#cb177-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">cat</span>(<span class="st">&quot;The total score of midterm and final exam is calculated. </span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb177-13"><a href="r6.html#cb177-13" aria-hidden="true" tabindex="-1"></a>            super<span class="sc">$</span><span class="fu">calculate_total</span>()</span>
+<span id="cb177-14"><a href="r6.html#cb177-14" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb177-15"><a href="r6.html#cb177-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb177-16"><a href="r6.html#cb177-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb177-17"><a href="r6.html#cb177-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-18"><a href="r6.html#cb177-18" aria-hidden="true" tabindex="-1"></a>sanghoon <span class="ot">&lt;-</span> UspStudent<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;Sanghoon&quot;</span>, <span class="st">&quot;Park&quot;</span>, <span class="dv">80</span>, <span class="dv">56</span>)</span>
+<span id="cb177-19"><a href="r6.html#cb177-19" aria-hidden="true" tabindex="-1"></a>sanghoon</span></code></pre></div>
+<pre><code>## Student: 
+##     Name  : Sanghoon Park
+##     E-mail: sanghoon-park@gmail.com
+##     Midterm Score : 80
+##     Final Score: 56</code></pre>
+<p>새로 정의된 <code>UspStudent</code> 클래스는 상위 클래스인 <code>Student</code> 클래스의 멤버함수들과 변수들을 그대로 물려받는다. 여기서 코드의 재사용성이 증가한다. 또한 상위 클래스가 가지고 있던 <code>calculate_total()</code> 멤버함수에 접근하여, 새롭게 고쳐서 사용하는 것도 가능하다. 다음은 정의된 멤버함수들을 사용하여 변수들에 계산을 해서 넣는 과정을 보여준다.</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="r6.html#cb179-1" aria-hidden="true" tabindex="-1"></a>sanghoon<span class="sc">$</span>university_name</span></code></pre></div>
+<pre><code>## [1] &quot;University of Statistics Playbook&quot;</code></pre>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="r6.html#cb181-1" aria-hidden="true" tabindex="-1"></a>sanghoon<span class="sc">$</span><span class="fu">calculate_average</span>()</span>
+<span id="cb181-2"><a href="r6.html#cb181-2" aria-hidden="true" tabindex="-1"></a>sanghoon<span class="sc">$</span>average</span></code></pre></div>
+<pre><code>## [1] 68</code></pre>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="r6.html#cb183-1" aria-hidden="true" tabindex="-1"></a>sanghoon<span class="sc">$</span><span class="fu">calculate_total</span>()</span></code></pre></div>
+<pre><code>## The total score of midterm and final exam is calculated.</code></pre>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="r6.html#cb185-1" aria-hidden="true" tabindex="-1"></a>sanghoon<span class="sc">$</span>total</span></code></pre></div>
+<pre><code>## [1] 136</code></pre>
+</div>
+<div id="공개public정보와-비공개private-정보의-필요성" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> 공개(Public)정보와 비공개(Private) 정보의 필요성</h2>
+<p>앞에서 살펴본 <code>R6Class()</code> 함수의 두 가지 입력값은 클래스 이름(<code>classname</code>)과 공개정보(<code>public</code>) 였다. 클래스를 만들고 사용하다보면, 때로는 클래스 안의 함수들을 사용하기 위해서 만들어야하는 변수나 함수들이 있는데, 이러한 정보들은 굳이 클래스를 사용하는 사용자들에게 보여줄 필요가 없다. 우리네 인생도 그러하다. 우리는 때로는 너무 많은 정보 제공에 피로감과 불편을 겪는 경우가 많다. 따라서, 클래스에 대한 정보의 접근을 적절하게 조절할 필요가 있는데, 클래스의 정보들을 공개될 정보(public)와 비공개 정보(private)들로 분류함으로써 조절할 수 있다.</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="r6.html#cb187-1" aria-hidden="true" tabindex="-1"></a>UspStudent <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(<span class="st">&quot;UspStudent&quot;</span>,</span>
+<span id="cb187-2"><a href="r6.html#cb187-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit =</span> Student,</span>
+<span id="cb187-3"><a href="r6.html#cb187-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">public =</span> <span class="fu">list</span>(</span>
+<span id="cb187-4"><a href="r6.html#cb187-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">university_name =</span> <span class="st">&quot;University of Statistics Playbook&quot;</span>,</span>
+<span id="cb187-5"><a href="r6.html#cb187-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">class_year =</span> <span class="cn">NA</span>,</span>
+<span id="cb187-6"><a href="r6.html#cb187-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">calculate_average =</span> <span class="cf">function</span>(){</span>
+<span id="cb187-7"><a href="r6.html#cb187-7" aria-hidden="true" tabindex="-1"></a>            private<span class="sc">$</span>.average <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">c</span>(self<span class="sc">$</span>midterm, self<span class="sc">$</span>final))</span>
+<span id="cb187-8"><a href="r6.html#cb187-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">cat</span>(<span class="st">&quot;Average score is&quot;</span>, private<span class="sc">$</span>.average)</span>
+<span id="cb187-9"><a href="r6.html#cb187-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">invisible</span>(self)</span>
+<span id="cb187-10"><a href="r6.html#cb187-10" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb187-11"><a href="r6.html#cb187-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">calculate_total =</span> <span class="cf">function</span>(){</span>
+<span id="cb187-12"><a href="r6.html#cb187-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">cat</span>(<span class="st">&quot;The total score of midterm and final exam is calculated. </span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb187-13"><a href="r6.html#cb187-13" aria-hidden="true" tabindex="-1"></a>            super<span class="sc">$</span><span class="fu">calculate_total</span>()</span>
+<span id="cb187-14"><a href="r6.html#cb187-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb187-15"><a href="r6.html#cb187-15" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb187-16"><a href="r6.html#cb187-16" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb187-17"><a href="r6.html#cb187-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">private =</span> <span class="fu">list</span>(</span>
+<span id="cb187-18"><a href="r6.html#cb187-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">.average =</span> <span class="cn">NA</span>    </span>
+<span id="cb187-19"><a href="r6.html#cb187-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb187-20"><a href="r6.html#cb187-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb187-21"><a href="r6.html#cb187-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb187-22"><a href="r6.html#cb187-22" aria-hidden="true" tabindex="-1"></a>taemo <span class="ot">&lt;-</span> UspStudent<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;Taemo&quot;</span>, <span class="st">&quot;Bang&quot;</span>, <span class="dv">80</span>, <span class="dv">56</span>)</span>
+<span id="cb187-23"><a href="r6.html#cb187-23" aria-hidden="true" tabindex="-1"></a>taemo<span class="sc">$</span><span class="fu">calculate_average</span>()</span></code></pre></div>
+<pre><code>## Average score is 68</code></pre>
+<p>위의 <code>UspStudent</code> 클래스에는 비공개 정보가 하나들어있다. 바로 중간 기말고사 점수의 평균을 저장하는 <code>average</code> 변수인데, 클래스의 정의시 <code>private()</code>에 감싸져서 입력이 되었음에 주목하자.</p>
+<p><code>average</code> 변수는 클래스 안에서의 멤버함수를 통해서 접근할 땐 <code>private$name</code> 형식으로 접근이 가능함에 반하여, 클래스를 사용하는 사용자 입장에서는 가려져서 보이지 않는 정보에 해당한다.</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="r6.html#cb189-1" aria-hidden="true" tabindex="-1"></a>taemo<span class="sc">$</span>.average</span></code></pre></div>
+<pre><code>## NULL</code></pre>
+<p>해들리 위캠의 말을 빌리면, 공개-비공개 정보의 구분은 큰 패키지나 클래스를 정의할 때 <a href="https://adv-r.hadley.nz/r6.html#privacy">가장 중요한 단계가 된다</a>. 왜냐하면 비공개 정보의 경우는 개발자의 입장에서 언제든지 수정할 수 있는 정보가 되지만, 공개된 멤버함수나 필드들에 대해서는 쉽게 바꿀 수가 없기 때문이다.</p>
+<pre><code>&gt; 여기서 하나 짚고 넘어가면 좋은 것이 있는데, 바로 R에서의 이름 짓기 방식이다. R의 기본 함수들 중에서 .을 사용해서 지어진 경우가 있는데, 현재는 권장하지 않고 있다. 이유는 바로 비공개 정보를 갖는 변수나 함수들을 나타내는데에 .을 찍어서 나타내기 때문이다. `.average` 역시 변수의 이름에서 이 변수는 클래스 안에서만 접근이 가능하다는 것을 변수 이름만 보고도 알 수 있도록 만들어졌다.</code></pre>
+<div id="활성-변수active-field를-사용한-읽기-전용-변수" class="section level3" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> 활성 변수(active field)를 사용한 읽기 전용 변수</h3>
+<p><a href="https://adv-r.hadley.nz/r6.html#active-fields">Advance R의 14장</a>의 내용을 보면, R6의 접근성을 다루면서 <code>active field</code>의 개념이 나온다. 자세한 내용이 궁금한 독자들은 찾아보기 바란다. <code>active field</code>의 좋은 점은 이것을 사용해서 클래스 사용자들에게 읽기 전용 정보를 제공해줄수 있기 때문이다.</p>
+<p>앞에서의 예를 들어보면 중간, 기말고사의 평균 정보는 클래스 사용자들에게 유요한 정보가 될 수 있다. 하지만, private으로 감싸버리면 사용자들은 이 정보에 접근을 할 수 없게 된다. 사용자는 평균 정보에 접근하고 싶어하지만, 개발자의 입장에서는 쉽게 공개정보로 바꾸기가 쉽지 않다. 왜냐하면 사용자들이 마음대로 평균 변수에 접근해서 정보를 변경시켜버리면 클래스에서 평균 정보를 가져다가 쓰는 멤버함수들이 잘 작동하지 않을 수 있기 때문이다. 이럴 경우 <code>active field</code>를 사용해서 average를 읽기전용으로만 접근 가능하도록 설계할 수 있다.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="r6.html#cb192-1" aria-hidden="true" tabindex="-1"></a>UspStudent <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(<span class="st">&quot;UspStudent&quot;</span>,</span>
+<span id="cb192-2"><a href="r6.html#cb192-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit =</span> Student,</span>
+<span id="cb192-3"><a href="r6.html#cb192-3" aria-hidden="true" tabindex="-1"></a>    <span class="do">## active field</span></span>
+<span id="cb192-4"><a href="r6.html#cb192-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">active =</span> <span class="fu">list</span>(</span>
+<span id="cb192-5"><a href="r6.html#cb192-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">average =</span> <span class="cf">function</span>(value) {</span>
+<span id="cb192-6"><a href="r6.html#cb192-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (<span class="fu">missing</span>(value)) {</span>
+<span id="cb192-7"><a href="r6.html#cb192-7" aria-hidden="true" tabindex="-1"></a>                private<span class="sc">$</span>.average</span>
+<span id="cb192-8"><a href="r6.html#cb192-8" aria-hidden="true" tabindex="-1"></a>            } <span class="cf">else</span> {</span>
+<span id="cb192-9"><a href="r6.html#cb192-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">stop</span>(<span class="st">&quot;`$average` is read only&quot;</span>, <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb192-10"><a href="r6.html#cb192-10" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb192-11"><a href="r6.html#cb192-11" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb192-12"><a href="r6.html#cb192-12" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb192-13"><a href="r6.html#cb192-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">public =</span> <span class="fu">list</span>(</span>
+<span id="cb192-14"><a href="r6.html#cb192-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">university_name =</span> <span class="st">&quot;University of Statistics Playbook&quot;</span>,</span>
+<span id="cb192-15"><a href="r6.html#cb192-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">class_year =</span> <span class="cn">NA</span>,</span>
+<span id="cb192-16"><a href="r6.html#cb192-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">calculate_average =</span> <span class="cf">function</span>(){</span>
+<span id="cb192-17"><a href="r6.html#cb192-17" aria-hidden="true" tabindex="-1"></a>            private<span class="sc">$</span>.average <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">c</span>(self<span class="sc">$</span>midterm, self<span class="sc">$</span>final))</span>
+<span id="cb192-18"><a href="r6.html#cb192-18" aria-hidden="true" tabindex="-1"></a>            <span class="fu">cat</span>(<span class="st">&quot;Average score is&quot;</span>, private<span class="sc">$</span>.average)</span>
+<span id="cb192-19"><a href="r6.html#cb192-19" aria-hidden="true" tabindex="-1"></a>            <span class="fu">invisible</span>(self)</span>
+<span id="cb192-20"><a href="r6.html#cb192-20" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb192-21"><a href="r6.html#cb192-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">calculate_total =</span> <span class="cf">function</span>(){</span>
+<span id="cb192-22"><a href="r6.html#cb192-22" aria-hidden="true" tabindex="-1"></a>            <span class="fu">cat</span>(<span class="st">&quot;The total score of midterm and final exam is calculated. </span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb192-23"><a href="r6.html#cb192-23" aria-hidden="true" tabindex="-1"></a>            super<span class="sc">$</span><span class="fu">calculate_total</span>()</span>
+<span id="cb192-24"><a href="r6.html#cb192-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-25"><a href="r6.html#cb192-25" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb192-26"><a href="r6.html#cb192-26" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb192-27"><a href="r6.html#cb192-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">private =</span> <span class="fu">list</span>(</span>
+<span id="cb192-28"><a href="r6.html#cb192-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">.average =</span> <span class="cn">NA</span>    </span>
+<span id="cb192-29"><a href="r6.html#cb192-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb192-30"><a href="r6.html#cb192-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb192-31"><a href="r6.html#cb192-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-32"><a href="r6.html#cb192-32" aria-hidden="true" tabindex="-1"></a>conie <span class="ot">&lt;-</span> UspStudent<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;Connie&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="dv">78</span>, <span class="dv">82</span>)</span>
+<span id="cb192-33"><a href="r6.html#cb192-33" aria-hidden="true" tabindex="-1"></a>conie<span class="sc">$</span><span class="fu">calculate_average</span>()</span></code></pre></div>
+<pre><code>## Average score is 80</code></pre>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="r6.html#cb194-1" aria-hidden="true" tabindex="-1"></a>conie<span class="sc">$</span>average</span></code></pre></div>
+<pre><code>## [1] 80</code></pre>
+<p>위에서 정의된 <code>UspStudent</code> 클래스에서는 사용자에게 평균값을 구하는 함수와 구한 평균값에 접근을 허용하지만, 사용자가 average값에 접근하여 바꾸려고 하면 에러를 뱉어내도록 설계가 되어있다.</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="r6.html#cb196-1" aria-hidden="true" tabindex="-1"></a>conie<span class="sc">$</span>average <span class="ot">&lt;-</span> <span class="dv">60</span></span></code></pre></div>
+<pre><code>## Error: `$average` is read only</code></pre>
+</div>
+</div>
+<div id="텐서와-r6의-관계" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> 텐서와 R6의 관계</h2>
+</div>
+<div id="r6-관련자료" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> R6 관련자료</h2>
+<p>R6에 대한 더 깊은 내용은 Hadley Wickham의 <a href="https://adv-r.hadley.nz/index.html">Advanced R</a>과 <a href="https://r6.r-lib.org/">R6 패키지의 웹사이트</a>를 참고하도록 하자.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="텐서의-이동-cpu-leftrightarrow-gpu.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="forward.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/statisticsplaybook/r-torch-playbook/edit/master/04-r6-and-tensor.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

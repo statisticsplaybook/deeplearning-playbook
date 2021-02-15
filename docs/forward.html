@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 순전파 (Forward propagation) | 딥러닝 공략집 with R</title>
+  <meta name="description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 순전파 (Forward propagation) | 딥러닝 공략집 with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
+  <meta name="github-repo" content="statisticsplaybook/r-torch-playbook" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 순전파 (Forward propagation) | 딥러닝 공략집 with R" />
+  
+  <meta name="twitter:description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
+  
+
+<meta name="author" content="슬기로운통계생활" />
+
+
+<meta name="date" content="2021-02-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="r6.html"/>
+<link rel="next" href="미분-자동추적-기능-autograd-에-대하여.html"/>
+<script src="libs/header-attrs-2.6.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<meta name="google-site-verification" content="z9CiKKDExNMW8gi4-dN3X6zGa1-OXeSaIpjGFgXgHEg" />
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6MYZBEL4H2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-6MYZBEL4H2');
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">딥러닝 공략집 with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>들어가며</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#설치하기"><i class="fa fa-check"></i>설치하기</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#기본-패키지"><i class="fa fa-check"></i>기본 패키지</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> 딥러닝 첫걸음, 텐서 (tensor) 만들기</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#torch와의-첫만남"><i class="fa fa-check"></i><b>1.1</b> <code>torch</code>와의 첫만남</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#텐서-tensor-만들기"><i class="fa fa-check"></i><b>1.2</b> 텐서 (tensor) 만들기</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="intro.html"><a href="intro.html#빈-텐서-만들기"><i class="fa fa-check"></i><b>1.2.1</b> 빈 텐서 만들기</a></li>
+<li class="chapter" data-level="1.2.2" data-path="intro.html"><a href="intro.html#랜덤-텐서"><i class="fa fa-check"></i><b>1.2.2</b> 랜덤 텐서</a></li>
+<li class="chapter" data-level="1.2.3" data-path="intro.html"><a href="intro.html#단위-텐서"><i class="fa fa-check"></i><b>1.2.3</b> 단위 텐서</a></li>
+<li class="chapter" data-level="1.2.4" data-path="intro.html"><a href="intro.html#영0-텐서"><i class="fa fa-check"></i><b>1.2.4</b> 영(0) 텐서</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#고급기술-영리하게-만들기"><i class="fa fa-check"></i><b>1.3</b> 고급기술: 영리하게 만들기</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="intro.html"><a href="intro.html#텐서-직접선언"><i class="fa fa-check"></i><b>1.3.1</b> 텐서 직접선언</a></li>
+<li class="chapter" data-level="1.3.2" data-path="intro.html"><a href="intro.html#연산자-사용"><i class="fa fa-check"></i><b>1.3.2</b> <code>:</code> 연산자 사용</a></li>
+<li class="chapter" data-level="1.3.3" data-path="intro.html"><a href="intro.html#seq-함수-사용"><i class="fa fa-check"></i><b>1.3.3</b> <code>seq()</code> 함수 사용</a></li>
+<li class="chapter" data-level="1.3.4" data-path="intro.html"><a href="intro.html#연산자-사용-1"><i class="fa fa-check"></i><b>1.3.4</b> <code>%&gt;%</code> 연산자 사용</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#텐서와-행렬은-같을까"><i class="fa fa-check"></i><b>1.4</b> 텐서와 행렬은 같을까?</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="operation.html"><a href="operation.html"><i class="fa fa-check"></i><b>2</b> 텐서 (tensor) 연산</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="operation.html"><a href="operation.html#토치-torch-불러오기-및-준비물-준비"><i class="fa fa-check"></i><b>2.1</b> 토치 (torch) 불러오기 및 준비물 준비</a></li>
+<li class="chapter" data-level="2.2" data-path="operation.html"><a href="operation.html#텐서의-연산"><i class="fa fa-check"></i><b>2.2</b> 텐서의 연산</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="operation.html"><a href="operation.html#형type-변환"><i class="fa fa-check"></i><b>2.2.1</b> 형(type) 변환</a></li>
+<li class="chapter" data-level="2.2.2" data-path="operation.html"><a href="operation.html#모양-변환"><i class="fa fa-check"></i><b>2.2.2</b> 모양 변환</a></li>
+<li class="chapter" data-level="2.2.3" data-path="operation.html"><a href="operation.html#덧셈과-뺄셈"><i class="fa fa-check"></i><b>2.2.3</b> 덧셈과 뺄셈</a></li>
+<li class="chapter" data-level="2.2.4" data-path="operation.html"><a href="operation.html#상수와의-연산"><i class="fa fa-check"></i><b>2.2.4</b> 상수와의 연산</a></li>
+<li class="chapter" data-level="2.2.5" data-path="operation.html"><a href="operation.html#제곱근과-로그"><i class="fa fa-check"></i><b>2.2.5</b> 제곱근과 로그</a></li>
+<li class="chapter" data-level="2.2.6" data-path="operation.html"><a href="operation.html#텐서의-곱셈"><i class="fa fa-check"></i><b>2.2.6</b> 텐서의 곱셈</a></li>
+<li class="chapter" data-level="2.2.7" data-path="operation.html"><a href="operation.html#텐서의-전치transpose"><i class="fa fa-check"></i><b>2.2.7</b> 텐서의 전치(transpose)</a></li>
+<li class="chapter" data-level="2.2.8" data-path="operation.html"><a href="operation.html#r에서의-3차원-배열"><i class="fa fa-check"></i><b>2.2.8</b> R에서의 3차원 배열</a></li>
+<li class="chapter" data-level="2.2.9" data-path="operation.html"><a href="operation.html#다차원-텐서와-1차원-벡터-텐서의-연산"><i class="fa fa-check"></i><b>2.2.9</b> 다차원 텐서와 1차원 벡터 텐서의 연산</a></li>
+<li class="chapter" data-level="2.2.10" data-path="operation.html"><a href="operation.html#차원-텐서-끼리의-연산-내적과-외적"><i class="fa fa-check"></i><b>2.2.10</b> 1차원 텐서 끼리의 연산, 내적과 외적</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="텐서의-이동-cpu-leftrightarrow-gpu.html"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html"><i class="fa fa-check"></i><b>3</b> 텐서의 이동; CPU <span class="math inline">\(\leftrightarrow\)</span> GPU</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="텐서의-이동-cpu-leftrightarrow-gpu.html"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#gpu-사용-가능-체크"><i class="fa fa-check"></i><b>3.1</b> GPU 사용 가능 체크</a></li>
+<li class="chapter" data-level="3.2" data-path="텐서의-이동-cpu-leftrightarrow-gpu.html"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cpu-to-gpu"><i class="fa fa-check"></i><b>3.2</b> CPU to GPU</a></li>
+<li class="chapter" data-level="3.3" data-path="텐서의-이동-cpu-leftrightarrow-gpu.html"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#gpu-to-cpu"><i class="fa fa-check"></i><b>3.3</b> GPU to CPU</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="r6.html"><a href="r6.html"><i class="fa fa-check"></i><b>4</b> R6와 텐서</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="r6.html"><a href="r6.html#시작하기"><i class="fa fa-check"></i><b>4.1</b> 시작하기</a></li>
+<li class="chapter" data-level="4.2" data-path="r6.html"><a href="r6.html#클래스class와-멤버함수method-그리고-필드field"><i class="fa fa-check"></i><b>4.2</b> 클래스(Class)와 멤버함수(Method), 그리고 필드(Field)</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="r6.html"><a href="r6.html#클래스는-왜-필요할까"><i class="fa fa-check"></i><b>4.2.1</b> 클래스는 왜 필요할까?</a></li>
+<li class="chapter" data-level="4.2.2" data-path="r6.html"><a href="r6.html#학생자료-입력-예제"><i class="fa fa-check"></i><b>4.2.2</b> 학생자료 입력 예제</a></li>
+<li class="chapter" data-level="4.2.3" data-path="r6.html"><a href="r6.html#클래스class-정의하기"><i class="fa fa-check"></i><b>4.2.3</b> 클래스(Class) 정의하기</a></li>
+<li class="chapter" data-level="4.2.4" data-path="r6.html"><a href="r6.html#print를-사용한-결과물-정리"><i class="fa fa-check"></i><b>4.2.4</b> print()를 사용한 결과물 정리</a></li>
+<li class="chapter" data-level="4.2.5" data-path="r6.html"><a href="r6.html#set을-이용한-클래스-조정"><i class="fa fa-check"></i><b>4.2.5</b> set을 이용한 클래스 조정</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="r6.html"><a href="r6.html#상속inheritance---클래스-물려받기"><i class="fa fa-check"></i><b>4.3</b> 상속(Inheritance) - 클래스 물려받기</a></li>
+<li class="chapter" data-level="4.4" data-path="r6.html"><a href="r6.html#공개public정보와-비공개private-정보의-필요성"><i class="fa fa-check"></i><b>4.4</b> 공개(Public)정보와 비공개(Private) 정보의 필요성</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="r6.html"><a href="r6.html#활성-변수active-field를-사용한-읽기-전용-변수"><i class="fa fa-check"></i><b>4.4.1</b> 활성 변수(active field)를 사용한 읽기 전용 변수</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="r6.html"><a href="r6.html#텐서와-r6의-관계"><i class="fa fa-check"></i><b>4.5</b> 텐서와 R6의 관계</a></li>
+<li class="chapter" data-level="4.6" data-path="r6.html"><a href="r6.html#r6-관련자료"><i class="fa fa-check"></i><b>4.6</b> R6 관련자료</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="forward.html"><a href="forward.html"><i class="fa fa-check"></i><b>5</b> 순전파 (Forward propagation)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="forward.html"><a href="forward.html#신경망의-구조"><i class="fa fa-check"></i><b>5.1</b> 신경망의 구조</a></li>
+<li class="chapter" data-level="5.2" data-path="forward.html"><a href="forward.html#순전파forward-propagation"><i class="fa fa-check"></i><b>5.2</b> 순전파(Forward propagation)</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="forward.html"><a href="forward.html#표본-1개-경로-1개만-생각해보기"><i class="fa fa-check"></i><b>5.2.1</b> 표본 1개, 경로 1개만 생각해보기</a></li>
+<li class="chapter" data-level="5.2.2" data-path="forward.html"><a href="forward.html#개의-표본-경로-한꺼번에-생각하기"><i class="fa fa-check"></i><b>5.2.2</b> 1개의 표본, 경로 한꺼번에 생각하기</a></li>
+<li class="chapter" data-level="5.2.3" data-path="forward.html"><a href="forward.html#전체-표본-경로-전체-생각해보기"><i class="fa fa-check"></i><b>5.2.3</b> 전체 표본, 경로 전체 생각해보기</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html"><i class="fa fa-check"></i><b>6</b> 미분 자동추적 기능 (Autograd) 에 대하여</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#예제-함수"><i class="fa fa-check"></i><b>6.1</b> 예제 함수</a></li>
+<li class="chapter" data-level="6.2" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#데이터-생성"><i class="fa fa-check"></i><b>6.2</b> 데이터 생성</a></li>
+<li class="chapter" data-level="6.3" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#함수-만들기-및-오차-그래프"><i class="fa fa-check"></i><b>6.3</b> 함수 만들기 및 오차 그래프</a></li>
+<li class="chapter" data-level="6.4" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#autograd-기능-없이-기울기-구하기"><i class="fa fa-check"></i><b>6.4</b> Autograd 기능 없이 기울기 구하기</a></li>
+<li class="chapter" data-level="6.5" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#자동미분autograd-기능"><i class="fa fa-check"></i><b>6.5</b> 자동미분(Autograd) 기능</a></li>
+<li class="chapter" data-level="6.6" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#자동-미분-관련-함수들"><i class="fa fa-check"></i><b>6.6</b> 자동 미분 관련 함수들</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#detach"><i class="fa fa-check"></i><b>6.6.1</b> <code>$detach()</code></a></li>
+<li class="chapter" data-level="6.6.2" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#requires_grad-변수와-requires_grad_true"><i class="fa fa-check"></i><b>6.6.2</b> <code>$requires_grad</code> 변수와 <code>$requires_grad_(TRUE)</code></a></li>
+<li class="chapter" data-level="6.6.3" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#with_no_grad"><i class="fa fa-check"></i><b>6.6.3</b> <code>with_no_grad({})</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#경사하강법"><i class="fa fa-check"></i><b>6.7</b> 경사하강법</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#시각화"><i class="fa fa-check"></i><b>6.7.1</b> 시각화</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html"><i class="fa fa-check"></i><b>7</b> <code>torch_nn</code> 모듈로 첫 신경망 정의하기</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#신경망-정의-custom-nn-modules"><i class="fa fa-check"></i><b>7.1</b> 신경망 정의 (Custom nn Modules)</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#nn_module과-클래스-상속"><i class="fa fa-check"></i><b>7.1.1</b> <code>nn_module</code>과 클래스 상속</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#nn_linear-클래스"><i class="fa fa-check"></i><b>7.2</b> <code>nn_linear</code> 클래스</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#bias-없는-경우"><i class="fa fa-check"></i><b>7.2.1</b> bias 없는 경우</a></li>
+<li class="chapter" data-level="7.2.2" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#bias-있는-경우"><i class="fa fa-check"></i><b>7.2.2</b> bias 있는 경우</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#순전파forward-propagation-정의"><i class="fa fa-check"></i><b>7.3</b> 순전파(Forward propagation) 정의</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/statisticsplaybook/r-torch-playbook" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">딥러닝 공략집 with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="forward" class="section level1" number="5">
+<h1><span class="header-section-number">Chapter 5</span> 순전파 (Forward propagation)</h1>
+<div id="신경망의-구조" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> 신경망의 구조</h2>
+<p>딥러닝의 시작점인 신경망(Neural network)을 공부하기 위해서, 앞으로 우리가 다룰 모델 중 가장 간단하면서, 딥러닝에서 어떤 일이 벌어지고 있는지 상상이 가능한 신경망을 먼저 학습하기로 하자. 우리가 오늘 예로 생각할 신경망은 다음과 같다.</p>
+<div class="figure" style="text-align: center"><span id="fig:neuralnet-example"></span>
+<img src="image/neuralnet1.png" alt="세상에서 가장 간단하지만 있을 건 다있는 신경망" width="100%" />
+<p class="caption">
+Figure 5.1: 세상에서 가장 간단하지만 있을 건 다있는 신경망
+</p>
+</div>
+<p>위의 그림과 같은 신경망을 2단 신경망이라고 부른다. 일반적으로 단수를 셀 때 제일 처음 입력하는 층은 단수에 포함하지 않는 것에 주의하자. 각 녹색, 회색, 그리고 빨간색의 노드(node)들은 신경망의 요소를 이루는데, 각각의 이름은 다음과 같다.</p>
+<ul>
+<li>입력층(input layer) - 2개의 녹색 노드(node)</li>
+<li>은닉층(hidden layer) - 3개의 회색 노드(node)</li>
+<li>출력층(output layer) - 1개의 빨강색 노드(node)</li>
+</ul>
+<p>자 이제부터, 녹색 노드에는 무엇이 들어가는지, 그리고, 어떤 과정을 거쳐서 빨강색의 값이 나오는지에 대하여 알아보자. 딥러닝에서 녹색이 입력값을 넣어서 빨간색의 결과값을 얻는 과정을 <strong>순전파(Forward propagation)</strong>라고 부른다. <code>propagation</code>의 뜻은 증식, 혹은 번식인데, 식물이나 동물이 자라나는 것을 의미하는데, 녹색의 입력값들이 어떠한 과정을 거쳐 빨간색으로 자라나는지 한번 알아보자.</p>
+</div>
+<div id="순전파forward-propagation" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> 순전파(Forward propagation)</h2>
+<p>우리가 사용할 데이터 역시 아주 간단하다.</p>
+<p><span class="math display">\[
+X =\left(\begin{array}{cc}
+1 &amp; 2\\
+3 &amp; 4\\
+5 &amp; 6
+\end{array}\right)
+\]</span>
+가로 행이 하나의 표본을 의미하고, 세로 열 각각은 변수를 의미한다. 즉, 위의 자료 행렬은 2개의 변수 정보가 들어있는 세 개의 표본들이 있는 자료을 의미한다.</p>
+<div id="표본-1개-경로-1개만-생각해보기" class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> 표본 1개, 경로 1개만 생각해보기</h3>
+<p>주의할 것은, 우리가 그려놓은 신경망의 입력층의 노드는 2개이고, 자료 행렬은 3행 2열이라는 것이다. 우리가 그려놓은 신경망으로 샘플 하나 하나가 입력층에 각각 입력되어 표본별 결과값 생성되는 것이다. 따라서 신경망을 잘 이해하기 위해서 딱 하나의 표본, 그리고 딱 하나의 경로만을 생각해보자.</p>
+<pre><code>&gt; 목표: 첫번째 표본인 $(1, 2)$가 다음과 같은 경로를 타고 어떻게 자라나는지 생각해보자. </code></pre>
+<div class="figure" style="text-align: center"><span id="fig:neuralnet-path"></span>
+<img src="image/neuralnet3.png" alt="예시 경로 1" width="100%" />
+<p class="caption">
+Figure 5.2: 예시 경로 1
+</p>
+</div>
+<p>그림에서 <span class="math inline">\(\beta\)</span>는 노드와 노드 사이를 지나갈 때 부여되는 웨이트들을 의미하고, <span class="math inline">\(\sigma()\)</span>는 다음의 시그모이드(sigmoid) 함수를 의미한다.</p>
+<p><span class="math display">\[
+\sigma(x) = \frac{1}{1+e^{-x}} = \frac{e^x}{e^x+1}
+\]</span></p>
+<p>자료 행렬을 위에 색칠된 경로로 보낸다는 의미는 다음과 같은 계산과정을 거친다는 것이다.</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="forward.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb199-2"><a href="forward.html#cb199-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb199-3"><a href="forward.html#cb199-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 매트릭스 </span></span>
+<span id="cb199-4"><a href="forward.html#cb199-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 by 2</span></span>
+<span id="cb199-5"><a href="forward.html#cb199-5" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> T),</span>
+<span id="cb199-6"><a href="forward.html#cb199-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">dtype =</span> <span class="fu">torch_double</span>())</span>
+<span id="cb199-7"><a href="forward.html#cb199-7" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1  2
+## [ CPUDoubleType{1,2} ]</code></pre>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="forward.html#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="co"># beta_1 벡터 </span></span>
+<span id="cb201-2"><a href="forward.html#cb201-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2 by 1</span></span>
+<span id="cb201-3"><a href="forward.html#cb201-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1번째 레이어에 관한 웨이트 (베타) 중 </span></span>
+<span id="cb201-4"><a href="forward.html#cb201-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 다음 레이어의 1번째 노드에 대한 베타 벡터에 부여</span></span>
+<span id="cb201-5"><a href="forward.html#cb201-5" aria-hidden="true" tabindex="-1"></a><span class="co"># beta_1 = (beta_11, beta_12)</span></span>
+<span id="cb201-6"><a href="forward.html#cb201-6" aria-hidden="true" tabindex="-1"></a>beta_1 <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">2</span>), <span class="at">ncol =</span> <span class="dv">1</span>),</span>
+<span id="cb201-7"><a href="forward.html#cb201-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">dtype =</span> <span class="fu">torch_double</span>()) </span>
+<span id="cb201-8"><a href="forward.html#cb201-8" aria-hidden="true" tabindex="-1"></a>beta_1</span></code></pre></div>
+<pre><code>## torch_tensor
+##  0.1137
+##  0.6223
+## [ CPUDoubleType{2,1} ]</code></pre>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="forward.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2번째 레이어 1번째 노드</span></span>
+<span id="cb203-2"><a href="forward.html#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 by 1</span></span>
+<span id="cb203-3"><a href="forward.html#cb203-3" aria-hidden="true" tabindex="-1"></a>z_21 <span class="ot">&lt;-</span> X<span class="sc">$</span><span class="fu">mm</span>(beta_1)</span>
+<span id="cb203-4"><a href="forward.html#cb203-4" aria-hidden="true" tabindex="-1"></a>z_21</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1.3583
+## [ CPUDoubleType{1,1} ]</code></pre>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="forward.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2번째 레이어 1번째 노드에서의 시그모이드 함수 통과</span></span>
+<span id="cb205-2"><a href="forward.html#cb205-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 by 1</span></span>
+<span id="cb205-3"><a href="forward.html#cb205-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sigmoid)</span>
+<span id="cb205-4"><a href="forward.html#cb205-4" aria-hidden="true" tabindex="-1"></a>a_21 <span class="ot">&lt;-</span> <span class="fu">sigmoid</span>(z_21)</span>
+<span id="cb205-5"><a href="forward.html#cb205-5" aria-hidden="true" tabindex="-1"></a>a_21</span></code></pre></div>
+<pre><code>## torch_tensor
+##  0.7955
+## [ CPUDoubleType{1,1} ]</code></pre>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="forward.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2번째 레이어에 관한 웨이트 (감마) 중 </span></span>
+<span id="cb207-2"><a href="forward.html#cb207-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 다음 레이어의 1번째 노드에 대한 베타값에 임의의 값을 부여</span></span>
+<span id="cb207-3"><a href="forward.html#cb207-3" aria-hidden="true" tabindex="-1"></a><span class="co"># beta_1 상수 1 by 1</span></span>
+<span id="cb207-4"><a href="forward.html#cb207-4" aria-hidden="true" tabindex="-1"></a>gamma_1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb207-5"><a href="forward.html#cb207-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-6"><a href="forward.html#cb207-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 3번째 레이어 1번째 노드</span></span>
+<span id="cb207-7"><a href="forward.html#cb207-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 by 1</span></span>
+<span id="cb207-8"><a href="forward.html#cb207-8" aria-hidden="true" tabindex="-1"></a>z_31 <span class="ot">&lt;-</span> a_21 <span class="sc">*</span> gamma_1</span>
+<span id="cb207-9"><a href="forward.html#cb207-9" aria-hidden="true" tabindex="-1"></a>z_31</span></code></pre></div>
+<pre><code>## torch_tensor
+##  0.4847
+## [ CPUDoubleType{1,1} ]</code></pre>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="forward.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 마지막 레이어에서 시그모이드 함수 통과</span></span>
+<span id="cb209-2"><a href="forward.html#cb209-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 by 1</span></span>
+<span id="cb209-3"><a href="forward.html#cb209-3" aria-hidden="true" tabindex="-1"></a>y_hat <span class="ot">&lt;-</span> <span class="fu">sigmoid</span>(z_31)</span>
+<span id="cb209-4"><a href="forward.html#cb209-4" aria-hidden="true" tabindex="-1"></a>y_hat</span></code></pre></div>
+<pre><code>## torch_tensor
+##  0.6188
+## [ CPUDoubleType{1,1} ]</code></pre>
+<p>즉, 우리가 생각하는 표본은 빨간색 노드에 도착하기 위해서 두번째 은닉층의 첫번째 노드를 통과하여 올 수 있다. 하지만 빨간색 노드에는 방금 우리가 생각한 경로 뿐만아니라 두 개의 선택지가 더 존재한다.</p>
+</div>
+<div id="개의-표본-경로-한꺼번에-생각하기" class="section level3" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> 1개의 표본, 경로 한꺼번에 생각하기</h3>
+<p>세가지의 경로를 모두 생각해보면, 우리의 표본은 다음의 경로를 통해서 도착한다.</p>
+<pre><code>&gt; 목표: 첫번째 표본인 $(1, 2)$가 다음과 같은 세가지 경로를 타고 어떻게 하나로 합쳐지는지 이해해보자. </code></pre>
+<div class="figure" style="text-align: center"><span id="fig:neuralnet-allpath"></span>
+<img src="image/neuralnet3.png" alt="3가지 경로" width="100%" />
+<p class="caption">
+Figure 5.3: 3가지 경로
+</p>
+</div>
+<p>이 과정을 우리가 통계 시간에 배운 회귀분석에 연결지어 생각해보면, 다음의 해석이 가능하다. 두번째 은닉층의 각각의 노드들이 하나의 회귀분석 예측 모델들이라고 생각하면, 신경망은 세 개의 회귀분석을 한 대 모아놓은 거대한 회귀분석 집합체라고 생각할 수 있게 된다. 즉, 각 회귀분석 모델들이 예측한 표본에 대한 대응변수 예측값들을 은닉층에 저장한 후, 그 예측값들을 모두 모아 마지막 빨간색 노드에서 합치면서 좀 더 좋은 예측값을 만들어 내는 것이다. 이 때, <span class="math inline">\(\gamma\)</span> 벡터를 통해 가중치를 부여하는 것이라고 해석이 가능하다.</p>
+<p>이 과정을 <code>torch</code> 텐서를 사용하여 깔끔하게 나타내보자.</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="forward.html#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1개 표본 </span></span>
+<span id="cb212-2"><a href="forward.html#cb212-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 by 2</span></span>
+<span id="cb212-3"><a href="forward.html#cb212-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> T),</span>
+<span id="cb212-4"><a href="forward.html#cb212-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">dtype =</span> <span class="fu">torch_double</span>()) </span>
+<span id="cb212-5"><a href="forward.html#cb212-5" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1  2
+## [ CPUDoubleType{1,2} ]</code></pre>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="forward.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 베타벡터가 세 개 존재함.</span></span>
+<span id="cb214-2"><a href="forward.html#cb214-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2 by 3</span></span>
+<span id="cb214-3"><a href="forward.html#cb214-3" aria-hidden="true" tabindex="-1"></a>beta_1 <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">2</span>), <span class="at">ncol =</span> <span class="dv">1</span>),</span>
+<span id="cb214-4"><a href="forward.html#cb214-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">dtype =</span> <span class="fu">torch_double</span>())</span>
+<span id="cb214-5"><a href="forward.html#cb214-5" aria-hidden="true" tabindex="-1"></a>beta_2 <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">2</span>), <span class="at">ncol =</span> <span class="dv">1</span>),</span>
+<span id="cb214-6"><a href="forward.html#cb214-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">dtype =</span> <span class="fu">torch_double</span>()) </span>
+<span id="cb214-7"><a href="forward.html#cb214-7" aria-hidden="true" tabindex="-1"></a>beta_3 <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">2</span>), <span class="at">ncol =</span> <span class="dv">1</span>),</span>
+<span id="cb214-8"><a href="forward.html#cb214-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">dtype =</span> <span class="fu">torch_double</span>()) </span>
+<span id="cb214-9"><a href="forward.html#cb214-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb214-10"><a href="forward.html#cb214-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 정의된 베타벡터를 cbind in torch</span></span>
+<span id="cb214-11"><a href="forward.html#cb214-11" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">torch_cat</span>(<span class="fu">c</span>(beta_1, beta_2, beta_3), <span class="dv">2</span>)</span>
+<span id="cb214-12"><a href="forward.html#cb214-12" aria-hidden="true" tabindex="-1"></a>beta</span></code></pre></div>
+<pre><code>## torch_tensor
+##  0.6234  0.6403  0.2326
+##  0.8609  0.0095  0.6661
+## [ CPUDoubleType{2,3} ]</code></pre>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="forward.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2번째 레이어 z_2</span></span>
+<span id="cb216-2"><a href="forward.html#cb216-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 by 3</span></span>
+<span id="cb216-3"><a href="forward.html#cb216-3" aria-hidden="true" tabindex="-1"></a>z_2 <span class="ot">&lt;-</span> X<span class="sc">$</span><span class="fu">mm</span>(beta)</span>
+<span id="cb216-4"><a href="forward.html#cb216-4" aria-hidden="true" tabindex="-1"></a>z_2</span></code></pre></div>
+<pre><code>## torch_tensor
+##  2.3452  0.6593  1.5647
+## [ CPUDoubleType{1,3} ]</code></pre>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="forward.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2번째 레이어 sigmoid 함수 통과</span></span>
+<span id="cb218-2"><a href="forward.html#cb218-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 by 3</span></span>
+<span id="cb218-3"><a href="forward.html#cb218-3" aria-hidden="true" tabindex="-1"></a>a_2 <span class="ot">&lt;-</span> <span class="fu">sigmoid</span>(z_2)</span>
+<span id="cb218-4"><a href="forward.html#cb218-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb218-5"><a href="forward.html#cb218-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2번째 레이어에 관한 웨이트 (감마) 벡터 </span></span>
+<span id="cb218-6"><a href="forward.html#cb218-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 다음 레이어의 1번째 노드에 대한 베타값에 임의의 값을 부여</span></span>
+<span id="cb218-7"><a href="forward.html#cb218-7" aria-hidden="true" tabindex="-1"></a><span class="co"># gamma vector 3 by 1</span></span>
+<span id="cb218-8"><a href="forward.html#cb218-8" aria-hidden="true" tabindex="-1"></a>gamma_1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb218-9"><a href="forward.html#cb218-9" aria-hidden="true" tabindex="-1"></a>gamma_2 <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb218-10"><a href="forward.html#cb218-10" aria-hidden="true" tabindex="-1"></a>gamma_3 <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb218-11"><a href="forward.html#cb218-11" aria-hidden="true" tabindex="-1"></a>gamma <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(gamma_1,</span>
+<span id="cb218-12"><a href="forward.html#cb218-12" aria-hidden="true" tabindex="-1"></a>                               gamma_2, </span>
+<span id="cb218-13"><a href="forward.html#cb218-13" aria-hidden="true" tabindex="-1"></a>                               gamma_3), <span class="at">ncol =</span> <span class="dv">1</span>),</span>
+<span id="cb218-14"><a href="forward.html#cb218-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dtype =</span> <span class="fu">torch_double</span>())</span>
+<span id="cb218-15"><a href="forward.html#cb218-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb218-16"><a href="forward.html#cb218-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 3번째 레이어 z_3</span></span>
+<span id="cb218-17"><a href="forward.html#cb218-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 by 1</span></span>
+<span id="cb218-18"><a href="forward.html#cb218-18" aria-hidden="true" tabindex="-1"></a>z_3 <span class="ot">&lt;-</span> a_2<span class="sc">$</span><span class="fu">mm</span>(gamma)</span>
+<span id="cb218-19"><a href="forward.html#cb218-19" aria-hidden="true" tabindex="-1"></a>z_3</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1.3771
+## [ CPUDoubleType{1,1} ]</code></pre>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="forward.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 마지막 레이어에서 시그모이드 함수 통과</span></span>
+<span id="cb220-2"><a href="forward.html#cb220-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 by 1</span></span>
+<span id="cb220-3"><a href="forward.html#cb220-3" aria-hidden="true" tabindex="-1"></a>y_hat <span class="ot">&lt;-</span> <span class="fu">sigmoid</span>(z_3)</span>
+<span id="cb220-4"><a href="forward.html#cb220-4" aria-hidden="true" tabindex="-1"></a>y_hat</span></code></pre></div>
+<pre><code>## torch_tensor
+##  0.7985
+## [ CPUDoubleType{1,1} ]</code></pre>
+<p><code>R</code>에서 우리가 즐겨쓰던 <code>cbind()</code>와 <code>rbind()</code>는 torch에서는 <code>torch_cat()</code> 하나의 함수으로 구현이 가능하다. 함수의 두번째 입력값은 숫자 1은 행방향(rbind)에, 2는 열방향(cbind)과 대응된다.</p>
+</div>
+<div id="전체-표본-경로-전체-생각해보기" class="section level3" number="5.2.3">
+<h3><span class="header-section-number">5.2.3</span> 전체 표본, 경로 전체 생각해보기</h3>
+<p>이제 자료 행렬 전체를 한꺼번에 넣는 방법을 생각해보자. 입력값이 자료 행렬 전체이므로, 결과값은 이에 대응하도록 행의 갯수와 같은 벡터 형식이 될 것이라는 것을 예상하고 코드를 따라오도록 하자.</p>
+<pre><code>&gt; 목표: 전체 표본이 신경망을 통해서 예측되는 구조를 이해하자. </code></pre>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="forward.html#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 텐서 </span></span>
+<span id="cb223-2"><a href="forward.html#cb223-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 by 2</span></span>
+<span id="cb223-3"><a href="forward.html#cb223-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> T),</span>
+<span id="cb223-4"><a href="forward.html#cb223-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">dtype =</span> <span class="fu">torch_double</span>()) </span>
+<span id="cb223-5"><a href="forward.html#cb223-5" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
+<pre><code>## torch_tensor
+##  1  2
+##  3  4
+##  5  6
+## [ CPUDoubleType{3,2} ]</code></pre>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="forward.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 베타벡터가 세 개 존재함.</span></span>
+<span id="cb225-2"><a href="forward.html#cb225-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2 by 3</span></span>
+<span id="cb225-3"><a href="forward.html#cb225-3" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">6</span>), <span class="at">ncol =</span> <span class="dv">3</span>),</span>
+<span id="cb225-4"><a href="forward.html#cb225-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">dtype =</span> <span class="fu">torch_double</span>())</span>
+<span id="cb225-5"><a href="forward.html#cb225-5" aria-hidden="true" tabindex="-1"></a>beta</span></code></pre></div>
+<pre><code>## torch_tensor
+##  0.2827  0.2923  0.2862
+##  0.9234  0.8373  0.2668
+## [ CPUDoubleType{2,3} ]</code></pre>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="forward.html#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2번째 레이어 z_2</span></span>
+<span id="cb227-2"><a href="forward.html#cb227-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 by 3</span></span>
+<span id="cb227-3"><a href="forward.html#cb227-3" aria-hidden="true" tabindex="-1"></a>z_2 <span class="ot">&lt;-</span> X<span class="sc">$</span><span class="fu">mm</span>(beta)</span>
+<span id="cb227-4"><a href="forward.html#cb227-4" aria-hidden="true" tabindex="-1"></a>z_2</span></code></pre></div>
+<pre><code>## torch_tensor
+##  2.1296  1.9669  0.8199
+##  4.5419  4.2261  1.9260
+##  6.9543  6.4854  3.0320
+## [ CPUDoubleType{3,3} ]</code></pre>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="forward.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2번째 레이어 sigmoid 함수 통과</span></span>
+<span id="cb229-2"><a href="forward.html#cb229-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 by 3</span></span>
+<span id="cb229-3"><a href="forward.html#cb229-3" aria-hidden="true" tabindex="-1"></a>a_2 <span class="ot">&lt;-</span> <span class="fu">sigmoid</span>(z_2)</span>
+<span id="cb229-4"><a href="forward.html#cb229-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb229-5"><a href="forward.html#cb229-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2번째 레이어에 관한 웨이트 (감마) 벡터 </span></span>
+<span id="cb229-6"><a href="forward.html#cb229-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 다음 레이어의 1번째 노드에 대한 베타값에 임의의 값을 부여</span></span>
+<span id="cb229-7"><a href="forward.html#cb229-7" aria-hidden="true" tabindex="-1"></a><span class="co"># gamma vector 3 by 1</span></span>
+<span id="cb229-8"><a href="forward.html#cb229-8" aria-hidden="true" tabindex="-1"></a>gamma <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">3</span>), <span class="at">ncol =</span> <span class="dv">1</span>),</span>
+<span id="cb229-9"><a href="forward.html#cb229-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dtype =</span> <span class="fu">torch_double</span>())</span>
+<span id="cb229-10"><a href="forward.html#cb229-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb229-11"><a href="forward.html#cb229-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 3번째 레이어 z_3</span></span>
+<span id="cb229-12"><a href="forward.html#cb229-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 by 1</span></span>
+<span id="cb229-13"><a href="forward.html#cb229-13" aria-hidden="true" tabindex="-1"></a>z_3 <span class="ot">&lt;-</span> a_2<span class="sc">$</span><span class="fu">mm</span>(gamma)</span>
+<span id="cb229-14"><a href="forward.html#cb229-14" aria-hidden="true" tabindex="-1"></a>z_3</span></code></pre></div>
+<pre><code>## torch_tensor
+##  0.5904
+##  0.6900
+##  0.7205
+## [ CPUDoubleType{3,1} ]</code></pre>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="forward.html#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 마지막 레이어에서 시그모이드 함수 통과</span></span>
+<span id="cb231-2"><a href="forward.html#cb231-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 by 1</span></span>
+<span id="cb231-3"><a href="forward.html#cb231-3" aria-hidden="true" tabindex="-1"></a>y_hat <span class="ot">&lt;-</span> <span class="fu">sigmoid</span>(z_3)</span>
+<span id="cb231-4"><a href="forward.html#cb231-4" aria-hidden="true" tabindex="-1"></a>y_hat</span></code></pre></div>
+<pre><code>## torch_tensor
+##  0.6435
+##  0.6660
+##  0.6727
+## [ CPUDoubleType{3,1} ]</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="r6.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="미분-자동추적-기능-autograd-에-대하여.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/statisticsplaybook/r-torch-playbook/edit/master/05-forward-propagation.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

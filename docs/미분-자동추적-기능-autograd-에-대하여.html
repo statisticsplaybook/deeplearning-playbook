@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 미분 자동추적 기능 (Autograd) 에 대하여 | 딥러닝 공략집 with R</title>
+  <title>Chapter 6 미분 자동추적 기능 (Autograd) 에 대하여 | 딥러닝 공략집 with R</title>
   <meta name="description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 미분 자동추적 기능 (Autograd) 에 대하여 | 딥러닝 공략집 with R" />
+  <meta property="og:title" content="Chapter 6 미분 자동추적 기능 (Autograd) 에 대하여 | 딥러닝 공략집 with R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="statisticsplaybook/r-torch-playbook" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 미분 자동추적 기능 (Autograd) 에 대하여 | 딥러닝 공략집 with R" />
+  <meta name="twitter:title" content="Chapter 6 미분 자동추적 기능 (Autograd) 에 대하여 | 딥러닝 공략집 with R" />
   
   <meta name="twitter:description" content="딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝판왕을 정복해보자. 본격 R 딥러닝 공략집" />
   
@@ -24,15 +24,15 @@
 <meta name="author" content="슬기로운통계생활" />
 
 
-<meta name="date" content="2021-02-13" />
+<meta name="date" content="2021-02-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="순전파-forward-propagation.html"/>
-<link rel="next" href="r6와-텐서.html"/>
+<link rel="prev" href="forward.html"/>
+<link rel="next" href="torch-nn-모듈로-첫-신경망-정의하기.html"/>
 <script src="libs/header-attrs-2.6.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">딥러닝 공략집 with Rtorch</a></li>
+<li><a href="./">딥러닝 공략집 with R</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>들어가며</a>
@@ -191,52 +191,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="텐서의-이동-cpu-leftrightarrow-gpu.html"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cpu-to-gpu"><i class="fa fa-check"></i><b>3.2</b> CPU to GPU</a></li>
 <li class="chapter" data-level="3.3" data-path="텐서의-이동-cpu-leftrightarrow-gpu.html"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#gpu-to-cpu"><i class="fa fa-check"></i><b>3.3</b> GPU to CPU</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="순전파-forward-propagation.html"><a href="순전파-forward-propagation.html"><i class="fa fa-check"></i><b>4</b> 순전파 (Forward propagation)</a>
+<li class="chapter" data-level="4" data-path="r6.html"><a href="r6.html"><i class="fa fa-check"></i><b>4</b> R6와 텐서</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="순전파-forward-propagation.html"><a href="순전파-forward-propagation.html#신경망의-구조"><i class="fa fa-check"></i><b>4.1</b> 신경망의 구조</a></li>
-<li class="chapter" data-level="4.2" data-path="순전파-forward-propagation.html"><a href="순전파-forward-propagation.html#순전파forward-propagation"><i class="fa fa-check"></i><b>4.2</b> 순전파(Forward propagation)</a>
+<li class="chapter" data-level="4.1" data-path="r6.html"><a href="r6.html#시작하기"><i class="fa fa-check"></i><b>4.1</b> 시작하기</a></li>
+<li class="chapter" data-level="4.2" data-path="r6.html"><a href="r6.html#클래스class와-멤버함수method-그리고-필드field"><i class="fa fa-check"></i><b>4.2</b> 클래스(Class)와 멤버함수(Method), 그리고 필드(Field)</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="순전파-forward-propagation.html"><a href="순전파-forward-propagation.html#표본-1개-경로-1개만-생각해보기"><i class="fa fa-check"></i><b>4.2.1</b> 표본 1개, 경로 1개만 생각해보기</a></li>
-<li class="chapter" data-level="4.2.2" data-path="순전파-forward-propagation.html"><a href="순전파-forward-propagation.html#개의-표본-경로-한꺼번에-생각하기"><i class="fa fa-check"></i><b>4.2.2</b> 1개의 표본, 경로 한꺼번에 생각하기</a></li>
-<li class="chapter" data-level="4.2.3" data-path="순전파-forward-propagation.html"><a href="순전파-forward-propagation.html#전체-표본-경로-전체-생각해보기"><i class="fa fa-check"></i><b>4.2.3</b> 전체 표본, 경로 전체 생각해보기</a></li>
+<li class="chapter" data-level="4.2.1" data-path="r6.html"><a href="r6.html#클래스는-왜-필요할까"><i class="fa fa-check"></i><b>4.2.1</b> 클래스는 왜 필요할까?</a></li>
+<li class="chapter" data-level="4.2.2" data-path="r6.html"><a href="r6.html#학생자료-입력-예제"><i class="fa fa-check"></i><b>4.2.2</b> 학생자료 입력 예제</a></li>
+<li class="chapter" data-level="4.2.3" data-path="r6.html"><a href="r6.html#클래스class-정의하기"><i class="fa fa-check"></i><b>4.2.3</b> 클래스(Class) 정의하기</a></li>
+<li class="chapter" data-level="4.2.4" data-path="r6.html"><a href="r6.html#print를-사용한-결과물-정리"><i class="fa fa-check"></i><b>4.2.4</b> print()를 사용한 결과물 정리</a></li>
+<li class="chapter" data-level="4.2.5" data-path="r6.html"><a href="r6.html#set을-이용한-클래스-조정"><i class="fa fa-check"></i><b>4.2.5</b> set을 이용한 클래스 조정</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="r6.html"><a href="r6.html#상속inheritance---클래스-물려받기"><i class="fa fa-check"></i><b>4.3</b> 상속(Inheritance) - 클래스 물려받기</a></li>
+<li class="chapter" data-level="4.4" data-path="r6.html"><a href="r6.html#공개public정보와-비공개private-정보의-필요성"><i class="fa fa-check"></i><b>4.4</b> 공개(Public)정보와 비공개(Private) 정보의 필요성</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="r6.html"><a href="r6.html#활성-변수active-field를-사용한-읽기-전용-변수"><i class="fa fa-check"></i><b>4.4.1</b> 활성 변수(active field)를 사용한 읽기 전용 변수</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="r6.html"><a href="r6.html#텐서와-r6의-관계"><i class="fa fa-check"></i><b>4.5</b> 텐서와 R6의 관계</a></li>
+<li class="chapter" data-level="4.6" data-path="r6.html"><a href="r6.html#r6-관련자료"><i class="fa fa-check"></i><b>4.6</b> R6 관련자료</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="forward.html"><a href="forward.html"><i class="fa fa-check"></i><b>5</b> 순전파 (Forward propagation)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="forward.html"><a href="forward.html#신경망의-구조"><i class="fa fa-check"></i><b>5.1</b> 신경망의 구조</a></li>
+<li class="chapter" data-level="5.2" data-path="forward.html"><a href="forward.html#순전파forward-propagation"><i class="fa fa-check"></i><b>5.2</b> 순전파(Forward propagation)</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="forward.html"><a href="forward.html#표본-1개-경로-1개만-생각해보기"><i class="fa fa-check"></i><b>5.2.1</b> 표본 1개, 경로 1개만 생각해보기</a></li>
+<li class="chapter" data-level="5.2.2" data-path="forward.html"><a href="forward.html#개의-표본-경로-한꺼번에-생각하기"><i class="fa fa-check"></i><b>5.2.2</b> 1개의 표본, 경로 한꺼번에 생각하기</a></li>
+<li class="chapter" data-level="5.2.3" data-path="forward.html"><a href="forward.html#전체-표본-경로-전체-생각해보기"><i class="fa fa-check"></i><b>5.2.3</b> 전체 표본, 경로 전체 생각해보기</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html"><i class="fa fa-check"></i><b>5</b> 미분 자동추적 기능 (Autograd) 에 대하여</a>
+<li class="chapter" data-level="6" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html"><i class="fa fa-check"></i><b>6</b> 미분 자동추적 기능 (Autograd) 에 대하여</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#예제-함수"><i class="fa fa-check"></i><b>5.1</b> 예제 함수</a></li>
-<li class="chapter" data-level="5.2" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#데이터-생성"><i class="fa fa-check"></i><b>5.2</b> 데이터 생성</a></li>
-<li class="chapter" data-level="5.3" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#함수-만들기-및-오차-그래프"><i class="fa fa-check"></i><b>5.3</b> 함수 만들기 및 오차 그래프</a></li>
-<li class="chapter" data-level="5.4" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#autograd-기능-없이-기울기-구하기"><i class="fa fa-check"></i><b>5.4</b> Autograd 기능 없이 기울기 구하기</a></li>
-<li class="chapter" data-level="5.5" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#자동미분autograd-기능"><i class="fa fa-check"></i><b>5.5</b> 자동미분(Autograd) 기능</a></li>
-<li class="chapter" data-level="5.6" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#자동-미분-관련-함수들"><i class="fa fa-check"></i><b>5.6</b> 자동 미분 관련 함수들</a>
+<li class="chapter" data-level="6.1" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#예제-함수"><i class="fa fa-check"></i><b>6.1</b> 예제 함수</a></li>
+<li class="chapter" data-level="6.2" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#데이터-생성"><i class="fa fa-check"></i><b>6.2</b> 데이터 생성</a></li>
+<li class="chapter" data-level="6.3" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#함수-만들기-및-오차-그래프"><i class="fa fa-check"></i><b>6.3</b> 함수 만들기 및 오차 그래프</a></li>
+<li class="chapter" data-level="6.4" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#autograd-기능-없이-기울기-구하기"><i class="fa fa-check"></i><b>6.4</b> Autograd 기능 없이 기울기 구하기</a></li>
+<li class="chapter" data-level="6.5" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#자동미분autograd-기능"><i class="fa fa-check"></i><b>6.5</b> 자동미분(Autograd) 기능</a></li>
+<li class="chapter" data-level="6.6" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#자동-미분-관련-함수들"><i class="fa fa-check"></i><b>6.6</b> 자동 미분 관련 함수들</a>
 <ul>
-<li class="chapter" data-level="5.6.1" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#detach"><i class="fa fa-check"></i><b>5.6.1</b> <code>$detach()</code></a></li>
-<li class="chapter" data-level="5.6.2" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#requires_grad-변수와-requires_grad_true"><i class="fa fa-check"></i><b>5.6.2</b> <code>$requires_grad</code> 변수와 <code>$requires_grad_(TRUE)</code></a></li>
-<li class="chapter" data-level="5.6.3" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#with_no_grad"><i class="fa fa-check"></i><b>5.6.3</b> <code>with_no_grad({})</code></a></li>
+<li class="chapter" data-level="6.6.1" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#detach"><i class="fa fa-check"></i><b>6.6.1</b> <code>$detach()</code></a></li>
+<li class="chapter" data-level="6.6.2" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#requires_grad-변수와-requires_grad_true"><i class="fa fa-check"></i><b>6.6.2</b> <code>$requires_grad</code> 변수와 <code>$requires_grad_(TRUE)</code></a></li>
+<li class="chapter" data-level="6.6.3" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#with_no_grad"><i class="fa fa-check"></i><b>6.6.3</b> <code>with_no_grad({})</code></a></li>
 </ul></li>
-<li class="chapter" data-level="5.7" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#경사하강법"><i class="fa fa-check"></i><b>5.7</b> 경사하강법</a>
+<li class="chapter" data-level="6.7" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#경사하강법"><i class="fa fa-check"></i><b>6.7</b> 경사하강법</a>
 <ul>
-<li class="chapter" data-level="5.7.1" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#시각화"><i class="fa fa-check"></i><b>5.7.1</b> 시각화</a></li>
+<li class="chapter" data-level="6.7.1" data-path="미분-자동추적-기능-autograd-에-대하여.html"><a href="미분-자동추적-기능-autograd-에-대하여.html#시각화"><i class="fa fa-check"></i><b>6.7.1</b> 시각화</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="r6와-텐서.html"><a href="r6와-텐서.html"><i class="fa fa-check"></i><b>6</b> R6와 텐서</a>
+<li class="chapter" data-level="7" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html"><i class="fa fa-check"></i><b>7</b> <code>torch_nn</code> 모듈로 첫 신경망 정의하기</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="r6와-텐서.html"><a href="r6와-텐서.html#시작하기"><i class="fa fa-check"></i><b>6.1</b> 시작하기</a></li>
-<li class="chapter" data-level="6.2" data-path="r6와-텐서.html"><a href="r6와-텐서.html#클래스class와-멤버함수method-그리고-필드field"><i class="fa fa-check"></i><b>6.2</b> 클래스(Class)와 멤버함수(Method), 그리고 필드(Field)</a>
+<li class="chapter" data-level="7.1" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#신경망-정의-custom-nn-modules"><i class="fa fa-check"></i><b>7.1</b> 신경망 정의 (Custom nn Modules)</a>
 <ul>
-<li class="chapter" data-level="6.2.1" data-path="r6와-텐서.html"><a href="r6와-텐서.html#클래스는-왜-필요할까"><i class="fa fa-check"></i><b>6.2.1</b> 클래스는 왜 필요할까?</a></li>
-<li class="chapter" data-level="6.2.2" data-path="r6와-텐서.html"><a href="r6와-텐서.html#학생자료-입력-예제"><i class="fa fa-check"></i><b>6.2.2</b> 학생자료 입력 예제</a></li>
-<li class="chapter" data-level="6.2.3" data-path="r6와-텐서.html"><a href="r6와-텐서.html#클래스class-정의하기"><i class="fa fa-check"></i><b>6.2.3</b> 클래스(Class) 정의하기</a></li>
-<li class="chapter" data-level="6.2.4" data-path="r6와-텐서.html"><a href="r6와-텐서.html#print를-사용한-결과물-정리"><i class="fa fa-check"></i><b>6.2.4</b> print()를 사용한 결과물 정리</a></li>
-<li class="chapter" data-level="6.2.5" data-path="r6와-텐서.html"><a href="r6와-텐서.html#set을-이용한-클래스-조정"><i class="fa fa-check"></i><b>6.2.5</b> set을 이용한 클래스 조정</a></li>
+<li class="chapter" data-level="7.1.1" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#nn_module과-클래스-상속"><i class="fa fa-check"></i><b>7.1.1</b> <code>nn_module</code>과 클래스 상속</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="r6와-텐서.html"><a href="r6와-텐서.html#상속inheritance---클래스-물려받기"><i class="fa fa-check"></i><b>6.3</b> 상속(Inheritance) - 클래스 물려받기</a></li>
-<li class="chapter" data-level="6.4" data-path="r6와-텐서.html"><a href="r6와-텐서.html#공개public정보와-비공개private-정보의-필요성"><i class="fa fa-check"></i><b>6.4</b> 공개(Public)정보와 비공개(Private) 정보의 필요성</a>
+<li class="chapter" data-level="7.2" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#nn_linear-클래스"><i class="fa fa-check"></i><b>7.2</b> <code>nn_linear</code> 클래스</a>
 <ul>
-<li class="chapter" data-level="6.4.1" data-path="r6와-텐서.html"><a href="r6와-텐서.html#활성-변수active-field를-사용한-읽기-전용-변수"><i class="fa fa-check"></i><b>6.4.1</b> 활성 변수(active field)를 사용한 읽기 전용 변수</a></li>
+<li class="chapter" data-level="7.2.1" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#bias-없는-경우"><i class="fa fa-check"></i><b>7.2.1</b> bias 없는 경우</a></li>
+<li class="chapter" data-level="7.2.2" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#bias-있는-경우"><i class="fa fa-check"></i><b>7.2.2</b> bias 있는 경우</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="r6와-텐서.html"><a href="r6와-텐서.html#텐서와-r6의-관계"><i class="fa fa-check"></i><b>6.5</b> 텐서와 R6의 관계</a></li>
-<li class="chapter" data-level="6.6" data-path="r6와-텐서.html"><a href="r6와-텐서.html#r6-관련자료"><i class="fa fa-check"></i><b>6.6</b> R6 관련자료</a></li>
+<li class="chapter" data-level="7.3" data-path="torch-nn-모듈로-첫-신경망-정의하기.html"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#순전파forward-propagation-정의"><i class="fa fa-check"></i><b>7.3</b> 순전파(Forward propagation) 정의</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -259,11 +272,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="미분-자동추적-기능-autograd-에-대하여" class="section level1" number="5">
-<h1><span class="header-section-number">Chapter 5</span> 미분 자동추적 기능 (Autograd) 에 대하여</h1>
+<div id="미분-자동추적-기능-autograd-에-대하여" class="section level1" number="6">
+<h1><span class="header-section-number">Chapter 6</span> 미분 자동추적 기능 (Autograd) 에 대하여</h1>
 <p>이번 장에서는 <code>torch</code> 및 다른 딥러닝 라이브러리의 근본을 이루는 기능인 미분 자동 추적 기능에 대하여 알아보도록 하자. 예를 들어 설명하는 것을 좋아하므로, 이번 챕터에 쓸 예제 함수를 먼저 정의하자.</p>
-<div id="예제-함수" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> 예제 함수</h2>
+<div id="예제-함수" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> 예제 함수</h2>
 <p><span class="math inline">\(n\)</span>개의 데이터 <span class="math inline">\(x_1, ..., x_n\)</span>이 주어졌다고 할 때, 우리는 다음의 함수 <span class="math inline">\(f\)</span>를 정의 할 수 있다.</p>
 <p><span class="math display">\[
 f(\mu) = \frac{1}{n}\sum_{i=1}^{n}(x_i - \mu)^2
@@ -271,17 +284,17 @@ f(\mu) = \frac{1}{n}\sum_{i=1}^{n}(x_i - \mu)^2
 <p>위의 함수는 다음과 같이 해석해 볼 수 있다. <span class="math inline">\(x\)</span> 데이터에 담겨있는 정보를 단 하나의 지표 <span class="math inline">\(\mu\)</span>로 압축해서 나타낸다고 할 때, 함수 <span class="math inline">\(f\)</span>는 각 관찰값에 대한 오차들, <span class="math inline">\(x_i - \mu\)</span>,의 제곱의 평균을 나타낸다.</p>
 <p>통계학에서는 나름 유명한 함수인데, 왜냐하면 위의 함수값을 최소화시키는 <span class="math inline">\(\mu\)</span>를 찾게되면 표본평균(<span class="math inline">\(\bar{x}\)</span>) 나오기 때문이다. 오늘은 이 함수를 통하여 <code>torch</code>의 자동 미분 기능에 대하여 알아보고자 한다.</p>
 </div>
-<div id="데이터-생성" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> 데이터 생성</h2>
+<div id="데이터-생성" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> 데이터 생성</h2>
 <p><code>torch</code>패키지를 불러 임의로 난수를 발생시킨 후, 텐서 <code>x</code>에 집어넣도록 하자.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span>
-<span id="cb1-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># set seed in torch</span></span>
-<span id="cb1-5"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_manual_seed</span>(<span class="dv">2021</span>)</span>
-<span id="cb1-6"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb1-7" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">7</span>) <span class="sc">*</span> <span class="dv">10</span></span>
-<span id="cb1-8"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb1-8" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb233-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb233-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span>
+<span id="cb233-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb233-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb233-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb233-4" aria-hidden="true" tabindex="-1"></a><span class="co"># set seed in torch</span></span>
+<span id="cb233-5"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb233-5" aria-hidden="true" tabindex="-1"></a><span class="fu">torch_manual_seed</span>(<span class="dv">2021</span>)</span>
+<span id="cb233-6"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb233-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb233-7"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb233-7" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">torch_rand</span>(<span class="dv">7</span>) <span class="sc">*</span> <span class="dv">10</span></span>
+<span id="cb233-8"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb233-8" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  5.1339
 ##  7.4256
@@ -297,39 +310,39 @@ f(\mu) = \frac{1}{n}\sum_{i=1}^{n}(x_i - \mu)^2
 <li><code>torch_rand()</code>: <code>base</code> 패키지에서 <code>runif()</code> 함수와 같다. 균등분포(Uniform distribution) 분포에서 원하는 갯수만큼 표본을 뽑는다.</li>
 </ul>
 </div>
-<div id="함수-만들기-및-오차-그래프" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> 함수 만들기 및 오차 그래프</h2>
+<div id="함수-만들기-및-오차-그래프" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> 함수 만들기 및 오차 그래프</h2>
 <p>앞에서 살펴본 함수 <span class="math inline">\(f\)</span>는 모수(<span class="math inline">\(\mu\)</span>)를 입력값으로 하는 함수이므로, 다음과 같이 함수를 정의 할 수 있다.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb3-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(mu){</span>
-<span id="cb3-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>((x <span class="sc">-</span> mu)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb3-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb235-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(mu){</span>
+<span id="cb235-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb235-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>((x <span class="sc">-</span> mu)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb235-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb235-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb235-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb235-4" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## torch_tensor
 ## 20.0462
 ## [ CPUFloatType{} ]</code></pre>
 <p>위에서 알 수 있듯, <span class="math inline">\(\mu\)</span> 값이 2인 경우에 대한 오차들의 제곱의 평균값은 20.0462이다. 여러 <span class="math inline">\(\mu\)</span> 값에 대하여 <code>f</code> 함수의 값을 구해보자.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb5-1" aria-hidden="true" tabindex="-1"></a>mu_vec <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="fl">0.02</span>)</span>
-<span id="cb5-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb5-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(mu_vec, <span class="sc">~</span><span class="fu">as.numeric</span>(<span class="fu">f</span>(<span class="at">mu =</span> .x)))</span>
-<span id="cb5-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(result)</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb237-1" aria-hidden="true" tabindex="-1"></a>mu_vec <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="fl">0.02</span>)</span>
+<span id="cb237-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb237-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(mu_vec, <span class="sc">~</span><span class="fu">as.numeric</span>(<span class="fu">f</span>(<span class="at">mu =</span> .x)))</span>
+<span id="cb237-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb237-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(result)</span></code></pre></div>
 <pre><code>## [1] 37.27285 37.06098 36.84991 36.63964 36.43018 36.22152</code></pre>
 <p>위의 두 정보를 이용해서 <code>f</code>의 모양이 어떻게 생겼는지 그려보면 다음과 같이 2차원 곡선을 띄고있다는 것을 알 수 있다.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
-<span id="cb7-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latex2exp)</span>
-<span id="cb7-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_igray</span>())</span>
-<span id="cb7-5"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb7-6" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> mu_vec, </span>
-<span id="cb7-7"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb7-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> result)</span>
-<span id="cb7-8"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb7-9" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> plot_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb7-10"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb7-11"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">TeX</span>(<span class="st">&quot;$</span><span class="sc">\\</span><span class="st">mu$&quot;</span>),</span>
-<span id="cb7-12"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb7-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="fu">TeX</span>(<span class="st">&quot;$f(</span><span class="sc">\\</span><span class="st">mu)$&quot;</span>))</span>
-<span id="cb7-13"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb7-13" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb239-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb239-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latex2exp)</span>
+<span id="cb239-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb239-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb239-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb239-4" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_igray</span>())</span>
+<span id="cb239-5"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb239-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb239-6"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb239-6" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> mu_vec, </span>
+<span id="cb239-7"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb239-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> result)</span>
+<span id="cb239-8"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb239-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb239-9"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb239-9" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> plot_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb239-10"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb239-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb239-11"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb239-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">TeX</span>(<span class="st">&quot;$</span><span class="sc">\\</span><span class="st">mu$&quot;</span>),</span>
+<span id="cb239-12"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb239-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="fu">TeX</span>(<span class="st">&quot;$f(</span><span class="sc">\\</span><span class="st">mu)$&quot;</span>))</span>
+<span id="cb239-13"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb239-13" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:f-errormean"></span>
 <img src="bookdown-demo_files/figure-html/f-errormean-1.png" alt="$\mu$ 값에 따른 `myf` 함수값의 변화" width="100%" />
 <p class="caption">
-Figure 5.1: <span class="math inline">\(\mu\)</span> 값에 따른 <code>myf</code> 함수값의 변화
+Figure 6.1: <span class="math inline">\(\mu\)</span> 값에 따른 <code>myf</code> 함수값의 변화
 </p>
 </div>
 <p>우리의 목표는 바로 저 곡선을 최소로 만드는 <span class="math inline">\(\mu\)</span> 값이 무엇인지 찾아내는 것이다. 이 최소값을 찾기위해서는 <a href="https://ko.wikipedia.org/wiki/%EA%B2%BD%EC%82%AC_%ED%95%98%EA%B0%95%EB%B2%95">경사하강법</a> 같은 방법을 사용해야 하는데, 이러한 알고리즘들의 핵심은 바로 주어진 <span class="math inline">\(\mu\)</span>값에 대응하는 기울기값을 구하는 것이다.</p>
@@ -340,8 +353,8 @@ Figure 5.1: <span class="math inline">\(\mu\)</span> 값에 따른 <code>myf</co
 \]</span></p>
 <p>위의 수식에서 <span class="math inline">\(\gamma _{i}\)</span>은 탐색을 할 때 움직이는 거리 (step size)라고 부르고, 딥러닝 분야에서는 나중에 학습률(learning rate)의 개념이 된다. 또한, <span class="math inline">\(\nabla f(\mathbf {\mu} _{i})\)</span> 부분이 바로 기울기값을 나타내는 부분이다.</p>
 </div>
-<div id="autograd-기능-없이-기울기-구하기" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Autograd 기능 없이 기울기 구하기</h2>
+<div id="autograd-기능-없이-기울기-구하기" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Autograd 기능 없이 기울기 구하기</h2>
 <p>먼저 <code>torch</code>의 자동기울기 기능를 사용해서 기울기값 계산을 하기에 앞서, 계산 결과를 구해보자. <span class="math inline">\(y\)</span>를 <span class="math inline">\(\beta\)</span>에 대하여 미분하면 다음과 같다.</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -351,138 +364,138 @@ f&#39;(\beta) &amp; =\frac{d}{d\beta}\left(\frac{1}{n}\sum_{i=1}^{n}\left(x_{i}-
 \end{align*}
 \]</span></p>
 <p>따라서 <code>mu</code>값이 <code>2.5</code>로 주어졌을때, 기울기 값은 다음과 같다.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb8-1" aria-hidden="true" tabindex="-1"></a>f_prime <span class="ot">&lt;-</span> <span class="cf">function</span>(mu){</span>
-<span id="cb8-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span><span class="fu">mean</span>(<span class="dv">2</span><span class="sc">*</span>(x <span class="sc">-</span> mu))</span>
-<span id="cb8-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb8-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">f_prime</span>(<span class="fl">2.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb240-1" aria-hidden="true" tabindex="-1"></a>f_prime <span class="ot">&lt;-</span> <span class="cf">function</span>(mu){</span>
+<span id="cb240-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb240-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span><span class="fu">mean</span>(<span class="dv">2</span><span class="sc">*</span>(x <span class="sc">-</span> mu))</span>
+<span id="cb240-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb240-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb240-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb240-4" aria-hidden="true" tabindex="-1"></a><span class="fu">f_prime</span>(<span class="fl">2.5</span>)</span></code></pre></div>
 <pre><code>## torch_tensor
 ## -5.61331
 ## [ CPUFloatType{} ]</code></pre>
 <p>이것이 실제로 그러한지 그림을 그려보자.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb10-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
-<span id="cb10-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb10-2" aria-hidden="true" tabindex="-1"></a>my_slope <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">f_prime</span>(mu))</span>
-<span id="cb10-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb10-3" aria-hidden="true" tabindex="-1"></a>my_intercept <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">f</span>(mu) <span class="sc">-</span> <span class="fu">f_prime</span>(mu) <span class="sc">*</span> mu)</span>
-<span id="cb10-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb10-4" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-5"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb10-5" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_abline</span>(<span class="at">slope =</span> my_slope,</span>
-<span id="cb10-6"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb10-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">intercept =</span> my_intercept, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb242-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
+<span id="cb242-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb242-2" aria-hidden="true" tabindex="-1"></a>my_slope <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">f_prime</span>(mu))</span>
+<span id="cb242-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb242-3" aria-hidden="true" tabindex="-1"></a>my_intercept <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">f</span>(mu) <span class="sc">-</span> <span class="fu">f_prime</span>(mu) <span class="sc">*</span> mu)</span>
+<span id="cb242-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb242-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb242-5"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb242-5" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_abline</span>(<span class="at">slope =</span> my_slope,</span>
+<span id="cb242-6"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb242-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">intercept =</span> my_intercept, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
 </div>
-<div id="자동미분autograd-기능" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> 자동미분(Autograd) 기능</h2>
+<div id="자동미분autograd-기능" class="section level2" number="6.5">
+<h2><span class="header-section-number">6.5</span> 자동미분(Autograd) 기능</h2>
 <p><code>torch</code>에는 우리가 계산한 기울기 구하는 과정들을 자동으로 해주는 기능이 있다. 바로 자동미분 (Auto gradient) 기능이다. 기울기값 계산을 위해서 해야할 일은 기울기 계산기능을 <code>activate</code> 해주는 옵션을 실행시켜주기만 하면 된다.</p>
 <p>함수는 <span class="math inline">\(\mu\)</span>에 대한 함수이므로, 기울기값을 추적할 텐서 <span class="math inline">\(\mu\)</span>를 선언할 때 <code>requires_grad = TRUE</code> 옵션을 붙여줘서 선언하면 끝이다. 이 옵션이 활성화 되면 <code>torch</code>는 이 변수와 관련된 다른 변수들에 대하여 기울기값을 자동으로 추적한다. 추후 복잡한 신경망을 다루는 딥러닝 분야에서는 기울기를 구하는 것이 학습에 아주 핵심적인 기능이고, 이러한 기울기를 구하는 이러한 기울기를 계산하는 방법을 역전파 (backpropagation)라고 부른다.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb11-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fl">2.5</span>, <span class="at">requires_grad=</span><span class="cn">TRUE</span>)</span>
-<span id="cb11-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb11-2" aria-hidden="true" tabindex="-1"></a>mu</span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb243-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fl">2.5</span>, <span class="at">requires_grad=</span><span class="cn">TRUE</span>)</span>
+<span id="cb243-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb243-2" aria-hidden="true" tabindex="-1"></a>mu</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  2.5000
 ## [ CPUFloatType{1} ]</code></pre>
 <p><code>mu</code> 텐서가 기울기 추적 옵션을 달고 있어서, 이와 관련되어 생성되는 모든 텐서에 기울기 추적 옵션 grad_fn 태그가 달려서 생성된다. 다음과 같이 y를 정의를 하면, y에도 역시 grad_fn이 붙어서 생성되는 것을 알 수 있다.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb13-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">mean</span>((x <span class="sc">-</span> mu)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb13-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb13-2" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span>grad_fn</span></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb245-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">mean</span>((x <span class="sc">-</span> mu)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb245-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb245-2" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span>grad_fn</span></code></pre></div>
 <pre><code>## MeanBackward0</code></pre>
 <p>기울기 값 계산을 위해서 해야 할 일은 기울기 계산을 <code>activate</code> 해주는 함수를 실행시켜주기만 하면 된다. y에 대한 베타의 기울기 값을 구하는 것이므로, 다음과 같이 <code>backward()</code>를 이용하여 역전파(backward propagation)를 통하여 기울기 계산을 한다.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb15-1" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span><span class="fu">backward</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb247-1" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span><span class="fu">backward</span>()</span></code></pre></div>
 <p>자동 기울기 추적 기능을 사용한 auto grad가 구한 베타의 기울기값이 우리가 구한 값과 동일한지 확인해보자.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">f_prime</span>(<span class="fl">2.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="fu">f_prime</span>(<span class="fl">2.5</span>)</span></code></pre></div>
 <pre><code>## torch_tensor
 ## -5.61331
 ## [ CPUFloatType{} ]</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb18-1" aria-hidden="true" tabindex="-1"></a>mu<span class="sc">$</span>grad</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb250-1" aria-hidden="true" tabindex="-1"></a>mu<span class="sc">$</span>grad</span></code></pre></div>
 <pre><code>## torch_tensor
 ## -5.6133
 ## [ CPUFloatType{1} ]</code></pre>
 <p>앞에서 구한 <code>f_prime(2.5)</code>값이 동일하게 <code>mu$grad</code>에 담겨 있다는 것을 알 수 있다.</p>
 </div>
-<div id="자동-미분-관련-함수들" class="section level2" number="5.6">
-<h2><span class="header-section-number">5.6</span> 자동 미분 관련 함수들</h2>
+<div id="자동-미분-관련-함수들" class="section level2" number="6.6">
+<h2><span class="header-section-number">6.6</span> 자동 미분 관련 함수들</h2>
 <p>기울기 자동 추적기능을 사용한다는 것은 그것을 돌리는 컴퓨터의 메모리를 많이 차지한다는 이야기이다. 따라서 우리가 생각하는 변수에 대한 것에만 추적 옵션을 붙여야 하고, 더 이상 필요가 없어지면 기능을 꺼주기도 해야 할 것이다. 이러한 자동 미분 추척 기능들을 자유자재로 다루기 위해서 알아두어야 할 함수들이 있다.</p>
-<div id="detach" class="section level3" number="5.6.1">
-<h3><span class="header-section-number">5.6.1</span> <code>$detach()</code></h3>
+<div id="detach" class="section level3" number="6.6.1">
+<h3><span class="header-section-number">6.6.1</span> <code>$detach()</code></h3>
 <p>현재 y는 기울기 자동추적 기능이 붙어있다. 우리가 다음과 같이 y를 사용해서 텐서 <code>z</code>를 생성하면 그 역시 옵션이 딸려 생성이 될 테지만, y 텐서 이후 부터는 추적 기능을 사용하고 싶지 않을때, <code>$detach()</code>를 사용해서 추적기를 떼어낼 수 있다.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb20-1" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span>grad_fn</span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb252-1" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span>grad_fn</span></code></pre></div>
 <pre><code>## MeanBackward0</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb22-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> y<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb22-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb22-2" aria-hidden="true" tabindex="-1"></a>z<span class="sc">$</span>grad_fn</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb254-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> y<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb254-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb254-2" aria-hidden="true" tabindex="-1"></a>z<span class="sc">$</span>grad_fn</span></code></pre></div>
 <pre><code>## PowBackward0</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb24-1" aria-hidden="true" tabindex="-1"></a>z<span class="sc">$</span><span class="fu">detach_</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb256-1" aria-hidden="true" tabindex="-1"></a>z<span class="sc">$</span><span class="fu">detach_</span>()</span></code></pre></div>
 <pre><code>## torch_tensor
 ## 288.646
 ## [ CPUFloatType{} ]</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb26-1" aria-hidden="true" tabindex="-1"></a>z<span class="sc">$</span>grad_fn</span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb258-1" aria-hidden="true" tabindex="-1"></a>z<span class="sc">$</span>grad_fn</span></code></pre></div>
 <pre><code>## NULL</code></pre>
 </div>
-<div id="requires_grad-변수와-requires_grad_true" class="section level3" number="5.6.2">
-<h3><span class="header-section-number">5.6.2</span> <code>$requires_grad</code> 변수와 <code>$requires_grad_(TRUE)</code></h3>
+<div id="requires_grad-변수와-requires_grad_true" class="section level3" number="6.6.2">
+<h3><span class="header-section-number">6.6.2</span> <code>$requires_grad</code> 변수와 <code>$requires_grad_(TRUE)</code></h3>
 <p>이 함수는 이미 선언된 텐서에 미분 추적기능을 붙이고 싶을 때, <code>$requires_grad_(TRUE)</code>을 사용할 수 있다. 일반 텐서 <code>a</code>를 생성하도록 하자.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb28-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb28-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb28-2" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb260-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb260-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb260-2" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1
 ##  2
 ## [ CPUFloatType{2} ]</code></pre>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb30-1" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span>requires_grad</span></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb262-1" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span>requires_grad</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p><code>a$requires_grad</code> 값이 <code>FALSE</code>라는 말은 <code>a</code>에 대한 추적 옵션은 현재 꺼져있는 상태이다. 자동 추적 기능이 없이 생성된 텐서에 추적 기능을 붙일 때에는 <code>a$requires_grad</code>을 <code>TRUE</code>로 바꿔주면 된다. TRUE를 직접 할당해도 되고, <code>$requires_grad_(TRUE)</code>을 사용하여 바꿔줘도 된다.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a$requires_grad &lt;- TRUE</span></span>
-<span id="cb32-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb32-2" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">requires_grad_</span>(<span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb264-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a$requires_grad &lt;- TRUE</span></span>
+<span id="cb264-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb264-2" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">requires_grad_</span>(<span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## torch_tensor
 ##  1
 ##  2
 ## [ CPUFloatType{2} ]</code></pre>
 </div>
-<div id="with_no_grad" class="section level3" number="5.6.3">
-<h3><span class="header-section-number">5.6.3</span> <code>with_no_grad({})</code></h3>
+<div id="with_no_grad" class="section level3" number="6.6.3">
+<h3><span class="header-section-number">6.6.3</span> <code>with_no_grad({})</code></h3>
 <p>만약 특정 코드를 실행함에 있어서 추적 기능을 떼고 계산하고 싶은 경우, <code>with_no_grad({})</code>가 유용하다.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb34-1" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb266-1" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
 <pre><code>## torch_tensor
 ## 16.9896
 ## [ CPUFloatType{} ]</code></pre>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb36-1" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span>grad_fn</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb268-1" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span>grad_fn</span></code></pre></div>
 <pre><code>## MeanBackward0</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with_no_grad</span>({</span>
-<span id="cb38-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb38-2" aria-hidden="true" tabindex="-1"></a>    y</span>
-<span id="cb38-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb38-3" aria-hidden="true" tabindex="-1"></a>    y<span class="sc">$</span>grad_fn</span>
-<span id="cb38-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb38-4" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with_no_grad</span>({</span>
+<span id="cb270-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb270-2" aria-hidden="true" tabindex="-1"></a>    y</span>
+<span id="cb270-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb270-3" aria-hidden="true" tabindex="-1"></a>    y<span class="sc">$</span>grad_fn</span>
+<span id="cb270-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb270-4" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <pre><code>## MeanBackward0</code></pre>
 </div>
 </div>
-<div id="경사하강법" class="section level2" number="5.7">
-<h2><span class="header-section-number">5.7</span> 경사하강법</h2>
+<div id="경사하강법" class="section level2" number="6.7">
+<h2><span class="header-section-number">6.7</span> 경사하강법</h2>
 <p>이왕 자동 미분기능을 알았으니, 이 기능을 이용하여 식 @ref(eq:grad_decent)의 경사하강법으로 함수값을 최소로 만드는 <span class="math inline">\(\mu\)</span> 값을 찾아보도록 하자.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-1" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
-<span id="cb40-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 시작값 0.5</span></span>
-<span id="cb40-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-4" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fl">0.5</span>, <span class="at">requires_grad=</span><span class="cn">TRUE</span>)</span>
-<span id="cb40-5"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-6"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-6" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">100</span>)</span>
-<span id="cb40-7"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-7" aria-hidden="true" tabindex="-1"></a>result[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mu)</span>
-<span id="cb40-8"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-9"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">100</span>) {</span>
-<span id="cb40-10"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-10" aria-hidden="true" tabindex="-1"></a>    result[i] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mu)</span>
-<span id="cb40-11"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-11" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb40-12"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-12" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">mean</span>((x <span class="sc">-</span> mu)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb40-13"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-13" aria-hidden="true" tabindex="-1"></a>    y<span class="sc">$</span><span class="fu">backward</span>()</span>
-<span id="cb40-14"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-14" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb40-15"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">with_no_grad</span>({</span>
-<span id="cb40-16"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-16" aria-hidden="true" tabindex="-1"></a>        mu<span class="sc">$</span><span class="fu">sub_</span>(learning_rate <span class="sc">*</span> mu<span class="sc">$</span>grad)</span>
-<span id="cb40-17"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-17" aria-hidden="true" tabindex="-1"></a>        mu<span class="sc">$</span>grad<span class="sc">$</span><span class="fu">zero_</span>()        </span>
-<span id="cb40-18"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-18" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="cb40-19"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-19" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb40-20"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-21"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb40-21" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(result)</span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-1" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb272-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb272-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 시작값 0.5</span></span>
+<span id="cb272-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-4" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fl">0.5</span>, <span class="at">requires_grad=</span><span class="cn">TRUE</span>)</span>
+<span id="cb272-5"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb272-6"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-6" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb272-7"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-7" aria-hidden="true" tabindex="-1"></a>result[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mu)</span>
+<span id="cb272-8"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb272-9"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">100</span>) {</span>
+<span id="cb272-10"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-10" aria-hidden="true" tabindex="-1"></a>    result[i] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mu)</span>
+<span id="cb272-11"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb272-12"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-12" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">mean</span>((x <span class="sc">-</span> mu)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb272-13"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-13" aria-hidden="true" tabindex="-1"></a>    y<span class="sc">$</span><span class="fu">backward</span>()</span>
+<span id="cb272-14"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-14" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb272-15"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">with_no_grad</span>({</span>
+<span id="cb272-16"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-16" aria-hidden="true" tabindex="-1"></a>        mu<span class="sc">$</span><span class="fu">sub_</span>(learning_rate <span class="sc">*</span> mu<span class="sc">$</span>grad)</span>
+<span id="cb272-17"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-17" aria-hidden="true" tabindex="-1"></a>        mu<span class="sc">$</span>grad<span class="sc">$</span><span class="fu">zero_</span>()        </span>
+<span id="cb272-18"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-18" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb272-19"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb272-20"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb272-21"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb272-21" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(result)</span></code></pre></div>
 <pre><code>## [1] 5.306654 5.306654 5.306654 5.306654 5.306654 5.306654</code></pre>
 <p><code>mu$grad$zero_()</code> 부분은 미분값을 초기화 해주는 부분이라고 이해하면 좋다. 그렇지 않을 경우, 이전의 값이 남아있어서 계속 누적되므로 주의하자.</p>
-<div id="시각화" class="section level3" number="5.7.1">
-<h3><span class="header-section-number">5.7.1</span> 시각화</h3>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb42-1" aria-hidden="true" tabindex="-1"></a>mu_points <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> result, </span>
-<span id="cb42-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb42-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> <span class="fu">map_dbl</span>(result, <span class="sc">~</span><span class="fu">as.numeric</span>(<span class="fu">f</span>(<span class="at">mu =</span> .x))))</span>
-<span id="cb42-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb42-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span></span>
-<span id="cb42-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb42-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> mu_points, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<div id="시각화" class="section level3" number="6.7.1">
+<h3><span class="header-section-number">6.7.1</span> 시각화</h3>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb274-1" aria-hidden="true" tabindex="-1"></a>mu_points <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> result, </span>
+<span id="cb274-2"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb274-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> <span class="fu">map_dbl</span>(result, <span class="sc">~</span><span class="fu">as.numeric</span>(<span class="fu">f</span>(<span class="at">mu =</span> .x))))</span>
+<span id="cb274-3"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb274-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span></span>
+<span id="cb274-4"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb274-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> mu_points, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
 <p>이 챕터의 제일 첫부분에서 말했든 이론적인 정답은 데이터의 표본평균이 함수값을 최소로 만드는 값이다. 실제로 그렇게 나왔는지 확인해보면 두 값이 같다는 것을 알 수 있다.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb43-1" aria-hidden="true" tabindex="-1"></a>result[<span class="dv">100</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb275-1" aria-hidden="true" tabindex="-1"></a>result[<span class="dv">100</span>]</span></code></pre></div>
 <pre><code>## [1] 5.306654</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb45-1" aria-hidden="true" tabindex="-1"></a>x<span class="sc">$</span><span class="fu">mean</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="미분-자동추적-기능-autograd-에-대하여.html#cb277-1" aria-hidden="true" tabindex="-1"></a>x<span class="sc">$</span><span class="fu">mean</span>()</span></code></pre></div>
 <pre><code>## torch_tensor
 ## 5.30665
 ## [ CPUFloatType{} ]</code></pre>
@@ -496,8 +509,8 @@ f&#39;(\beta) &amp; =\frac{d}{d\beta}\left(\frac{1}{n}\sum_{i=1}^{n}\left(x_{i}-
           </div>
         </div>
       </div>
-<a href="순전파-forward-propagation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="r6와-텐서.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="forward.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="torch-nn-모듈로-첫-신경망-정의하기.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -528,7 +541,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/statisticsplaybook/r-torch-playbook/edit/master/05-autograd.Rmd",
+"link": "https://github.com/statisticsplaybook/r-torch-playbook/edit/master/06-autograd.Rmd",
 "text": "Edit"
 },
 "history": {
