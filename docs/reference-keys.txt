@@ -72,3 +72,4 @@ nn_linear-클래스
 bias-없는-경우
 bias-있는-경우
 순전파forward-propagation-정의
+eq:graddecent
