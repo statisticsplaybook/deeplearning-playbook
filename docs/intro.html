@@ -24,7 +24,7 @@
 <meta name="author" content="슬기로운통계생활" />
 
 
-<meta name="date" content="2021-02-15" />
+<meta name="date" content="2021-02-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -254,6 +254,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8" data-path="나의-첫-신경망-학습.html"><a href="나의-첫-신경망-학습.html"><i class="fa fa-check"></i><b>8</b> 나의 첫 신경망 학습</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="나의-첫-신경망-학습.html"><a href="나의-첫-신경망-학습.html#학습-준비---데이터-만들기"><i class="fa fa-check"></i><b>8.1</b> 학습 준비 - 데이터 만들기</a></li>
+<li class="chapter" data-level="8.2" data-path="나의-첫-신경망-학습.html"><a href="나의-첫-신경망-학습.html#신경망과-블랙박스black-box"><i class="fa fa-check"></i><b>8.2</b> 신경망과 블랙박스(Black-box)</a></li>
+<li class="chapter" data-level="8.3" data-path="나의-첫-신경망-학습.html"><a href="나의-첫-신경망-학습.html#신경망-학습"><i class="fa fa-check"></i><b>8.3</b> 신경망 학습</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="나의-첫-신경망-학습.html"><a href="나의-첫-신경망-학습.html#손실함수와-최적화-방법-선택"><i class="fa fa-check"></i><b>8.3.1</b> 손실함수와 최적화 방법 선택</a></li>
+<li class="chapter" data-level="8.3.2" data-path="나의-첫-신경망-학습.html"><a href="나의-첫-신경망-학습.html#학습-구현"><i class="fa fa-check"></i><b>8.3.2</b> 학습 구현</a></li>
+<li class="chapter" data-level="8.3.3" data-path="나의-첫-신경망-학습.html"><a href="나의-첫-신경망-학습.html#시각화-1"><i class="fa fa-check"></i><b>8.3.3</b> 시각화</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="나의-첫-신경망-학습.html"><a href="나의-첫-신경망-학습.html#과적합overfitting과의-싸움"><i class="fa fa-check"></i><b>8.4</b> 과적합(overfitting)과의 싸움</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -296,11 +304,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-3"><a href="intro.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 텐서 x값 확인</span></span>
 <span id="cb4-4"><a href="intro.html#cb4-4" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>## torch_tensor
-## -1.9322e+24  4.5886e-41 -1.9322e+24
-##  4.5886e-41 -1.7543e+16  3.0744e-41
-## -1.7543e+16  3.0744e-41  0.0000e+00
-##  0.0000e+00  0.0000e+00  0.0000e+00
-##  0.0000e+00  0.0000e+00  0.0000e+00
+##  6.3984e+19  4.5649e-41  1.2904e-36
+##  3.0876e-41  6.3058e-44  4.4842e-44
+##  1.6255e-43  1.5554e-43  1.5975e-43
+##  1.3873e-43  1.4574e-43  1.3312e-43
+##  1.6255e-43  1.4153e-43  1.5414e-43
 ## [ CPUFloatType{5,3} ]</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 텐서 x의 크기 확인</span></span>
 <span id="cb6-2"><a href="intro.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(x)</span></code></pre></div>
@@ -313,31 +321,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="intro.html#cb8-1" aria-hidden="true" tabindex="-1"></a>rand_tensor <span class="ot">&lt;-</span>  <span class="fu">torch_rand</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
 <span id="cb8-2"><a href="intro.html#cb8-2" aria-hidden="true" tabindex="-1"></a>rand_tensor</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.2419  0.1012  0.9456
-##  0.7544  0.6856  0.6036
-##  0.2795  0.3757  0.8029
-##  0.4892  0.9704  0.9461
-##  0.5698  0.0750  0.3051
+##  0.3356  0.0351  0.6202
+##  0.9045  0.7832  0.9296
+##  0.2731  0.3997  0.4099
+##  0.8124  0.7434  0.4712
+##  0.1851  0.5208  0.9427
 ## [ CPUFloatType{5,3} ]</code></pre>
 <p>참고로 이렇게 만들어진 텐서에는 R에서 텐서과 어레이(array)에 접근할 때사용한 모든 문법들을 사용해서 접근할 수 있다.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="intro.html#cb10-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[,<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.1012
-##  0.6856
-##  0.3757
-##  0.9704
-##  0.0750
+##  0.0351
+##  0.7832
+##  0.3997
+##  0.7434
+##  0.5208
 ## [ CPUFloatType{5} ]</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="intro.html#cb12-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.2419  0.1012  0.9456
-##  0.7544  0.6856  0.6036
-##  0.2795  0.3757  0.8029
+##  0.3356  0.0351  0.6202
+##  0.9045  0.7832  0.9296
+##  0.2731  0.3997  0.4099
 ## [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="intro.html#cb14-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>## torch_tensor
-##  0.2795  0.8029
-##  0.4892  0.9461
+##  0.2731  0.4099
+##  0.8124  0.4712
 ## [ CPUFloatType{2,2} ]</code></pre>
 <p>위의 예제에서 벌써부터 일부 R유저들은 감격의 눈물을 흘릴 수 있다. 그렇다, Rtorch에서 텐서의 <strong>첫번째 위치는 1부터 시작</strong>한다. 이 너무나도 당연한 진리는 파이썬에서는 통하지 않는다.</p>
 </div>

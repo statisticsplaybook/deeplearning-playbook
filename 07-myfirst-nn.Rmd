@@ -132,3 +132,5 @@ my_net(X)
 위의 코드를 한번 살펴보자. 먼저 `zeallot` 패키지는 `%<-%`를 포함하는 패키지인데, 여러 개의 변수에 한꺼번에 값을 부여하는 연산자이기 때문에 알아두면 편한 패키지 이다.
 
 새로 정의된 `TwoLayerNet` 클래스에는 \@ref(fig:neuralnet-example2)의 2단 신경망의 순전파(forward propagation)가 구현된 멤버함수 `forward`가 정의되어 있다. 이 함수는 입력 텐서 `X`가 신경망으로 들어오게 되면, 은닉층(hidden_layer) $\rightarrow$ 활성함수 (activation function; 여기서는 nn_sigmoid 함수) $\rightarrow$ 출력층(output_layer) $\rightarrow$ 활성함수 순으로 내보내게 된다.
+
+

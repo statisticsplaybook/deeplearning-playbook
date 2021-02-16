@@ -5,7 +5,10 @@ fig:neuralnet-allpath
 fig:f-errormean
 eq:graddecent
 fig:neuralnet-example2
+eq:model-sample
 fig:data-vis
+fig:add-regression
+fig:vis-result
 intro
 torch와의-첫만남
 텐서-tensor-만들기
@@ -76,3 +79,9 @@ bias-있는-경우
 순전파forward-propagation-정의
 나의-첫-신경망-학습
 학습-준비---데이터-만들기
+신경망과-블랙박스black-box
+신경망-학습
+손실함수와-최적화-방법-선택
+학습-구현
+시각화-1
+과적합overfitting과의-싸움
