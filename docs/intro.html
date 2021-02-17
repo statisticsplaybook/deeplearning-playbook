@@ -323,31 +323,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="intro.html#cb8-1" aria-hidden="true" tabindex="-1"></a>rand_tensor <span class="ot">&lt;-</span>  <span class="fu">torch_rand</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
 <span id="cb8-2"><a href="intro.html#cb8-2" aria-hidden="true" tabindex="-1"></a>rand_tensor</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.7934  0.0891  0.0235
-#&gt;  0.6796  0.8982  0.7362
-#&gt;  0.4113  0.9030  0.9509
-#&gt;  0.1285  0.6919  0.0665
-#&gt;  0.5642  0.2051  0.2647
+#&gt;  0.4980  0.5026  0.5200
+#&gt;  0.4852  0.7107  0.0314
+#&gt;  0.2706  0.8231  0.6118
+#&gt;  0.3428  0.5056  0.9673
+#&gt;  0.0821  0.0108  0.3728
 #&gt; [ CPUFloatType{5,3} ]</code></pre>
 <p>참고로 이렇게 만들어진 텐서에는 R에서 텐서과 어레이(array)에 접근할 때사용한 모든 문법들을 사용해서 접근할 수 있다.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="intro.html#cb10-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[,<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.0891
-#&gt;  0.8982
-#&gt;  0.9030
-#&gt;  0.6919
-#&gt;  0.2051
+#&gt;  0.5026
+#&gt;  0.7107
+#&gt;  0.8231
+#&gt;  0.5056
+#&gt;  0.0108
 #&gt; [ CPUFloatType{5} ]</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="intro.html#cb12-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.7934  0.0891  0.0235
-#&gt;  0.6796  0.8982  0.7362
-#&gt;  0.4113  0.9030  0.9509
+#&gt;  0.4980  0.5026  0.5200
+#&gt;  0.4852  0.7107  0.0314
+#&gt;  0.2706  0.8231  0.6118
 #&gt; [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="intro.html#cb14-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.4113  0.9509
-#&gt;  0.1285  0.0665
+#&gt;  0.2706  0.6118
+#&gt;  0.3428  0.9673
 #&gt; [ CPUFloatType{2,2} ]</code></pre>
 <p>위의 예제에서 벌써부터 일부 R유저들은 감격의 눈물을 흘릴 수 있다. 그렇다, Rtorch에서 텐서의 <strong>첫번째 위치는 1부터 시작</strong>한다. 이 너무나도 당연한 진리는 파이썬에서는 통하지 않는다.</p>
 </div>
