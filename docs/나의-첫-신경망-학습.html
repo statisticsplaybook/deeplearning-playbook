@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="torch-nn-모듈로-첫-신경망-정의하기.html"/>
-<link rel="next" href="references.html"/>
+<link rel="next" href="dataset과-dataloader-클래스.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -264,6 +264,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="나의-첫-신경망-학습.html"><a href="나의-첫-신경망-학습.html#과적합overfitting과의-싸움"><i class="fa fa-check"></i><b>8.4</b> 과적합(overfitting)과의 싸움</a></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="dataset과-dataloader-클래스.html"><a href="dataset과-dataloader-클래스.html"><i class="fa fa-check"></i><b>9</b> <code>Dataset</code>과 <code>Dataloader</code> 클래스</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/statisticsplaybook/r-torch-playbook" target="blank">Published with bookdown</a></li>
@@ -507,7 +508,6 @@ L(\hat{\boldsymbol{y}}, \boldsymbol{y}) = \frac{1}{n}\sum_i^{n}(\hat{y_i}-y_i)^2
 <p>즉, 학습 데이터를 너무나 잘 반영하는 것도 좋지만, 이렇게 학습된 신경망을 사용해서 예측을 할 때, 신경망에 입력 될 데이터는 대부분 학습 데이터와 비슷하기도 하겠지만, 비슷하지 않은 전혀 다른 입력값이 들어올 수 있다. 이런 상황에 잘 대비하기(?) 위해서 혹은 신경망이 성능을 잘 내기 위해서는 신경망을 학습을 할 때 성과측정을 신경망의 학습에 한번도 사용되지 않는 새로운 데이터로 평가를 해야만 한다.</p>
 <p>이렇게 모델이 학습 데이터 패턴을 너무나 많이 반영하고 있는 현상을 과하게 적합이 되어 있다고 하여 모델 과적합(overfitting) 상태라고 부른다. 기계학습과 딥러닝에서는 일단 베이스라인 모델이 정해진 후에는 어떤 모수값(weights)이 최적의 모수인지를 찾아내야하는 과정을 거친다. 이 과정을 거치는 가장 큰 이유는 모델 과적합 방지에 있다. 어떻게 하면 학습 데이터의 패턴은 잘 반영하면서, 새로이 들어올 데이터에도 잘 반응할 수 있는 모델을 세울 수 있을지 앞으로의 학습을 통해서 차근차근 배워보자.</p>
 
-
 </div>
 </div>
 <div class="footnotes">
@@ -522,7 +522,7 @@ L(\hat{\boldsymbol{y}}, \boldsymbol{y}) = \frac{1}{n}\sum_i^{n}(\hat{y_i}-y_i)^2
         </div>
       </div>
 <a href="torch-nn-모듈로-첫-신경망-정의하기.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="dataset과-dataloader-클래스.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
