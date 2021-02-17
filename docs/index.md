@@ -1,7 +1,7 @@
 ---
 title: "딥러닝 공략집 with R"
 author: "[슬기로운통계생활](https://www.youtube.com/c/statisticsplaybook)"
-date: "`r Sys.Date()`"
+date: "2021-02-17"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
@@ -23,24 +23,21 @@ description: "딥러닝 라이브러리 Rtorch를 사용하여 딥러닝의 끝�
 
 설치 역시 간단한다. 여느 R패키지와 같이 `install.packages()` 함수를 사용하면 된다. 서브 라이브러리인 `torchaudio`와 `torchvision`이 있으나, 책의 뒷부분에서 다루기로 한다.
 
-```{r eval=FALSE}
+
+```r
 install.packages("torch")
 # 혹은 개발버전을 다운 받고 싶다면 다음의 코드를 사용한다.
 # devtools::install_github("mlverse/torch")
 ```
 
-```{r include=FALSE}
-# automatically create a bib database for R packages
-knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
-), 'packages.bib')
-```
+
 
 ## 기본 패키지 {.unnumbered}
 
 앞으로의 내용에 있어서 다음의 두 패키지는 기본으로 불러와서 사용하는 것을 약속으로 한다.
 
-```{r eval=FALSE}
+
+```r
 library(tidyverse)
 library(torch)
 ```

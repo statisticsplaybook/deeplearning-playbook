@@ -1,4 +1,3 @@
-fig:thumnail
 fig:neuralnet-example
 fig:neuralnet-path
 fig:neuralnet-allpath

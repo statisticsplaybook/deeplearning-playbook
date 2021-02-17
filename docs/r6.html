@@ -24,7 +24,7 @@
 <meta name="author" content="슬기로운통계생활" />
 
 
-<meta name="date" content="2021-02-16" />
+<meta name="date" content="2021-02-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="텐서의-이동-cpu-leftrightarrow-gpu.html"/>
 <link rel="next" href="forward.html"/>
-<script src="libs/header-attrs-2.6.6/header-attrs.js"></script>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="dlplaybook.css" type="text/css" />
 </head>
 
 <body>
@@ -302,13 +303,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb147-3"><a href="r6.html#cb147-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 멤버함수(methods) 정의</span></span>
 <span id="cb147-4"><a href="r6.html#cb147-4" aria-hidden="true" tabindex="-1"></a>))</span>
 <span id="cb147-5"><a href="r6.html#cb147-5" aria-hidden="true" tabindex="-1"></a>ExampleClass</span></code></pre></div>
-<pre><code>## &lt;Example&gt; object generator
-##   Public:
-##     clone: function (deep = FALSE) 
-##   Parent env: &lt;environment: R_GlobalEnv&gt;
-##   Locked objects: TRUE
-##   Locked class: FALSE
-##   Portable: TRUE</code></pre>
+<pre><code>#&gt; &lt;Example&gt; object generator
+#&gt;   Public:
+#&gt;     clone: function (deep = FALSE) 
+#&gt;   Parent env: &lt;environment: R_GlobalEnv&gt;
+#&gt;   Locked objects: TRUE
+#&gt;   Locked class: FALSE
+#&gt;   Portable: TRUE</code></pre>
 <p>한가지 꼭 짚고 넘어가야하는 것이 있는데, 바로 이름을 정하는 방식이다.</p>
 <ol style="list-style-type: decimal">
 <li>클래스의 이름은 <code>UpperCamelCase</code> 형식으로 짓는다. 즉, 클래스의 이름을 선언할 때 띄어쓰기를 하지않고, 대신 대문자를 사용한다.</li>
@@ -330,9 +331,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb150-4"><a href="r6.html#cb150-4" aria-hidden="true" tabindex="-1"></a>issac <span class="ot">&lt;-</span> <span class="fu">student</span>()</span>
 <span id="cb150-5"><a href="r6.html#cb150-5" aria-hidden="true" tabindex="-1"></a>bomi <span class="ot">&lt;-</span> <span class="fu">student</span>()</span>
 <span id="cb150-6"><a href="r6.html#cb150-6" aria-hidden="true" tabindex="-1"></a>issac</span></code></pre></div>
-<pre><code>## list()</code></pre>
+<pre><code>#&gt; list()</code></pre>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="r6.html#cb152-1" aria-hidden="true" tabindex="-1"></a>bomi</span></code></pre></div>
-<pre><code>## list()</code></pre>
+<pre><code>#&gt; list()</code></pre>
 <p>student라는 함수는 빈 리스트를 반환을 하는데, 우리가 이 함수를 사용하여 <code>issac</code>과 <code>bomi</code>라는 학생의 정보를 담는 리스트를 만들 수 있다. 만약 우리가 다음과 같은 추가 정보를 저장하려고 한다고 가정해보자.</p>
 <ul>
 <li>issac
@@ -365,35 +366,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb154-10"><a href="r6.html#cb154-10" aria-hidden="true" tabindex="-1"></a>bomi<span class="sc">$</span>midterm <span class="ot">&lt;-</span> <span class="dv">65</span></span>
 <span id="cb154-11"><a href="r6.html#cb154-11" aria-hidden="true" tabindex="-1"></a>bomi<span class="sc">$</span>final <span class="ot">&lt;-</span> <span class="dv">80</span></span>
 <span id="cb154-12"><a href="r6.html#cb154-12" aria-hidden="true" tabindex="-1"></a>issac</span></code></pre></div>
-<pre><code>## $first
-## [1] &quot;Issac&quot;
-## 
-## $last
-## [1] &quot;Lee&quot;
-## 
-## $email
-## [1] &quot;issac-lee@gmail.com&quot;
-## 
-## $midterm
-## [1] 70
-## 
-## $final
-## [1] 50</code></pre>
+<pre><code>#&gt; $first
+#&gt; [1] &quot;Issac&quot;
+#&gt; 
+#&gt; $last
+#&gt; [1] &quot;Lee&quot;
+#&gt; 
+#&gt; $email
+#&gt; [1] &quot;issac-lee@gmail.com&quot;
+#&gt; 
+#&gt; $midterm
+#&gt; [1] 70
+#&gt; 
+#&gt; $final
+#&gt; [1] 50</code></pre>
 <div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="r6.html#cb156-1" aria-hidden="true" tabindex="-1"></a>bomi</span></code></pre></div>
-<pre><code>## $first
-## [1] &quot;Bomi&quot;
-## 
-## $last
-## [1] &quot;Kim&quot;
-## 
-## $email
-## [1] &quot;bomi-kim@gmail.com&quot;
-## 
-## $midterm
-## [1] 65
-## 
-## $final
-## [1] 80</code></pre>
+<pre><code>#&gt; $first
+#&gt; [1] &quot;Bomi&quot;
+#&gt; 
+#&gt; $last
+#&gt; [1] &quot;Kim&quot;
+#&gt; 
+#&gt; $email
+#&gt; [1] &quot;bomi-kim@gmail.com&quot;
+#&gt; 
+#&gt; $midterm
+#&gt; [1] 65
+#&gt; 
+#&gt; $final
+#&gt; [1] 80</code></pre>
 <p>위의 코드는 OOP관점에서 상당히 중복 코드가 많은 비효율적인 코드이다. 이러한 코드를 우리가 배운 <code>R6Class()</code>를 사용하여 어떻게 줄일 수 있는지 알아보자.</p>
 </div>
 <div id="클래스class-정의하기" class="section level3" number="4.2.3">
@@ -418,42 +419,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb158-17"><a href="r6.html#cb158-17" aria-hidden="true" tabindex="-1"></a>))</span>
 <span id="cb158-18"><a href="r6.html#cb158-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb158-19"><a href="r6.html#cb158-19" aria-hidden="true" tabindex="-1"></a>Student</span></code></pre></div>
-<pre><code>## &lt;Student&gt; object generator
-##   Public:
-##     first: NULL
-##     last: NULL
-##     email: NULL
-##     midterm: NA
-##     final: NA
-##     initialize: function (first, last, midterm, final) 
-##     clone: function (deep = FALSE) 
-##   Parent env: &lt;environment: R_GlobalEnv&gt;
-##   Locked objects: TRUE
-##   Locked class: FALSE
-##   Portable: TRUE</code></pre>
+<pre><code>#&gt; &lt;Student&gt; object generator
+#&gt;   Public:
+#&gt;     first: NULL
+#&gt;     last: NULL
+#&gt;     email: NULL
+#&gt;     midterm: NA
+#&gt;     final: NA
+#&gt;     initialize: function (first, last, midterm, final) 
+#&gt;     clone: function (deep = FALSE) 
+#&gt;   Parent env: &lt;environment: R_GlobalEnv&gt;
+#&gt;   Locked objects: TRUE
+#&gt;   Locked class: FALSE
+#&gt;   Portable: TRUE</code></pre>
 <p>결과값을 유심히 살펴보면, <code>&lt;Student&gt; object generator</code> 라는 부분이 있는데, <code>Student</code> 라는 클래스는 객체(object)들을 만들어내는 생성자(generator)라는 것을 알 수 있다. 우리가 만들 <code>Student</code> 생성자를 통해서 도장을 찍듯, <code>new()</code> 함수를 사용하여 issac과 bomi를 다음과 같이 만들 수 있다.</p>
 <div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="r6.html#cb160-1" aria-hidden="true" tabindex="-1"></a>issac <span class="ot">&lt;-</span> Student<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;Issac&quot;</span>, <span class="st">&quot;Lee&quot;</span>, <span class="dv">70</span>, <span class="dv">50</span>)</span>
 <span id="cb160-2"><a href="r6.html#cb160-2" aria-hidden="true" tabindex="-1"></a>bomi <span class="ot">&lt;-</span> Student<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;Bomi&quot;</span>, <span class="st">&quot;Kim&quot;</span>, <span class="dv">65</span>, <span class="dv">80</span>)</span>
 <span id="cb160-3"><a href="r6.html#cb160-3" aria-hidden="true" tabindex="-1"></a>issac</span></code></pre></div>
-<pre><code>## &lt;Student&gt;
-##   Public:
-##     clone: function (deep = FALSE) 
-##     email: issac-lee@gmail.com
-##     final: 50
-##     first: Issac
-##     initialize: function (first, last, midterm, final) 
-##     last: Lee
-##     midterm: 70</code></pre>
+<pre><code>#&gt; &lt;Student&gt;
+#&gt;   Public:
+#&gt;     clone: function (deep = FALSE) 
+#&gt;     email: issac-lee@gmail.com
+#&gt;     final: 50
+#&gt;     first: Issac
+#&gt;     initialize: function (first, last, midterm, final) 
+#&gt;     last: Lee
+#&gt;     midterm: 70</code></pre>
 <div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="r6.html#cb162-1" aria-hidden="true" tabindex="-1"></a>bomi</span></code></pre></div>
-<pre><code>## &lt;Student&gt;
-##   Public:
-##     clone: function (deep = FALSE) 
-##     email: bomi-kim@gmail.com
-##     final: 80
-##     first: Bomi
-##     initialize: function (first, last, midterm, final) 
-##     last: Kim
-##     midterm: 65</code></pre>
+<pre><code>#&gt; &lt;Student&gt;
+#&gt;   Public:
+#&gt;     clone: function (deep = FALSE) 
+#&gt;     email: bomi-kim@gmail.com
+#&gt;     final: 80
+#&gt;     first: Bomi
+#&gt;     initialize: function (first, last, midterm, final) 
+#&gt;     last: Kim
+#&gt;     midterm: 65</code></pre>
 <p>즉, OOP의 장점은 공을 들여 한번 클래스를 잘 만들어놓으면, 한번 작성된 함수나 변수들의 재 사용율이 엄청 좋아지는 것이다.</p>
 </div>
 <div id="print를-사용한-결과물-정리" class="section level3" number="4.2.4">
@@ -489,20 +490,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb164-28"><a href="r6.html#cb164-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb164-29"><a href="r6.html#cb164-29" aria-hidden="true" tabindex="-1"></a>soony <span class="ot">&lt;-</span> Student<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;Soony&quot;</span>, <span class="st">&quot;Kim&quot;</span>, <span class="dv">70</span>, <span class="dv">20</span>)</span>
 <span id="cb164-30"><a href="r6.html#cb164-30" aria-hidden="true" tabindex="-1"></a>soony</span></code></pre></div>
-<pre><code>## Student: 
-##     Name  : Soony Kim
-##     E-mail: soony-kim@gmail.com
-##     Midterm Score : 70
-##     Final Score: 20</code></pre>
+<pre><code>#&gt; Student: 
+#&gt;     Name  : Soony Kim
+#&gt;     E-mail: soony-kim@gmail.com
+#&gt;     Midterm Score : 70
+#&gt;     Final Score: 20</code></pre>
 <p><code>print()</code> 멤버 함수를 추가한 후에 만들어진 <code>soony</code>의 정보는 클래스안에 정의된 <code>print()</code>를 통해서 보여진다는 것을 확인할 수 있다. 한가지 주의할 점은 <code>print()</code>가 클래스 안에 정의되어 있지 않은 채로 생성된 <code>issac</code>과 <code>bomi</code>의 경우는 <code>print()</code>가 작동하지 않는다는 것이다. 즉, 클래스에 정의된 함수들은 객체가 클래스로부터 생성될 때, 따라와서 붙는다.</p>
 <div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="r6.html#cb166-1" aria-hidden="true" tabindex="-1"></a>issac<span class="sc">$</span><span class="fu">print</span>()</span></code></pre></div>
-<pre><code>## Error in eval(expr, envir, enclos): attempt to apply non-function</code></pre>
+<pre><code>#&gt; Error in eval(expr, envir, enclos): attempt to apply non-function</code></pre>
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="r6.html#cb168-1" aria-hidden="true" tabindex="-1"></a>soony<span class="sc">$</span><span class="fu">print</span>()</span></code></pre></div>
-<pre><code>## Student: 
-##     Name  : Soony Kim
-##     E-mail: soony-kim@gmail.com
-##     Midterm Score : 70
-##     Final Score: 20</code></pre>
+<pre><code>#&gt; Student: 
+#&gt;     Name  : Soony Kim
+#&gt;     E-mail: soony-kim@gmail.com
+#&gt;     Midterm Score : 70
+#&gt;     Final Score: 20</code></pre>
 </div>
 <div id="set을-이용한-클래스-조정" class="section level3" number="4.2.5">
 <h3><span class="header-section-number">4.2.5</span> set을 이용한 클래스 조정</h3>
@@ -515,16 +516,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><code>invisible()</code> 함수는 결과를 반환하되, 결과물을 보여주지 않는 것인데, 클래스에서 함수를 정의할 때에 반드시 <code>invisible(self)</code>를 반환해줘야만 한다. 따라서 함수이지만, 함수와는 다른 이 클래스 안의 함수들을 멤버함수 <code>method()</code>라고하여 일반 함수와 구분을 지어서 부른다.</p>
 <div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="r6.html#cb171-1" aria-hidden="true" tabindex="-1"></a>jelly <span class="ot">&lt;-</span> Student<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;Jelly&quot;</span>, <span class="st">&quot;Lee&quot;</span>, <span class="dv">35</span>, <span class="dv">23</span>)</span>
 <span id="cb171-2"><a href="r6.html#cb171-2" aria-hidden="true" tabindex="-1"></a>jelly</span></code></pre></div>
-<pre><code>## Student: 
-##     Name  : Jelly Lee
-##     E-mail: jelly-lee@gmail.com
-##     Midterm Score : 35
-##     Final Score: 23</code></pre>
+<pre><code>#&gt; Student: 
+#&gt;     Name  : Jelly Lee
+#&gt;     E-mail: jelly-lee@gmail.com
+#&gt;     Midterm Score : 35
+#&gt;     Final Score: 23</code></pre>
 <div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="r6.html#cb173-1" aria-hidden="true" tabindex="-1"></a>jelly<span class="sc">$</span>total</span></code></pre></div>
-<pre><code>## [1] NA</code></pre>
+<pre><code>#&gt; [1] NA</code></pre>
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="r6.html#cb175-1" aria-hidden="true" tabindex="-1"></a>jelly<span class="sc">$</span><span class="fu">calculate_total</span>()</span>
 <span id="cb175-2"><a href="r6.html#cb175-2" aria-hidden="true" tabindex="-1"></a>jelly<span class="sc">$</span>total</span></code></pre></div>
-<pre><code>## [1] 58</code></pre>
+<pre><code>#&gt; [1] 58</code></pre>
 </div>
 </div>
 <div id="상속inheritance---클래스-물려받기" class="section level2" number="4.3">
@@ -551,21 +552,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb177-17"><a href="r6.html#cb177-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb177-18"><a href="r6.html#cb177-18" aria-hidden="true" tabindex="-1"></a>sanghoon <span class="ot">&lt;-</span> UspStudent<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;Sanghoon&quot;</span>, <span class="st">&quot;Park&quot;</span>, <span class="dv">80</span>, <span class="dv">56</span>)</span>
 <span id="cb177-19"><a href="r6.html#cb177-19" aria-hidden="true" tabindex="-1"></a>sanghoon</span></code></pre></div>
-<pre><code>## Student: 
-##     Name  : Sanghoon Park
-##     E-mail: sanghoon-park@gmail.com
-##     Midterm Score : 80
-##     Final Score: 56</code></pre>
+<pre><code>#&gt; Student: 
+#&gt;     Name  : Sanghoon Park
+#&gt;     E-mail: sanghoon-park@gmail.com
+#&gt;     Midterm Score : 80
+#&gt;     Final Score: 56</code></pre>
 <p>새로 정의된 <code>UspStudent</code> 클래스는 상위 클래스인 <code>Student</code> 클래스의 멤버함수들과 변수들을 그대로 물려받는다. 여기서 코드의 재사용성이 증가한다. 또한 상위 클래스가 가지고 있던 <code>calculate_total()</code> 멤버함수에 접근하여, 새롭게 고쳐서 사용하는 것도 가능하다. 다음은 정의된 멤버함수들을 사용하여 변수들에 계산을 해서 넣는 과정을 보여준다.</p>
 <div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="r6.html#cb179-1" aria-hidden="true" tabindex="-1"></a>sanghoon<span class="sc">$</span>university_name</span></code></pre></div>
-<pre><code>## [1] &quot;University of Statistics Playbook&quot;</code></pre>
+<pre><code>#&gt; [1] &quot;University of Statistics Playbook&quot;</code></pre>
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="r6.html#cb181-1" aria-hidden="true" tabindex="-1"></a>sanghoon<span class="sc">$</span><span class="fu">calculate_average</span>()</span>
 <span id="cb181-2"><a href="r6.html#cb181-2" aria-hidden="true" tabindex="-1"></a>sanghoon<span class="sc">$</span>average</span></code></pre></div>
-<pre><code>## [1] 68</code></pre>
+<pre><code>#&gt; [1] 68</code></pre>
 <div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="r6.html#cb183-1" aria-hidden="true" tabindex="-1"></a>sanghoon<span class="sc">$</span><span class="fu">calculate_total</span>()</span></code></pre></div>
-<pre><code>## The total score of midterm and final exam is calculated.</code></pre>
+<pre><code>#&gt; The total score of midterm and final exam is calculated.</code></pre>
 <div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="r6.html#cb185-1" aria-hidden="true" tabindex="-1"></a>sanghoon<span class="sc">$</span>total</span></code></pre></div>
-<pre><code>## [1] 136</code></pre>
+<pre><code>#&gt; [1] 136</code></pre>
 </div>
 <div id="공개public정보와-비공개private-정보의-필요성" class="section level2" number="4.4">
 <h2><span class="header-section-number">4.4</span> 공개(Public)정보와 비공개(Private) 정보의 필요성</h2>
@@ -593,11 +594,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb187-21"><a href="r6.html#cb187-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb187-22"><a href="r6.html#cb187-22" aria-hidden="true" tabindex="-1"></a>taemo <span class="ot">&lt;-</span> UspStudent<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;Taemo&quot;</span>, <span class="st">&quot;Bang&quot;</span>, <span class="dv">80</span>, <span class="dv">56</span>)</span>
 <span id="cb187-23"><a href="r6.html#cb187-23" aria-hidden="true" tabindex="-1"></a>taemo<span class="sc">$</span><span class="fu">calculate_average</span>()</span></code></pre></div>
-<pre><code>## Average score is 68</code></pre>
+<pre><code>#&gt; Average score is 68</code></pre>
 <p>위의 <code>UspStudent</code> 클래스에는 비공개 정보가 하나들어있다. 바로 중간 기말고사 점수의 평균을 저장하는 <code>average</code> 변수인데, 클래스의 정의시 <code>private()</code>에 감싸져서 입력이 되었음에 주목하자.</p>
 <p><code>average</code> 변수는 클래스 안에서의 멤버함수를 통해서 접근할 땐 <code>private$name</code> 형식으로 접근이 가능함에 반하여, 클래스를 사용하는 사용자 입장에서는 가려져서 보이지 않는 정보에 해당한다.</p>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="r6.html#cb189-1" aria-hidden="true" tabindex="-1"></a>taemo<span class="sc">$</span>.average</span></code></pre></div>
-<pre><code>## NULL</code></pre>
+<pre><code>#&gt; NULL</code></pre>
 <p>해들리 위캠의 말을 빌리면, 공개-비공개 정보의 구분은 큰 패키지나 클래스를 정의할 때 <a href="https://adv-r.hadley.nz/r6.html#privacy">가장 중요한 단계가 된다</a>. 왜냐하면 비공개 정보의 경우는 개발자의 입장에서 언제든지 수정할 수 있는 정보가 되지만, 공개된 멤버함수나 필드들에 대해서는 쉽게 바꿀 수가 없기 때문이다.</p>
 <pre><code>&gt; 여기서 하나 짚고 넘어가면 좋은 것이 있는데, 바로 R에서의 이름 짓기 방식이다. R의 기본 함수들 중에서 .을 사용해서 지어진 경우가 있는데, 현재는 권장하지 않고 있다. 이유는 바로 비공개 정보를 갖는 변수나 함수들을 나타내는데에 .을 찍어서 나타내기 때문이다. `.average` 역시 변수의 이름에서 이 변수는 클래스 안에서만 접근이 가능하다는 것을 변수 이름만 보고도 알 수 있도록 만들어졌다.</code></pre>
 <div id="활성-변수active-field를-사용한-읽기-전용-변수" class="section level3" number="4.4.1">
@@ -637,12 +638,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb192-31"><a href="r6.html#cb192-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb192-32"><a href="r6.html#cb192-32" aria-hidden="true" tabindex="-1"></a>conie <span class="ot">&lt;-</span> UspStudent<span class="sc">$</span><span class="fu">new</span>(<span class="st">&quot;Connie&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="dv">78</span>, <span class="dv">82</span>)</span>
 <span id="cb192-33"><a href="r6.html#cb192-33" aria-hidden="true" tabindex="-1"></a>conie<span class="sc">$</span><span class="fu">calculate_average</span>()</span></code></pre></div>
-<pre><code>## Average score is 80</code></pre>
+<pre><code>#&gt; Average score is 80</code></pre>
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="r6.html#cb194-1" aria-hidden="true" tabindex="-1"></a>conie<span class="sc">$</span>average</span></code></pre></div>
-<pre><code>## [1] 80</code></pre>
+<pre><code>#&gt; [1] 80</code></pre>
 <p>위에서 정의된 <code>UspStudent</code> 클래스에서는 사용자에게 평균값을 구하는 함수와 구한 평균값에 접근을 허용하지만, 사용자가 average값에 접근하여 바꾸려고 하면 에러를 뱉어내도록 설계가 되어있다.</p>
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="r6.html#cb196-1" aria-hidden="true" tabindex="-1"></a>conie<span class="sc">$</span>average <span class="ot">&lt;-</span> <span class="dv">60</span></span></code></pre></div>
-<pre><code>## Error: `$average` is read only</code></pre>
+<pre><code>#&gt; Error: `$average` is read only</code></pre>
 </div>
 </div>
 <div id="텐서와-r6의-관계" class="section level2" number="4.5">
@@ -685,11 +686,7 @@ gitbook.start({
 "vk": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
+"fontsettings": null,
 "edit": {
 "link": "https://github.com/statisticsplaybook/r-torch-playbook/edit/master/04-r6-and-tensor.Rmd",
 "text": "Edit"

@@ -24,7 +24,7 @@
 <meta name="author" content="슬기로운통계생활" />
 
 
-<meta name="date" content="2021-02-16" />
+<meta name="date" content="2021-02-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 
 <link rel="next" href="intro.html"/>
-<script src="libs/header-attrs-2.6.6/header-attrs.js"></script>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="dlplaybook.css" type="text/css" />
 </head>
 
 <body>
@@ -287,22 +288,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">딥러닝 공략집 with R</h1>
 <p class="author"><em><a href="https://www.youtube.com/c/statisticsplaybook">슬기로운통계생활</a></em></p>
-<p class="date"><em>2021-02-16</em></p>
+<p class="date"><em>2021-02-17</em></p>
 </div>
 <div id="들어가며" class="section level1 unnumbered">
 <h1>들어가며</h1>
-<div class="figure" style="text-align: center"><span id="fig:thumnail"></span>
-<img src="image/deeplearning-playbook.png" alt="deep-learning playbook" width="100%" />
-<p class="caption">
-Figure 0.1: deep-learning playbook
-</p>
-</div>
-<p>이제까지 R에서의 딥러닝은 Python의 라이브러리들을 <code>reticulate</code> 패키지를 이용하여 빌려온 형태였지만, <a href="https://torch.mlverse.org/">torch for R</a> 패키지는 C 라이브러리를 Torch를 기반으로 R을 wrapper 언어로서 사용하여 패키지를 만들었다. 즉, Torch + Python = PyTorch, Torch + R = Rtorch가 되는 셈이다.</p>
+<p><img src="image/deeplearning-playbook.png" /></p>
+<p>이제까지 R에서의 딥러닝은 Python의 라이브러리들을 <code>reticulate</code> 패키지를 이용하여 빌려온 형태였지만, <a href="https://torch.mlverse.org/">torch for R</a> 패키지는 C 라이브러리를 Torch를 기반으로 R을 wrapper 언어로서 사용하여 패키지를 만들었다. 즉, Torch + Python = PyTorch, Torch + R = RTorch가 되는 셈이다.</p>
 <div id="설치하기" class="section level2 unnumbered">
 <h2>설치하기</h2>
 <p>설치 역시 간단한다. 여느 R패키지와 같이 <code>install.packages()</code> 함수를 사용하면 된다. 서브 라이브러리인 <code>torchaudio</code>와 <code>torchvision</code>이 있으나, 책의 뒷부분에서 다루기로 한다.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;torch&quot;</span>)</span>
-<span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 혹은 개발버전을 다운 받고 싶다면</span></span>
+<span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 혹은 개발버전을 다운 받고 싶다면 다음의 코드를 사용한다.</span></span>
 <span id="cb1-3"><a href="index.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::install_github(&quot;mlverse/torch&quot;)</span></span></code></pre></div>
 </div>
 <div id="기본-패키지" class="section level2 unnumbered">
@@ -344,11 +340,7 @@ gitbook.start({
 "vk": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
+"fontsettings": null,
 "edit": {
 "link": "https://github.com/statisticsplaybook/r-torch-playbook/edit/master/index.Rmd",
 "text": "Edit"

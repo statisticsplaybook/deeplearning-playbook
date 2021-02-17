@@ -24,7 +24,7 @@
 <meta name="author" content="슬기로운통계생활" />
 
 
-<meta name="date" content="2021-02-16" />
+<meta name="date" content="2021-02-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="미분-자동추적-기능-autograd-에-대하여.html"/>
 <link rel="next" href="나의-첫-신경망-학습.html"/>
-<script src="libs/header-attrs-2.6.6/header-attrs.js"></script>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -129,6 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="dlplaybook.css" type="text/css" />
 </head>
 
 <body>
@@ -290,7 +291,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="figure" style="text-align: center"><span id="fig:neuralnet-example2"></span>
 <img src="image/neuralnet1.png" alt="다시 두두등장! 세상 간단한 신경망" width="100%" />
 <p class="caption">
-Figure 7.1: 다시 두두등장! 세상 간단한 신경망
+그림 7.1: 다시 두두등장! 세상 간단한 신경망
 </p>
 </div>
 <div id="신경망-정의-custom-nn-modules" class="section level2" number="7.1">
@@ -304,11 +305,11 @@ Figure 7.1: 다시 두두등장! 세상 간단한 신경망
 <span id="cb279-3"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb279-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> T),</span>
 <span id="cb279-4"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb279-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">dtype =</span> <span class="fu">torch_float</span>()) </span>
 <span id="cb279-5"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb279-5" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
-<pre><code>## torch_tensor
-##  1  2
-##  3  4
-##  5  6
-## [ CPUFloatType{3,2} ]</code></pre>
+<pre><code>#&gt; torch_tensor
+#&gt;  1  2
+#&gt;  3  4
+#&gt;  5  6
+#&gt; [ CPUFloatType{3,2} ]</code></pre>
 <p>먼저, <code>TwoLayerNet</code>이라는 이름의 신경망 클래스를 정의한다(기억하시나? 클래스의 이름은 카멜 형식이다!). <code>nn_module()</code> 함수는 클래스를 정의하는 함수인데, 이 함수를 사용해서 만들어진 클래스는 자동으로 신경망과 관련한 클래스인 <code>basic-nn-module</code> 클래스를 상속하게 만든다. 즉, <code>nn_module</code>안에는 신경망 관련 클래스들 속에는 신경망과 관련한 많은 함수가 정의되어 있을 것이고, 이것을 다 상속받아서 클래스가 만들어지는 것이다. 다음의 코드는 위의 신경망을 정의한 코드이다.</p>
 <div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb281-1" aria-hidden="true" tabindex="-1"></a>TwoLayerNet <span class="ot">&lt;-</span> <span class="fu">nn_module</span>(</span>
 <span id="cb281-2"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb281-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">classname =</span> <span class="st">&quot;TowLayerNet&quot;</span>,</span>
@@ -323,13 +324,13 @@ Figure 7.1: 다시 두두등장! 세상 간단한 신경망
 <span id="cb281-11"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb281-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb281-12"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb281-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb281-13"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb281-13" aria-hidden="true" tabindex="-1"></a>myfirst_model <span class="ot">&lt;-</span> <span class="fu">TwoLayerNet</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>)</span></code></pre></div>
-<pre><code>## Initiation complete!</code></pre>
+<pre><code>#&gt; Initiation complete!</code></pre>
 <div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb283-1" aria-hidden="true" tabindex="-1"></a>myfirst_model</span></code></pre></div>
-<pre><code>## An `nn_module` containing 9 parameters.
-## 
-## ── Modules ─────────────────────────────────────────────────────────────────────
-## ● hidden_layer: &lt;nn_linear&gt; #6 parameters
-## ● output_layer: &lt;nn_linear&gt; #3 parameters</code></pre>
+<pre><code>#&gt; An `nn_module` containing 9 parameters.
+#&gt; 
+#&gt; ── Modules ─────────────────────────────────────────────────────────────────────
+#&gt; ● hidden_layer: &lt;nn_linear&gt; #6 parameters
+#&gt; ● output_layer: &lt;nn_linear&gt; #3 parameters</code></pre>
 <p>결과를 살펴보면 <code>TwoLayerNet</code> 클래스에 의하여 만들어진 <code>myfirst_model</code>는 두 개의 층이 들어있는 것을 확인할 수 있다. 이 두개 층에 관련한 모수 갯수를 그림과 한번 연결 시켜보면 잘 정의가 되어있다는 것을 알 수 있다.</p>
 <ul>
 <li>hidden_layer: 그림에서 첫번째와 두번째 층을 연결하는 다리가 6개라는 것을 주목하자. 모수의 갯수는 그래서 6개!</li>
@@ -345,61 +346,61 @@ Figure 7.1: 다시 두두등장! 세상 간단한 신경망
 <p>우리가 예전에 다루었던 예제에서는 <code>bias</code> 항이 없었으므로, <code>bias=FALSE</code>를 해주어야 함에 주의하자.</p>
 <div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb285-1" aria-hidden="true" tabindex="-1"></a>mat_op <span class="ot">&lt;-</span> <span class="fu">nn_linear</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="at">bias =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb285-2"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb285-2" aria-hidden="true" tabindex="-1"></a>mat_op<span class="sc">$</span>weight</span></code></pre></div>
-<pre><code>## torch_tensor
-##  0.2524  0.6096
-##  0.2502  0.0472
-##  0.3940 -0.1165
-## [ CPUFloatType{3,2} ]</code></pre>
+<pre><code>#&gt; torch_tensor
+#&gt;  0.0155  0.4763
+#&gt; -0.3872 -0.4209
+#&gt;  0.2312  0.3258
+#&gt; [ CPUFloatType{3,2} ]</code></pre>
 <p><code>mat_op</code>을 nn.Linear(2, 3) 클래스로 만들어진 클래스 생성자로 이해 할 수 있다. 그리고 이것의 수학적 의미는 행렬 연산으로 이해할 수 있겠다. <code>mat_op</code>가 생성될 때 임의의 <code>weight</code> 텐서, <span class="math inline">\(W\)</span>, 와 <code>bias</code>, <span class="math inline">\(b\)</span>,가 생성이 되고, 입력값으로 들어오는 <code>X</code>에 대하여 다음의 연산을 수행한 후 결괏값을 내보낸다.</p>
 <p><span class="math display">\[
 y = X\beta = XW^T
 \]</span></p>
 <p>결과를 코드로 확인해보자.</p>
 <div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb287-1" aria-hidden="true" tabindex="-1"></a>X<span class="sc">$</span><span class="fu">mm</span>(mat_op<span class="sc">$</span>weight<span class="sc">$</span><span class="fu">t</span>())</span></code></pre></div>
-<pre><code>## torch_tensor
-##  1.4715  0.3445  0.1610
-##  3.1954  0.9392  0.7160
-##  4.9193  1.5339  1.2709
-## [ CPUFloatType{3,3} ]</code></pre>
+<pre><code>#&gt; torch_tensor
+#&gt;  0.9680 -1.2290  0.8827
+#&gt;  1.9515 -2.8452  1.9967
+#&gt;  2.9350 -4.4614  3.1106
+#&gt; [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mat_op</span>(X)</span></code></pre></div>
-<pre><code>## torch_tensor
-##  1.4715  0.3445  0.1610
-##  3.1954  0.9392  0.7160
-##  4.9193  1.5339  1.2709
-## [ CPUFloatType{3,3} ]</code></pre>
+<pre><code>#&gt; torch_tensor
+#&gt;  0.9680 -1.2290  0.8827
+#&gt;  1.9515 -2.8452  1.9967
+#&gt;  2.9350 -4.4614  3.1106
+#&gt; [ CPUFloatType{3,3} ]</code></pre>
 </div>
 <div id="bias-있는-경우" class="section level3" number="7.2.2">
 <h3><span class="header-section-number">7.2.2</span> bias 있는 경우</h3>
 <p><code>bias=TRUE</code>를 해주면 <code>weight</code> 텐서 <span class="math inline">\(W\)</span>와 더불어 bias 텐서가 생성이 된다.</p>
 <div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb291-1" aria-hidden="true" tabindex="-1"></a>mat_op2 <span class="ot">&lt;-</span> <span class="fu">nn_linear</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="at">bias =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb291-2"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb291-2" aria-hidden="true" tabindex="-1"></a>mat_op2<span class="sc">$</span>weight</span></code></pre></div>
-<pre><code>## torch_tensor
-##  0.5929 -0.3510
-## -0.4910 -0.2437
-##  0.3812 -0.6701
-## [ CPUFloatType{3,2} ]</code></pre>
+<pre><code>#&gt; torch_tensor
+#&gt; -0.0859  0.2377
+#&gt; -0.4647  0.1602
+#&gt;  0.4786 -0.1773
+#&gt; [ CPUFloatType{3,2} ]</code></pre>
 <div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb293-1" aria-hidden="true" tabindex="-1"></a>mat_op2<span class="sc">$</span>bias</span></code></pre></div>
-<pre><code>## torch_tensor
-##  0.6401
-## -0.3302
-## -0.2438
-## [ CPUFloatType{3} ]</code></pre>
+<pre><code>#&gt; torch_tensor
+#&gt;  0.5000
+#&gt;  0.1592
+#&gt; -0.2467
+#&gt; [ CPUFloatType{3} ]</code></pre>
 <p>따라서 정의된 신경망의 연산 역시 다음과 같이 바뀐다.</p>
 <p><span class="math display">\[
 y = X\beta + b = XW^T + b
 \]</span></p>
 <div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb295-1" aria-hidden="true" tabindex="-1"></a>X<span class="sc">$</span><span class="fu">mm</span>(mat_op2<span class="sc">$</span>weight<span class="sc">$</span><span class="fu">t</span>()) <span class="sc">+</span> mat_op2<span class="sc">$</span>bias</span></code></pre></div>
-<pre><code>## torch_tensor
-##  0.5309 -1.3086 -1.2027
-##  1.0145 -2.7780 -1.7804
-##  1.4982 -4.2474 -2.3580
-## [ CPUFloatType{3,3} ]</code></pre>
+<pre><code>#&gt; torch_tensor
+#&gt;  0.8895  0.0150 -0.1226
+#&gt;  1.1931 -0.5940  0.4800
+#&gt;  1.4968 -1.2029  1.0826
+#&gt; [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mat_op2</span>(X)</span></code></pre></div>
-<pre><code>## torch_tensor
-##  0.5309 -1.3086 -1.2027
-##  1.0145 -2.7780 -1.7804
-##  1.4982 -4.2474 -2.3580
-## [ CPUFloatType{3,3} ]</code></pre>
+<pre><code>#&gt; torch_tensor
+#&gt;  0.8895  0.0150 -0.1226
+#&gt;  1.1931 -0.5940  0.4800
+#&gt;  1.4968 -1.2029  1.0826
+#&gt; [ CPUFloatType{3,3} ]</code></pre>
 </div>
 </div>
 <div id="순전파forward-propagation-정의" class="section level2" number="7.3">
@@ -430,13 +431,13 @@ y = X\beta + b = XW^T + b
 <span id="cb299-22"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb299-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(zeallot)</span>
 <span id="cb299-23"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb299-23" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(D_in, H, D_out) <span class="sc">%&lt;-%</span>  <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>)</span>
 <span id="cb299-24"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb299-24" aria-hidden="true" tabindex="-1"></a>my_net <span class="ot">&lt;-</span> <span class="fu">TwoLayerNet</span>(D_in, H, D_out)</span></code></pre></div>
-<pre><code>## Initiation complete!</code></pre>
+<pre><code>#&gt; Initiation complete!</code></pre>
 <div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="fu">my_net</span>(X)</span></code></pre></div>
-<pre><code>## torch_tensor
-##  0.4476
-##  0.4347
-##  0.4347
-## [ CPUFloatType{3,1} ]</code></pre>
+<pre><code>#&gt; torch_tensor
+#&gt;  0.4701
+#&gt;  0.4808
+#&gt;  0.4912
+#&gt; [ CPUFloatType{3,1} ]</code></pre>
 <p>위의 코드를 한번 살펴보자. 먼저 <code>zeallot</code> 패키지는 <code>%&lt;-%</code>를 포함하는 패키지인데, 여러 개의 변수에 한꺼번에 값을 부여하는 연산자이기 때문에 알아두면 편한 패키지 이다.</p>
 <p>새로 정의된 <code>TwoLayerNet</code> 클래스에는 <a href="torch-nn-모듈로-첫-신경망-정의하기.html#fig:neuralnet-example2">7.1</a>의 2단 신경망의 순전파(forward propagation)가 구현된 멤버함수 <code>forward</code>가 정의되어 있다. 이 함수는 입력 텐서 <code>X</code>가 신경망으로 들어오게 되면, 은닉층(hidden_layer) <span class="math inline">\(\rightarrow\)</span> 활성함수 (activation function; 여기서는 nn_sigmoid 함수) <span class="math inline">\(\rightarrow\)</span> 출력층(output_layer) <span class="math inline">\(\rightarrow\)</span> 활성함수 순으로 내보내게 된다.</p>
 
@@ -473,11 +474,7 @@ gitbook.start({
 "vk": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
+"fontsettings": null,
 "edit": {
 "link": "https://github.com/statisticsplaybook/r-torch-playbook/edit/master/07-myfirst-nn.Rmd",
 "text": "Edit"
