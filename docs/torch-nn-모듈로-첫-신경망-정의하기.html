@@ -347,9 +347,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb285-1" aria-hidden="true" tabindex="-1"></a>mat_op <span class="ot">&lt;-</span> <span class="fu">nn_linear</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="at">bias =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb285-2"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb285-2" aria-hidden="true" tabindex="-1"></a>mat_op<span class="sc">$</span>weight</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.0155  0.4763
-#&gt; -0.3872 -0.4209
-#&gt;  0.2312  0.3258
+#&gt;  0.5935 -0.5460
+#&gt;  0.4711  0.1038
+#&gt; -0.6489 -0.1154
 #&gt; [ CPUFloatType{3,2} ]</code></pre>
 <p><code>mat_op</code>을 nn.Linear(2, 3) 클래스로 만들어진 클래스 생성자로 이해 할 수 있다. 그리고 이것의 수학적 의미는 행렬 연산으로 이해할 수 있겠다. <code>mat_op</code>가 생성될 때 임의의 <code>weight</code> 텐서, <span class="math inline">\(W\)</span>, 와 <code>bias</code>, <span class="math inline">\(b\)</span>,가 생성이 되고, 입력값으로 들어오는 <code>X</code>에 대하여 다음의 연산을 수행한 후 결괏값을 내보낸다.</p>
 <p><span class="math display">\[
@@ -358,15 +358,15 @@ y = X\beta = XW^T
 <p>결과를 코드로 확인해보자.</p>
 <div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb287-1" aria-hidden="true" tabindex="-1"></a>X<span class="sc">$</span><span class="fu">mm</span>(mat_op<span class="sc">$</span>weight<span class="sc">$</span><span class="fu">t</span>())</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.9680 -1.2290  0.8827
-#&gt;  1.9515 -2.8452  1.9967
-#&gt;  2.9350 -4.4614  3.1106
+#&gt; -0.4985  0.6788 -0.8797
+#&gt; -0.4035  1.8286 -2.4084
+#&gt; -0.3085  2.9785 -3.9371
 #&gt; [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mat_op</span>(X)</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.9680 -1.2290  0.8827
-#&gt;  1.9515 -2.8452  1.9967
-#&gt;  2.9350 -4.4614  3.1106
+#&gt; -0.4985  0.6788 -0.8797
+#&gt; -0.4035  1.8286 -2.4084
+#&gt; -0.3085  2.9785 -3.9371
 #&gt; [ CPUFloatType{3,3} ]</code></pre>
 </div>
 <div id="bias-있는-경우" class="section level3" number="7.2.2">
@@ -375,15 +375,15 @@ y = X\beta = XW^T
 <div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb291-1" aria-hidden="true" tabindex="-1"></a>mat_op2 <span class="ot">&lt;-</span> <span class="fu">nn_linear</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="at">bias =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb291-2"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb291-2" aria-hidden="true" tabindex="-1"></a>mat_op2<span class="sc">$</span>weight</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt; -0.0859  0.2377
-#&gt; -0.4647  0.1602
-#&gt;  0.4786 -0.1773
+#&gt;  0.1772 -0.6316
+#&gt; -0.7030 -0.1038
+#&gt;  0.0410  0.3805
 #&gt; [ CPUFloatType{3,2} ]</code></pre>
 <div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb293-1" aria-hidden="true" tabindex="-1"></a>mat_op2<span class="sc">$</span>bias</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.5000
-#&gt;  0.1592
-#&gt; -0.2467
+#&gt;  0.4085
+#&gt;  0.6377
+#&gt; -0.6051
 #&gt; [ CPUFloatType{3} ]</code></pre>
 <p>따라서 정의된 신경망의 연산 역시 다음과 같이 바뀐다.</p>
 <p><span class="math display">\[
@@ -391,15 +391,15 @@ y = X\beta + b = XW^T + b
 \]</span></p>
 <div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb295-1" aria-hidden="true" tabindex="-1"></a>X<span class="sc">$</span><span class="fu">mm</span>(mat_op2<span class="sc">$</span>weight<span class="sc">$</span><span class="fu">t</span>()) <span class="sc">+</span> mat_op2<span class="sc">$</span>bias</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.8895  0.0150 -0.1226
-#&gt;  1.1931 -0.5940  0.4800
-#&gt;  1.4968 -1.2029  1.0826
+#&gt; -0.6776 -0.2730  0.1969
+#&gt; -1.5865 -1.8866  1.0400
+#&gt; -2.4954 -3.5002  1.8830
 #&gt; [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mat_op2</span>(X)</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.8895  0.0150 -0.1226
-#&gt;  1.1931 -0.5940  0.4800
-#&gt;  1.4968 -1.2029  1.0826
+#&gt; -0.6776 -0.2730  0.1969
+#&gt; -1.5865 -1.8866  1.0400
+#&gt; -2.4954 -3.5002  1.8830
 #&gt; [ CPUFloatType{3,3} ]</code></pre>
 </div>
 </div>
@@ -434,9 +434,9 @@ y = X\beta + b = XW^T + b
 <pre><code>#&gt; Initiation complete!</code></pre>
 <div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="torch-nn-모듈로-첫-신경망-정의하기.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="fu">my_net</span>(X)</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.4701
-#&gt;  0.4808
-#&gt;  0.4912
+#&gt;  0.5525
+#&gt;  0.5482
+#&gt;  0.5489
 #&gt; [ CPUFloatType{3,1} ]</code></pre>
 <p>위의 코드를 한번 살펴보자. 먼저 <code>zeallot</code> 패키지는 <code>%&lt;-%</code>를 포함하는 패키지인데, 여러 개의 변수에 한꺼번에 값을 부여하는 연산자이기 때문에 알아두면 편한 패키지 이다.</p>
 <p>새로 정의된 <code>TwoLayerNet</code> 클래스에는 <a href="torch-nn-모듈로-첫-신경망-정의하기.html#fig:neuralnet-example2">7.1</a>의 2단 신경망의 순전파(forward propagation)가 구현된 멤버함수 <code>forward</code>가 정의되어 있다. 이 함수는 입력 텐서 <code>X</code>가 신경망으로 들어오게 되면, 은닉층(hidden_layer) <span class="math inline">\(\rightarrow\)</span> 활성함수 (activation function; 여기서는 nn_sigmoid 함수) <span class="math inline">\(\rightarrow\)</span> 출력층(output_layer) <span class="math inline">\(\rightarrow\)</span> 활성함수 순으로 내보내게 된다.</p>

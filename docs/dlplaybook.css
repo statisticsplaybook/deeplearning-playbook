@@ -10,7 +10,7 @@
   font-size: 1em;
   height: auto;
   padding: 1em 20px;
-  border-bottom: 1px solid #a9c9008a;
+  border-bottom: 1px solid #5884b08a;
 }
 
 .summary > li:first-child a {
@@ -81,7 +81,7 @@ h2 {
 }
  
 h3, h4 {
-  color: #566675;
+  color: #2f4861;
   font-weight: 400;
 }
    
@@ -111,7 +111,7 @@ p.date em {
 
 
 .level1 h1 {
-  border-bottom: 1px solid #a9c900;
+  border-bottom: 1px solid #5884b0;
 }
 
 
@@ -134,7 +134,7 @@ a:focus {
 
 .book .book-summary {
   background: white;
-  border-right: 1px solid #a9c9008a;
+  border-right: 1px solid #5884b08a;
 }
 
 .summary{
@@ -164,7 +164,7 @@ a:focus {
 .book .book-summary ul.summary li.focus>a,
 .book .book-summary > nav > ul > li.chapter.active > a:hover { 
   color: #1c3248;
-  border-left: solid 4px #a9c900;
+  border-left: solid 4px #5884b0;
   padding-left: 16px;
 } 
   
@@ -192,7 +192,7 @@ a:focus {
       margin-left: -20px !important;
       padding-left: 36px !important;
       color: #1c3248;
-      border-left: solid 4px #a9c900;
+      border-left: solid 4px #5884b0;
 } 
     
 .book .book-summary ul li ul li.chapter a:hover {
@@ -206,7 +206,7 @@ a:focus {
   margin-left: -40px !important;
   padding-left: 56px !important;
   color: #1c3248;
-  border-left: solid 4px #a9c900;
+  border-left: solid 4px #5884b0;
 } 
   
 .book .book-summary ul li ul li ul li > a:hover{
@@ -264,7 +264,7 @@ color: #2b4c6d;
   
 section ul li::before {
   content: "\2022";
-  color: #a9c900;
+  color: #5884b0;
   display: inline-block;
   position: relative;
   left: 1em;
@@ -306,7 +306,7 @@ div.rmdwarning {
 div.rmdnote {
   background-image: url("notes.svg");
   background-color: #a9c90112;
-  border-left: 4px solid #a9c90080;
+  border-left: 4px solid #5884b080;
   position: relative;
   color: #233546;
 }
@@ -319,7 +319,7 @@ div.rmdnote::before {
   left: -1em;
   width: 4px;
   display: block;
-  background-color: #a9c900;
+  background-color: #5884b0;
 }
 
 div.rmdwarning {
