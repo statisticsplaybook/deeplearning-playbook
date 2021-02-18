@@ -1,15 +1,3 @@
 # `Dataset`과 `Dataloader` 클래스
 
 이번 챕터에서는 실제 딥러닝을 사용하여 모델링을 할 때 사용될 데이터를 어떻게 `torch`에 넣을수 있는지에 대하여 알아보자.
-
-```{block note-dataloader, type='rmdnote'}
-### 알아두기
-
-이번 챕터는 `Dataset` 패키지와
-
-```
-
-```{block warning-dataloader, type='rmdwarning'}
-### 주의하기
-이번 챕터는 `dataloader` 를 다뤄본다. 
-```

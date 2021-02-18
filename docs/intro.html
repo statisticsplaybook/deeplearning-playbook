@@ -293,7 +293,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="torch와의-첫만남" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> <code>torch</code>와의 첫만남</h2>
 <p><code>torch</code>패키지를 설치했으니, 한번 만나봐야한다. 다음의 명령어를 통하여 <code>torch</code>를 불러보자.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="intro.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="intro.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span></code></pre></div>
 </div>
 <div id="텐서-tensor-만들기" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span> 텐서 (tensor) 만들기</h2>
@@ -303,10 +303,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="빈-텐서-만들기" class="section level3" number="1.2.1">
 <h3><span class="header-section-number">1.2.1</span> 빈 텐서 만들기</h3>
 <p>속이 빈 5행 3열의 텐서은 다음과 같이 선언한다. 주의할 점은 우리가 이번에 만들 빈 (empty) 텐서 과 뒤에서 만들어 볼 0 텐서는 다르다; 빈 텐서은 0과 근접한 쓰레기값이 들어있는 반면에, 0 텐서에는 정말 0이 들어있다.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="intro.html#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">torch_empty</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
-<span id="cb4-2"><a href="intro.html#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="intro.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 텐서 x값 확인</span></span>
-<span id="cb4-4"><a href="intro.html#cb4-4" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="intro.html#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">torch_empty</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
+<span id="cb2-2"><a href="intro.html#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="intro.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 텐서 x값 확인</span></span>
+<span id="cb2-4"><a href="intro.html#cb2-4" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  0  0  0
 #&gt;  0  0  0
@@ -314,50 +314,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  0  0  0
 #&gt;  0  0  0
 #&gt; [ CPUFloatType{5,3} ]</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 텐서 x의 크기 확인</span></span>
-<span id="cb6-2"><a href="intro.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="intro.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 텐서 x의 크기 확인</span></span>
+<span id="cb4-2"><a href="intro.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(x)</span></code></pre></div>
 <pre><code>#&gt; [1] 5 3</code></pre>
 <p>정말 5행 3열의 텐서가 만들어졌다. 이건 마치 우리가 R을 처음 시작하고 텐서을 만드는 것과 아주 유사해서, 실제 R을 만져본 사람이라면 뒤로 빨리 넘기고 싶어하는 욕구가 솓구칠 것이다. 결과값을 잘 살펴보자. <code>CPUFloatType</code>에서 우리는 현재 만든 <code>rand_tensor</code>는 CPU에서 접근이 가능하며, 실수 (float) 타입이라는 것을 이야기해준다.</p>
 </div>
 <div id="랜덤-텐서" class="section level3" number="1.2.2">
 <h3><span class="header-section-number">1.2.2</span> 랜덤 텐서</h3>
 <p>텐서의 각 자리에 0에서 1사이의 난수로 채워서 만드는 방법이다. <code>torch_rand()</code> 함수를 사용한다.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="intro.html#cb8-1" aria-hidden="true" tabindex="-1"></a>rand_tensor <span class="ot">&lt;-</span>  <span class="fu">torch_rand</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
-<span id="cb8-2"><a href="intro.html#cb8-2" aria-hidden="true" tabindex="-1"></a>rand_tensor</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1" aria-hidden="true" tabindex="-1"></a>rand_tensor <span class="ot">&lt;-</span>  <span class="fu">torch_rand</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
+<span id="cb6-2"><a href="intro.html#cb6-2" aria-hidden="true" tabindex="-1"></a>rand_tensor</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.7867  0.0507  0.0156
-#&gt;  0.6632  0.6563  0.2173
-#&gt;  0.2726  0.7350  0.2197
-#&gt;  0.9323  0.2003  0.7902
-#&gt;  0.7028  0.9591  0.9247
+#&gt;  0.1908  0.0605  0.4049
+#&gt;  0.3048  0.7473  0.1439
+#&gt;  0.3781  0.9344  0.9545
+#&gt;  0.0911  0.6152  0.0199
+#&gt;  0.0226  0.5611  0.1861
 #&gt; [ CPUFloatType{5,3} ]</code></pre>
 <p>참고로 이렇게 만들어진 텐서에는 R에서 텐서과 어레이(array)에 접근할 때사용한 모든 문법들을 사용해서 접근할 수 있다.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="intro.html#cb10-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[,<span class="dv">2</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="intro.html#cb8-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[,<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.0507
-#&gt;  0.6563
-#&gt;  0.7350
-#&gt;  0.2003
-#&gt;  0.9591
+#&gt;  0.0605
+#&gt;  0.7473
+#&gt;  0.9344
+#&gt;  0.6152
+#&gt;  0.5611
 #&gt; [ CPUFloatType{5} ]</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="intro.html#cb12-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="intro.html#cb10-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.7867  0.0507  0.0156
-#&gt;  0.6632  0.6563  0.2173
-#&gt;  0.2726  0.7350  0.2197
+#&gt;  0.1908  0.0605  0.4049
+#&gt;  0.3048  0.7473  0.1439
+#&gt;  0.3781  0.9344  0.9545
 #&gt; [ CPUFloatType{3,3} ]</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="intro.html#cb14-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="intro.html#cb12-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.2726  0.2197
-#&gt;  0.9323  0.7902
+#&gt;  0.3781  0.9545
+#&gt;  0.0911  0.0199
 #&gt; [ CPUFloatType{2,2} ]</code></pre>
-<p>위의 예제에서 벌써부터 일부 R유저들은 감격의 눈물을 흘릴 수 있다. 그렇다, Rtorch에서 텐서의 <strong>첫번째 위치는 1부터 시작</strong>한다. 이 너무나도 당연한 진리는 파이썬에서는 통하지 않는다.</p>
+<p>위의 예제에서 벌써부터 일부 R유저들은 감격의 눈물을 흘릴 수 있다.</p>
+<div class="rmdwarning">
+<h3 id="주의하기">
+주의하기
+</h3>
+<p>
+그렇다, Rtorch에서 텐서의 <strong>첫번째 위치는 1부터 시작</strong>한다. 이 너무나도 당연한 진리는 <strong>파이썬에서는 통하지 않는다.</strong>
+</p>
+</div>
 </div>
 <div id="단위-텐서" class="section level3" number="1.2.3">
 <h3><span class="header-section-number">1.2.3</span> 단위 텐서</h3>
 <p>4행 4열의 단위 텐서 (identity matrix)를 선언하는 방법은 다음과 같다.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="intro.html#cb16-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">torch_eye</span>(<span class="dv">4</span>)</span>
-<span id="cb16-2"><a href="intro.html#cb16-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="intro.html#cb14-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">torch_eye</span>(<span class="dv">4</span>)</span>
+<span id="cb14-2"><a href="intro.html#cb14-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  1  0  0  0
 #&gt;  0  1  0  0
@@ -368,8 +376,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="영0-텐서" class="section level3" number="1.2.4">
 <h3><span class="header-section-number">1.2.4</span> 영(0) 텐서</h3>
 <p>텐서의 요소들이 모두 0으로 채워진 3행 5열의 텐서을 선언하는 것은 다음과 같이 <code>torch_zeros()</code> 함수를 사용한다.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="intro.html#cb18-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">torch_zeros</span>(<span class="dv">3</span>, <span class="dv">5</span>)</span>
-<span id="cb18-2"><a href="intro.html#cb18-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="intro.html#cb16-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">torch_zeros</span>(<span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb16-2"><a href="intro.html#cb16-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  0  0  0  0  0
 #&gt;  0  0  0  0  0
@@ -383,8 +391,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="텐서-직접선언" class="section level3" number="1.3.1">
 <h3><span class="header-section-number">1.3.1</span> 텐서 직접선언</h3>
 <p>가장 핵심적인 내용은 R에서 벡터와 행렬을 정의한 후 <code>torch_tensor()</code> 함수에 넣어주면, 그대로 가져다가 텐서로 바꿔준다는 사실이다. 다음의 예제는 2행 2열의 행렬을 정의한 후, 정의된 행렬을 사용하여 텐서를 만드는 코드이다.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="intro.html#cb20-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="at">ncol =</span> <span class="dv">2</span>))</span>
-<span id="cb20-2"><a href="intro.html#cb20-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="intro.html#cb18-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="at">ncol =</span> <span class="dv">2</span>))</span>
+<span id="cb18-2"><a href="intro.html#cb18-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  1  4
 #&gt;  2  5
@@ -394,8 +402,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="연산자-사용" class="section level3" number="1.3.2">
 <h3><span class="header-section-number">1.3.2</span> <code>:</code> 연산자 사용</h3>
 <p>위의 코드가 잘 작동한다는 사실을 알게 되면, 우리가 너무나 익숙한 R의 기본 함수들을 사용하여 텐서를 자유롭게 만들 수 있을 것이다. 앞선 예제는 <code>:</code> 연산자를 통하여 다음과 같이 축약 할 수 있다.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="intro.html#cb22-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">ncol =</span> <span class="dv">2</span>))</span>
-<span id="cb22-2"><a href="intro.html#cb22-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="intro.html#cb20-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">ncol =</span> <span class="dv">2</span>))</span>
+<span id="cb20-2"><a href="intro.html#cb20-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  1  4
 #&gt;  2  5
@@ -405,8 +413,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="seq-함수-사용" class="section level3" number="1.3.3">
 <h3><span class="header-section-number">1.3.3</span> <code>seq()</code> 함수 사용</h3>
 <p><code>seq()</code> 함수는 좀 더 유연한 벡터를 만들 수 있도록 해주므로, 텐서를 만들때 유용하게 사용될 것이다.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="intro.html#cb24-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.1</span>), <span class="at">ncol =</span> <span class="dv">2</span>))</span>
-<span id="cb24-2"><a href="intro.html#cb24-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="intro.html#cb22-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.1</span>), <span class="at">ncol =</span> <span class="dv">2</span>))</span>
+<span id="cb22-2"><a href="intro.html#cb22-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  0.1000  0.6000
 #&gt;  0.2000  0.7000
@@ -415,8 +423,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  0.5000  1.0000
 #&gt; [ CPUFloatType{5,2} ]</code></pre>
 <p>위의 코드는 <code>seq()</code> 함수를 사용해서 벡터를 만들고, 2열을 갖는 행렬을 만든 후, 텐서로 변환을 시켰다. 단, <code>by</code> 옵션의 경우, 결과값이 홀수인지 짝수인지 체크해줘야 하므로, 특정 범위에서의 일정 간격 숫자를 뽑아 행렬로 만들땐 <code>length.out</code> 옵션이 편하다.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="intro.html#cb26-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">10</span>), <span class="at">ncol =</span> <span class="dv">2</span>))</span>
-<span id="cb26-2"><a href="intro.html#cb26-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="intro.html#cb24-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="fu">matrix</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">10</span>), <span class="at">ncol =</span> <span class="dv">2</span>))</span>
+<span id="cb24-2"><a href="intro.html#cb24-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  0.0000  0.5556
 #&gt;  0.1111  0.6667
@@ -424,14 +432,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  0.3333  0.8889
 #&gt;  0.4444  1.0000
 #&gt; [ CPUFloatType{5,2} ]</code></pre>
-<p>둘 다 0과 1사이의 벡터를 만들었지만, 결과는 다르다는 것에 주의하자. 텐서를 만드는 방법에 대한 핵심은 결국, <strong>자신이 편한 방법으로 만들고 싶은 텐서와 대응되는 R 개체를 만들고, <code>torch_tensor()</code>에 입력 시켜주면 되는 것</strong>이다.</p>
+<p>둘 다 0과 1사이의 벡터를 만들었지만, 결과는 다르다는 것에 주의하자.</p>
+<div class="rmdnote">
+<p>
+텐서를 만드는 방법에 대한 핵심은 결국, <strong>자신이 편한 방법으로 만들고 싶은 텐서와 대응되는 R 개체를 만들고, <code>torch_tensor()</code>에 입력 시켜주면 되는 것</strong>이다.
+</p>
+</div>
 </div>
 <div id="연산자-사용-1" class="section level3" number="1.3.4">
 <h3><span class="header-section-number">1.3.4</span> <code>%&gt;%</code> 연산자 사용</h3>
 <p>가끔 R에서 아주 많이 쓰이는 <code>%&gt;%</code> 파이프 연산자를 다른 라이브러리를 사용할 경우 적용할 생각을 못하는 경우가 있다. 왼쪽의 결과 값을 오른쪽의 입력값으로 넘겨주는 파이프 연산자 역시 torch 패키지에서 사용 가능하므로, 텐서 만드는 방법은 그야말로 무궁무진하다.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="intro.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
-<span id="cb28-2"><a href="intro.html#cb28-2" aria-hidden="true" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span> <span class="sc">%&gt;%</span> <span class="fu">diag</span>())</span>
-<span id="cb28-3"><a href="intro.html#cb28-3" aria-hidden="true" tabindex="-1"></a>y2</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="intro.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb26-2"><a href="intro.html#cb26-2" aria-hidden="true" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span> <span class="sc">%&gt;%</span> <span class="fu">diag</span>())</span>
+<span id="cb26-3"><a href="intro.html#cb26-3" aria-hidden="true" tabindex="-1"></a>y2</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  1  0  0  0  0
 #&gt;  0  2  0  0  0
@@ -444,10 +457,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="텐서와-행렬은-같을까" class="section level2" number="1.4">
 <h2><span class="header-section-number">1.4</span> 텐서와 행렬은 같을까?</h2>
 <p>앞에서 설명한 것처럼 텐서는 행렬의 개념을 확장시킨 것에 지나지 않겠지만, 그렇다고 같은 취급을 해서도 안된다. 그도 그럴것이 R에서 torch의 텐서와 행렬은 같지 않다. 이러한 사실은 다음과 같이 위에서 만든 텐서 <code>x</code>에 R의 기본 연산자인 행렬곱을 적용해보면 알 수 있다.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="intro.html#cb30-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">torch_zeros</span>(<span class="dv">3</span>, <span class="dv">5</span>)</span>
-<span id="cb30-2"><a href="intro.html#cb30-2" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%*%</span> <span class="fu">t</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="intro.html#cb28-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">torch_zeros</span>(<span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb28-2"><a href="intro.html#cb28-2" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%*%</span> <span class="fu">t</span>(x)</span></code></pre></div>
 <pre><code>#&gt; Error in t.default(x): argument is not a matrix</code></pre>
-<p>위의 <code>argument is not a matrix</code> 에러에서 우리는 정말 텐서와 행렬은 다르게 취급된다는 것을 알 수 있다. 즉, R환경에서 텐서와 행렬은 근본이 다른 개체(object)라는 것을 알 수 있다. 그렇다면 ‘텐서끼리의 계산은 어떻게 할까?’ 자연스러운 의문이 든다. 다음 장에서는 텐서의 연산에 대하여 배워보자.</p>
+<p>위의 <code>argument is not a matrix</code> 에러에서 우리는 정말 텐서와 행렬은 다르게 취급된다는 것을 알 수 있다. 그렇다면 ‘텐서끼리의 계산은 어떻게 할까?’ 자연스러운 의문이 든다. 다음 장에서는 텐서의 연산에 대하여 배워보자.</p>
+<div class="rmdwarning">
+<p>
+R 프로그램 입장에서 <code>torch</code>를 사용해서 정의된 텐서와 <code>base</code> 패키지의 행렬(matrix)은 근본이 다른 객체(object)이다.
+</p>
+</div>
 
 </div>
 </div>
