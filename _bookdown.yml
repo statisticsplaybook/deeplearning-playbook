@@ -14,6 +14,7 @@ before_chapter_script: "_common.R"
 
 delete_merged_file: true
 output_dir: docs
+download: no
 rmd_files: ["index.Rmd",
             "01-intro-to-tensor.Rmd",
             "02-tensor-calculation.Rmd",

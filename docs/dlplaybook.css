@@ -1,8 +1,10 @@
+/* dlplaybook.css edited by Issac Lee  - www.theissaclee.com */
+/* The original .css file is adjusted from smltar.css written by Desirée De Leon @RStudio*/
+
 @import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,600;0,700;1,400&&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 
-/* This css file adjusted from smltar.css written by Desirée De Leon @RStudio*/
 /*----- Toolbar line at top----- */
 /* TOC book title */
 
@@ -304,7 +306,7 @@ div.rmdwarning {
 }
 
 div.rmdnote {
-  background-image: url("notes.svg");
+  background-image: url("image/note.svg");
   background-color: #a9c90112;
   border-left: 4px solid #5884b080;
   position: relative;
@@ -323,7 +325,7 @@ div.rmdnote::before {
 }
 
 div.rmdwarning {
-  background-image: url("flag.svg");
+  background-image: url("image/flag.svg");
   color: #802f5f;
   background-color: #eab0c41a !important;
   border-left: #a3055d54 solid 4px;

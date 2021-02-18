@@ -1,2 +1,13 @@
 # `Dataset`과 `Dataloader` 클래스
 
+```{block note-dataloader, type='rmdnote'}
+### 알아두기
+
+이번 챕터는 `Dataset` 패키지와
+
+```
+
+```{block warning-dataloader, type='rmdwarning'}
+### 주의하기
+이번 챕터는 `dataloader` 를 다뤄본다. 
+```
