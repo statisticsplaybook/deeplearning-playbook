@@ -148,6 +148,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>들어가며</a>
 <ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#공략집-사용법"><i class="fa fa-check"></i>공략집 사용법</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#설치하기"><i class="fa fa-check"></i>설치하기</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#기본-패키지"><i class="fa fa-check"></i>기본 패키지</a></li>
 </ul></li>
@@ -324,31 +325,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="intro.html#cb8-1" aria-hidden="true" tabindex="-1"></a>rand_tensor <span class="ot">&lt;-</span>  <span class="fu">torch_rand</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
 <span id="cb8-2"><a href="intro.html#cb8-2" aria-hidden="true" tabindex="-1"></a>rand_tensor</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.1342  0.9159  0.2879
-#&gt;  0.9208  0.6807  0.1333
-#&gt;  0.3320  0.1744  0.4752
-#&gt;  0.6939  0.1963  0.3852
-#&gt;  0.5236  0.1110  0.6296
+#&gt;  0.7867  0.0507  0.0156
+#&gt;  0.6632  0.6563  0.2173
+#&gt;  0.2726  0.7350  0.2197
+#&gt;  0.9323  0.2003  0.7902
+#&gt;  0.7028  0.9591  0.9247
 #&gt; [ CPUFloatType{5,3} ]</code></pre>
 <p>참고로 이렇게 만들어진 텐서에는 R에서 텐서과 어레이(array)에 접근할 때사용한 모든 문법들을 사용해서 접근할 수 있다.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="intro.html#cb10-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[,<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.9159
-#&gt;  0.6807
-#&gt;  0.1744
-#&gt;  0.1963
-#&gt;  0.1110
+#&gt;  0.0507
+#&gt;  0.6563
+#&gt;  0.7350
+#&gt;  0.2003
+#&gt;  0.9591
 #&gt; [ CPUFloatType{5} ]</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="intro.html#cb12-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.1342  0.9159  0.2879
-#&gt;  0.9208  0.6807  0.1333
-#&gt;  0.3320  0.1744  0.4752
+#&gt;  0.7867  0.0507  0.0156
+#&gt;  0.6632  0.6563  0.2173
+#&gt;  0.2726  0.7350  0.2197
 #&gt; [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="intro.html#cb14-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.3320  0.4752
-#&gt;  0.6939  0.3852
+#&gt;  0.2726  0.2197
+#&gt;  0.9323  0.7902
 #&gt; [ CPUFloatType{2,2} ]</code></pre>
 <p>위의 예제에서 벌써부터 일부 R유저들은 감격의 눈물을 흘릴 수 있다. 그렇다, Rtorch에서 텐서의 <strong>첫번째 위치는 1부터 시작</strong>한다. 이 너무나도 당연한 진리는 파이썬에서는 통하지 않는다.</p>
 </div>
@@ -471,19 +472,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
+"sharing": null,
 "fontsettings": null,
 "edit": {
-"link": "https://github.com/statisticsplaybook/r-torch-playbook/edit/master/01-intro-to-tensor.Rmd",
+"link": "https://github.com/statisticsplaybook/deeplearning-playbook/edit/master/01-intro-to-tensor.Rmd",
 "text": "Edit"
 },
 "history": {
