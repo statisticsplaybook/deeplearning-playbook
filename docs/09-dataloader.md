@@ -263,12 +263,12 @@ enumerate(study_dl)[1:2]
 
 ```
 #> [[1]]
-#> <environment: 0x5646f1d209d0>
+#> <environment: 0x5555fe0782a0>
 #> attr(,"class")
 #> [1] "enum_env"
 #> 
 #> [[2]]
-#> <environment: 0x5646f1d24ab8>
+#> <environment: 0x5555fe07c388>
 #> attr(,"class")
 #> [1] "enum_env"
 ```
@@ -357,13 +357,12 @@ logistic_reg$parameters
 ```
 #> $fc1.weight
 #> torch_tensor
-#> -0.2590  0.1875
+#> -0.5930  0.5755
 #> [ CPUFloatType{1,2} ]
 #> 
 #> $fc1.bias
 #> torch_tensor
-#> 0.01 *
-#>  3.1121
+#> -0.1740
 #> [ CPUFloatType{1} ]
 ```
 
@@ -395,15 +394,15 @@ for (epoch in 1:10) {
 ```
 
 ```
-#> Loss at epoch 1: 0.810027
-#> Loss at epoch 2: 0.627629
-#> Loss at epoch 3: 0.572915
-#> Loss at epoch 4: 0.552729
-#> Loss at epoch 5: 0.543322
-#> Loss at epoch 6: 0.537924
-#> Loss at epoch 7: 0.534209
-#> Loss at epoch 8: 0.531259
-#> Loss at epoch 9: 0.528678
-#> Loss at epoch 10: 0.526286
+#> Loss at epoch 1: 1.237522
+#> Loss at epoch 2: 0.764068
+#> Loss at epoch 3: 0.600889
+#> Loss at epoch 4: 0.551459
+#> Loss at epoch 5: 0.532917
+#> Loss at epoch 6: 0.524191
+#> Loss at epoch 7: 0.519167
+#> Loss at epoch 8: 0.515707
+#> Loss at epoch 9: 0.512963
+#> Loss at epoch 10: 0.510566
 ```
 

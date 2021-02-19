@@ -338,31 +338,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="intro.html#cb8-1" aria-hidden="true" tabindex="-1"></a>rand_tensor <span class="ot">&lt;-</span>  <span class="fu">torch_rand</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
 <span id="cb8-2"><a href="intro.html#cb8-2" aria-hidden="true" tabindex="-1"></a>rand_tensor</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.6641  0.6025  0.1088
-#&gt;  0.3418  0.4407  0.0616
-#&gt;  0.3436  0.7225  0.6255
-#&gt;  0.1158  0.3470  0.6523
-#&gt;  0.6313  0.0694  0.4669
+#&gt;  0.2156  0.7993  0.6193
+#&gt;  0.8931  0.0246  0.6580
+#&gt;  0.0181  0.8055  0.8854
+#&gt;  0.9878  0.6933  0.2286
+#&gt;  0.2534  0.2907  0.4441
 #&gt; [ CPUFloatType{5,3} ]</code></pre>
 <p>참고로 이렇게 만들어진 텐서에는 R에서 텐서과 어레이(array)에 접근할 때사용한 모든 문법들을 사용해서 접근할 수 있다.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="intro.html#cb10-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[,<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.6025
-#&gt;  0.4407
-#&gt;  0.7225
-#&gt;  0.3470
-#&gt;  0.0694
+#&gt;  0.7993
+#&gt;  0.0246
+#&gt;  0.8055
+#&gt;  0.6933
+#&gt;  0.2907
 #&gt; [ CPUFloatType{5} ]</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="intro.html#cb12-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.6641  0.6025  0.1088
-#&gt;  0.3418  0.4407  0.0616
-#&gt;  0.3436  0.7225  0.6255
+#&gt;  0.2156  0.7993  0.6193
+#&gt;  0.8931  0.0246  0.6580
+#&gt;  0.0181  0.8055  0.8854
 #&gt; [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="intro.html#cb14-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.3436  0.6255
-#&gt;  0.1158  0.6523
+#&gt;  0.0181  0.8854
+#&gt;  0.9878  0.2286
 #&gt; [ CPUFloatType{2,2} ]</code></pre>
 <p>위의 예제에서 벌써부터 일부 R유저들은 감격의 눈물을 흘릴 수 있다.</p>
 <div class="rmdwarning">

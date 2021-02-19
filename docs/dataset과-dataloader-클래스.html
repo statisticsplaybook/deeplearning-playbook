@@ -541,12 +541,12 @@ pass_exam
 <pre><code>#&gt; [1] 44</code></pre>
 <div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="dataset과-dataloader-클래스.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="fu">enumerate</span>(study_dl)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code></pre></div>
 <pre><code>#&gt; [[1]]
-#&gt; &lt;environment: 0x5646f1d209d0&gt;
+#&gt; &lt;environment: 0x5555fe0782a0&gt;
 #&gt; attr(,&quot;class&quot;)
 #&gt; [1] &quot;enum_env&quot;
 #&gt; 
 #&gt; [[2]]
-#&gt; &lt;environment: 0x5646f1d24ab8&gt;
+#&gt; &lt;environment: 0x5555fe07c388&gt;
 #&gt; attr(,&quot;class&quot;)
 #&gt; [1] &quot;enum_env&quot;</code></pre>
 </div>
@@ -616,13 +616,12 @@ Y \sim Bernulli(\sigma(X\beta))
 <div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="dataset과-dataloader-클래스.html#cb340-1" aria-hidden="true" tabindex="-1"></a>logistic_reg<span class="sc">$</span>parameters</span></code></pre></div>
 <pre><code>#&gt; $fc1.weight
 #&gt; torch_tensor
-#&gt; -0.2590  0.1875
+#&gt; -0.5930  0.5755
 #&gt; [ CPUFloatType{1,2} ]
 #&gt; 
 #&gt; $fc1.bias
 #&gt; torch_tensor
-#&gt; 0.01 *
-#&gt;  3.1121
+#&gt; -0.1740
 #&gt; [ CPUFloatType{1} ]</code></pre>
 <p>코드에서 볼 수 있다시피, 로지스틱 회귀모형은 입력값을 독립변수 갯수인 2개로 받고, 출력값은 하나로 나가는 모형이다. 마지막 출력값을 0과 1사이로 보내기 위하여, 마지막 층에 <code>sigmoid()</code> 함수가 사용되었다.</p>
 <div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="dataset과-dataloader-클래스.html#cb342-1" aria-hidden="true" tabindex="-1"></a>optimizer <span class="ot">&lt;-</span> <span class="fu">optim_sgd</span>(logistic_reg<span class="sc">$</span>parameters, <span class="at">lr =</span> <span class="fl">0.01</span>)</span></code></pre></div>
@@ -642,16 +641,16 @@ Y \sim Bernulli(\sigma(X\beta))
 <span id="cb343-14"><a href="dataset과-dataloader-클래스.html#cb343-14" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb343-15"><a href="dataset과-dataloader-클래스.html#cb343-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Loss at epoch %d: %3f</span><span class="sc">\n</span><span class="st">&quot;</span>, epoch, <span class="fu">mean</span>(loss_collect)))</span>
 <span id="cb343-16"><a href="dataset과-dataloader-클래스.html#cb343-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<pre><code>#&gt; Loss at epoch 1: 0.810027
-#&gt; Loss at epoch 2: 0.627629
-#&gt; Loss at epoch 3: 0.572915
-#&gt; Loss at epoch 4: 0.552729
-#&gt; Loss at epoch 5: 0.543322
-#&gt; Loss at epoch 6: 0.537924
-#&gt; Loss at epoch 7: 0.534209
-#&gt; Loss at epoch 8: 0.531259
-#&gt; Loss at epoch 9: 0.528678
-#&gt; Loss at epoch 10: 0.526286</code></pre>
+<pre><code>#&gt; Loss at epoch 1: 1.237522
+#&gt; Loss at epoch 2: 0.764068
+#&gt; Loss at epoch 3: 0.600889
+#&gt; Loss at epoch 4: 0.551459
+#&gt; Loss at epoch 5: 0.532917
+#&gt; Loss at epoch 6: 0.524191
+#&gt; Loss at epoch 7: 0.519167
+#&gt; Loss at epoch 8: 0.515707
+#&gt; Loss at epoch 9: 0.512963
+#&gt; Loss at epoch 10: 0.510566</code></pre>
 
 </div>
 </div>
