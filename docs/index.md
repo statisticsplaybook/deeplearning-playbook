@@ -1,7 +1,7 @@
 ---
 title: "딥러닝 공략집 with R"
 author: "[슬기로운통계생활](https://www.youtube.com/c/statisticsplaybook)"
-date: "2021-02-17"
+date: "2021-02-19"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book

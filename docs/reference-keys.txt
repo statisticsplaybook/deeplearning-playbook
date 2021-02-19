@@ -8,6 +8,8 @@ eq:model-sample
 fig:data-vis
 fig:add-regression
 fig:vis-result
+tab:unnamed-chunk-1
+fig:unnamed-chunk-3
 intro
 torch와의-첫만남
 텐서-tensor-만들기
@@ -85,3 +87,10 @@ bias-있는-경우
 시각화-1
 과적합overfitting과의-싸움
 dataset과-dataloader-클래스
+예제-데이터
+데이터-나누기
+시각화-2
+dataset-클래스
+데이터로더-dataloader-클래스
+모델-설정---로지스틱-회귀모형
+torch-코드-구현
