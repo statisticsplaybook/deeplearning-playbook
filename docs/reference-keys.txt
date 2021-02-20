@@ -1,3 +1,13 @@
+fig:neuralnet-example
+fig:neuralnet-path
+fig:neuralnet-allpath
+fig:f-errormean
+eq:graddecent
+fig:neuralnet-example2
+eq:model-sample
+fig:data-vis
+fig:add-regression
+fig:vis-result
 tab:unnamed-chunk-1
 fig:unnamed-chunk-3
 tab:unnamed-chunk-19

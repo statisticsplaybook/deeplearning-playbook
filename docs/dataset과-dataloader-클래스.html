@@ -314,30 +314,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="예제-데이터" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> 예제 데이터</h2>
 <p>언제나 그렇듯, 본 공략집은 예제를 통해서 설명하는 것을 선호한다. 이번 챕터에서는 가상의 학생들의 공부시간과 연습한 문제 갯수, 그리고 시험의 합격 여부에 대한 자료를 만들어보았다.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="dataset과-dataloader-클래스.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span>
-<span id="cb1-2"><a href="dataset과-dataloader-클래스.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-3"><a href="dataset과-dataloader-클래스.html#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="dataset과-dataloader-클래스.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2021</span>)</span>
-<span id="cb1-5"><a href="dataset과-dataloader-클래스.html#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="dataset과-dataloader-클래스.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 독립변수 발생</span></span>
-<span id="cb1-7"><a href="dataset과-dataloader-클래스.html#cb1-7" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">300</span>, <span class="dv">5</span>, <span class="dv">2</span>), <span class="fu">rnorm</span>(<span class="dv">200</span>, <span class="dv">10</span>, <span class="dv">2</span>))</span>
-<span id="cb1-8"><a href="dataset과-dataloader-클래스.html#cb1-8" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">pmax</span>(<span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">300</span>, <span class="dv">10</span>, <span class="dv">2</span>), <span class="fu">rnorm</span>(<span class="dv">200</span>, <span class="dv">13</span>, <span class="dv">2</span>)), <span class="dv">0</span>))</span>
-<span id="cb1-9"><a href="dataset과-dataloader-클래스.html#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="dataset과-dataloader-클래스.html#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 종속변수 발생</span></span>
-<span id="cb1-11"><a href="dataset과-dataloader-클래스.html#cb1-11" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">300</span>, <span class="dv">200</span>))</span>
-<span id="cb1-12"><a href="dataset과-dataloader-클래스.html#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="dataset과-dataloader-클래스.html#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 프레임 만들기</span></span>
-<span id="cb1-14"><a href="dataset과-dataloader-클래스.html#cb1-14" aria-hidden="true" tabindex="-1"></a>study_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">study_time =</span> x1,</span>
-<span id="cb1-15"><a href="dataset과-dataloader-클래스.html#cb1-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">n_question =</span> x2,</span>
-<span id="cb1-16"><a href="dataset과-dataloader-클래스.html#cb1-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">pass_exam =</span> y)</span>
-<span id="cb1-17"><a href="dataset과-dataloader-클래스.html#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="dataset과-dataloader-클래스.html#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 뒤섞기</span></span>
-<span id="cb1-19"><a href="dataset과-dataloader-클래스.html#cb1-19" aria-hidden="true" tabindex="-1"></a>study_data <span class="ot">&lt;-</span> study_data[<span class="fu">sample</span>(<span class="dv">500</span>, <span class="dv">500</span>),]</span>
-<span id="cb1-20"><a href="dataset과-dataloader-클래스.html#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="dataset과-dataloader-클래스.html#cb1-21" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(study_data), <span class="at">format=</span><span class="st">&quot;html&quot;</span>,</span>
-<span id="cb1-22"><a href="dataset과-dataloader-클래스.html#cb1-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&quot;`study_data` 구조&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-23"><a href="dataset과-dataloader-클래스.html#cb1-23" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
-<span id="cb1-24"><a href="dataset과-dataloader-클래스.html#cb1-24" aria-hidden="true" tabindex="-1"></a>                            <span class="at">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="dataset과-dataloader-클래스.html#cb319-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span>
+<span id="cb319-2"><a href="dataset과-dataloader-클래스.html#cb319-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb319-3"><a href="dataset과-dataloader-클래스.html#cb319-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb319-4"><a href="dataset과-dataloader-클래스.html#cb319-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2021</span>)</span>
+<span id="cb319-5"><a href="dataset과-dataloader-클래스.html#cb319-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb319-6"><a href="dataset과-dataloader-클래스.html#cb319-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 독립변수 발생</span></span>
+<span id="cb319-7"><a href="dataset과-dataloader-클래스.html#cb319-7" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">300</span>, <span class="dv">5</span>, <span class="dv">2</span>), <span class="fu">rnorm</span>(<span class="dv">200</span>, <span class="dv">10</span>, <span class="dv">2</span>))</span>
+<span id="cb319-8"><a href="dataset과-dataloader-클래스.html#cb319-8" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">pmax</span>(<span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">300</span>, <span class="dv">10</span>, <span class="dv">2</span>), <span class="fu">rnorm</span>(<span class="dv">200</span>, <span class="dv">13</span>, <span class="dv">2</span>)), <span class="dv">0</span>))</span>
+<span id="cb319-9"><a href="dataset과-dataloader-클래스.html#cb319-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb319-10"><a href="dataset과-dataloader-클래스.html#cb319-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 종속변수 발생</span></span>
+<span id="cb319-11"><a href="dataset과-dataloader-클래스.html#cb319-11" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">300</span>, <span class="dv">200</span>))</span>
+<span id="cb319-12"><a href="dataset과-dataloader-클래스.html#cb319-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb319-13"><a href="dataset과-dataloader-클래스.html#cb319-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 프레임 만들기</span></span>
+<span id="cb319-14"><a href="dataset과-dataloader-클래스.html#cb319-14" aria-hidden="true" tabindex="-1"></a>study_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">study_time =</span> x1,</span>
+<span id="cb319-15"><a href="dataset과-dataloader-클래스.html#cb319-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">n_question =</span> x2,</span>
+<span id="cb319-16"><a href="dataset과-dataloader-클래스.html#cb319-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">pass_exam =</span> y)</span>
+<span id="cb319-17"><a href="dataset과-dataloader-클래스.html#cb319-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb319-18"><a href="dataset과-dataloader-클래스.html#cb319-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 뒤섞기</span></span>
+<span id="cb319-19"><a href="dataset과-dataloader-클래스.html#cb319-19" aria-hidden="true" tabindex="-1"></a>study_data <span class="ot">&lt;-</span> study_data[<span class="fu">sample</span>(<span class="dv">500</span>, <span class="dv">500</span>),]</span>
+<span id="cb319-20"><a href="dataset과-dataloader-클래스.html#cb319-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb319-21"><a href="dataset과-dataloader-클래스.html#cb319-21" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(study_data), <span class="at">format=</span><span class="st">&quot;html&quot;</span>,</span>
+<span id="cb319-22"><a href="dataset과-dataloader-클래스.html#cb319-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&quot;`study_data` 구조&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb319-23"><a href="dataset과-dataloader-클래스.html#cb319-23" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
+<span id="cb319-24"><a href="dataset과-dataloader-클래스.html#cb319-24" aria-hidden="true" tabindex="-1"></a>                            <span class="at">full_width =</span> F)</span></code></pre></div>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:unnamed-chunk-1">표 9.1: </span><code>study_data</code> 구조
@@ -428,16 +428,16 @@ pass_exam
 <h3><span class="header-section-number">9.1.1</span> 데이터 나누기</h3>
 <p>이전 챕터에서 우리는 전체 데이터를 모두 사용하여 신경망을 학습했었다. 하지만, 이럴 경우 과적합의 문제가 발생하기 때문에 언제 학습을 할 때, 우리 모델이 새로운 데이터에 얼마나 잘 되어있는지, 혹시 학습이 과적합은 일어나고 있는게 아닌지 판단해야 한다. 이런 것들을 하기 위해서 주어진 데이터를 두 개로 쪼갠다; 하나는 학습용(train data set), 하나는 평가용(test data set)으로 나눈다.</p>
 <p>다음의 코드는 주어진 <code>study_data</code>의 70%는 학습용, 30%는 평가용으로 나누는 코드이다.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="dataset과-dataloader-클래스.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample)</span>
-<span id="cb2-2"><a href="dataset과-dataloader-클래스.html#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="dataset과-dataloader-클래스.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2021</span>)</span>
-<span id="cb2-4"><a href="dataset과-dataloader-클래스.html#cb2-4" aria-hidden="true" tabindex="-1"></a>splited_data <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(study_data, <span class="at">prop =</span> <span class="fl">0.7</span>)</span>
-<span id="cb2-5"><a href="dataset과-dataloader-클래스.html#cb2-5" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(splited_data)</span>
-<span id="cb2-6"><a href="dataset과-dataloader-클래스.html#cb2-6" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">testing</span>(splited_data)</span>
-<span id="cb2-7"><a href="dataset과-dataloader-클래스.html#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="dataset과-dataloader-클래스.html#cb2-8" aria-hidden="true" tabindex="-1"></a>train_data <span class="sc">%&gt;%</span> <span class="fu">dim</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="dataset과-dataloader-클래스.html#cb320-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample)</span>
+<span id="cb320-2"><a href="dataset과-dataloader-클래스.html#cb320-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb320-3"><a href="dataset과-dataloader-클래스.html#cb320-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2021</span>)</span>
+<span id="cb320-4"><a href="dataset과-dataloader-클래스.html#cb320-4" aria-hidden="true" tabindex="-1"></a>splited_data <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(study_data, <span class="at">prop =</span> <span class="fl">0.7</span>)</span>
+<span id="cb320-5"><a href="dataset과-dataloader-클래스.html#cb320-5" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(splited_data)</span>
+<span id="cb320-6"><a href="dataset과-dataloader-클래스.html#cb320-6" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">testing</span>(splited_data)</span>
+<span id="cb320-7"><a href="dataset과-dataloader-클래스.html#cb320-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb320-8"><a href="dataset과-dataloader-클래스.html#cb320-8" aria-hidden="true" tabindex="-1"></a>train_data <span class="sc">%&gt;%</span> <span class="fu">dim</span>()</span></code></pre></div>
 <pre><code>#&gt; [1] 350   3</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="dataset과-dataloader-클래스.html#cb4-1" aria-hidden="true" tabindex="-1"></a>test_data <span class="sc">%&gt;%</span> <span class="fu">dim</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="dataset과-dataloader-클래스.html#cb322-1" aria-hidden="true" tabindex="-1"></a>test_data <span class="sc">%&gt;%</span> <span class="fu">dim</span>()</span></code></pre></div>
 <pre><code>#&gt; [1] 150   3</code></pre>
 </div>
 <div id="시각화-2" class="section level3" number="9.1.2">
@@ -455,37 +455,37 @@ pass_exam
 <h2><span class="header-section-number">9.2</span> <code>Dataset</code> 클래스</h2>
 <p><code>Dataset</code> 클래스는 우리가 가지고 있는 데이터를 <code>torch</code>에서 접근할 때 어떻게 접근을 해야하는지 알려줄때 사용한다. 예를 들어, 예제 데이터와 같이 행과 열로 구성된 데이터에서 어떤 열이 독립변수(independant variables)를 의미하고 있는지, 어떤 열이 종속변수(dependant variable)를 의미하는지 알려줘야하고, 만약 모델에 넣기 전, 특정 전처리가 필요하다면, 그 과정 역시 넣어줄 수 있다.</p>
 <p>다음은 <code>dataset</code> 함수를 사용하여 <code>study_dataset</code> 클래스 생성자를 정의하는 코드이다. 일단 <code>study_dataset</code> 생성자는 객체를 만들때, <code>R6</code>에서처럼 클래스 <code>initialize</code>가 실행된다. 이것을 통하여 <code>prepare_data()</code> 함수가 실행되고, 결과값이 클래스의 <code>data</code>로 저장된다.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="dataset과-dataloader-클래스.html#cb6-1" aria-hidden="true" tabindex="-1"></a>study_dataset <span class="ot">&lt;-</span> <span class="fu">dataset</span>(</span>
-<span id="cb6-2"><a href="dataset과-dataloader-클래스.html#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;study_dataset&quot;</span>,</span>
-<span id="cb6-3"><a href="dataset과-dataloader-클래스.html#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">initialize =</span> <span class="cf">function</span>() {</span>
-<span id="cb6-4"><a href="dataset과-dataloader-클래스.html#cb6-4" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>data <span class="ot">&lt;-</span> self<span class="sc">$</span><span class="fu">prepare_data</span>()</span>
-<span id="cb6-5"><a href="dataset과-dataloader-클래스.html#cb6-5" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb6-6"><a href="dataset과-dataloader-클래스.html#cb6-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-7"><a href="dataset과-dataloader-클래스.html#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.getitem =</span> <span class="cf">function</span>(index) {</span>
-<span id="cb6-8"><a href="dataset과-dataloader-클래스.html#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 독립변수 x, 종속변수 y</span></span>
-<span id="cb6-9"><a href="dataset과-dataloader-클래스.html#cb6-9" aria-hidden="true" tabindex="-1"></a>        x <span class="ot">&lt;-</span> self<span class="sc">$</span>data[index, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
-<span id="cb6-10"><a href="dataset과-dataloader-클래스.html#cb6-10" aria-hidden="true" tabindex="-1"></a>        y <span class="ot">&lt;-</span> self<span class="sc">$</span>data[index, <span class="dv">3</span>]</span>
-<span id="cb6-11"><a href="dataset과-dataloader-클래스.html#cb6-11" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb6-12"><a href="dataset과-dataloader-클래스.html#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>(x, y)</span>
-<span id="cb6-13"><a href="dataset과-dataloader-클래스.html#cb6-13" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb6-14"><a href="dataset과-dataloader-클래스.html#cb6-14" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-15"><a href="dataset과-dataloader-클래스.html#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">.length =</span> <span class="cf">function</span>() {</span>
-<span id="cb6-16"><a href="dataset과-dataloader-클래스.html#cb6-16" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>data<span class="sc">$</span><span class="fu">size</span>()[[<span class="dv">1</span>]]</span>
-<span id="cb6-17"><a href="dataset과-dataloader-클래스.html#cb6-17" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb6-18"><a href="dataset과-dataloader-클래스.html#cb6-18" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-19"><a href="dataset과-dataloader-클래스.html#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">prepare_data =</span> <span class="cf">function</span>() {</span>
-<span id="cb6-20"><a href="dataset과-dataloader-클래스.html#cb6-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 난수고정</span></span>
-<span id="cb6-21"><a href="dataset과-dataloader-클래스.html#cb6-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">set.seed</span>(<span class="dv">2021</span>)</span>
-<span id="cb6-22"><a href="dataset과-dataloader-클래스.html#cb6-22" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb6-23"><a href="dataset과-dataloader-클래스.html#cb6-23" aria-hidden="true" tabindex="-1"></a>        split_data <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">initial_split</span>(study_data, <span class="at">prop =</span> <span class="fl">0.7</span>)</span>
-<span id="cb6-24"><a href="dataset과-dataloader-클래스.html#cb6-24" aria-hidden="true" tabindex="-1"></a>        train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(split_data)</span>
-<span id="cb6-25"><a href="dataset과-dataloader-클래스.html#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-26"><a href="dataset과-dataloader-클래스.html#cb6-26" aria-hidden="true" tabindex="-1"></a>        <span class="fu">torch_tensor</span>(<span class="fu">as.matrix</span>(train_data))</span>
-<span id="cb6-27"><a href="dataset과-dataloader-클래스.html#cb6-27" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb6-28"><a href="dataset과-dataloader-클래스.html#cb6-28" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="dataset과-dataloader-클래스.html#cb324-1" aria-hidden="true" tabindex="-1"></a>study_dataset <span class="ot">&lt;-</span> <span class="fu">dataset</span>(</span>
+<span id="cb324-2"><a href="dataset과-dataloader-클래스.html#cb324-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;study_dataset&quot;</span>,</span>
+<span id="cb324-3"><a href="dataset과-dataloader-클래스.html#cb324-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">initialize =</span> <span class="cf">function</span>() {</span>
+<span id="cb324-4"><a href="dataset과-dataloader-클래스.html#cb324-4" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>data <span class="ot">&lt;-</span> self<span class="sc">$</span><span class="fu">prepare_data</span>()</span>
+<span id="cb324-5"><a href="dataset과-dataloader-클래스.html#cb324-5" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb324-6"><a href="dataset과-dataloader-클래스.html#cb324-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb324-7"><a href="dataset과-dataloader-클래스.html#cb324-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.getitem =</span> <span class="cf">function</span>(index) {</span>
+<span id="cb324-8"><a href="dataset과-dataloader-클래스.html#cb324-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 독립변수 x, 종속변수 y</span></span>
+<span id="cb324-9"><a href="dataset과-dataloader-클래스.html#cb324-9" aria-hidden="true" tabindex="-1"></a>        x <span class="ot">&lt;-</span> self<span class="sc">$</span>data[index, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb324-10"><a href="dataset과-dataloader-클래스.html#cb324-10" aria-hidden="true" tabindex="-1"></a>        y <span class="ot">&lt;-</span> self<span class="sc">$</span>data[index, <span class="dv">3</span>]</span>
+<span id="cb324-11"><a href="dataset과-dataloader-클래스.html#cb324-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb324-12"><a href="dataset과-dataloader-클래스.html#cb324-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>(x, y)</span>
+<span id="cb324-13"><a href="dataset과-dataloader-클래스.html#cb324-13" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb324-14"><a href="dataset과-dataloader-클래스.html#cb324-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb324-15"><a href="dataset과-dataloader-클래스.html#cb324-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">.length =</span> <span class="cf">function</span>() {</span>
+<span id="cb324-16"><a href="dataset과-dataloader-클래스.html#cb324-16" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>data<span class="sc">$</span><span class="fu">size</span>()[[<span class="dv">1</span>]]</span>
+<span id="cb324-17"><a href="dataset과-dataloader-클래스.html#cb324-17" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb324-18"><a href="dataset과-dataloader-클래스.html#cb324-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb324-19"><a href="dataset과-dataloader-클래스.html#cb324-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">prepare_data =</span> <span class="cf">function</span>() {</span>
+<span id="cb324-20"><a href="dataset과-dataloader-클래스.html#cb324-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 난수고정</span></span>
+<span id="cb324-21"><a href="dataset과-dataloader-클래스.html#cb324-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">set.seed</span>(<span class="dv">2021</span>)</span>
+<span id="cb324-22"><a href="dataset과-dataloader-클래스.html#cb324-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb324-23"><a href="dataset과-dataloader-클래스.html#cb324-23" aria-hidden="true" tabindex="-1"></a>        split_data <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">initial_split</span>(study_data, <span class="at">prop =</span> <span class="fl">0.7</span>)</span>
+<span id="cb324-24"><a href="dataset과-dataloader-클래스.html#cb324-24" aria-hidden="true" tabindex="-1"></a>        train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(split_data)</span>
+<span id="cb324-25"><a href="dataset과-dataloader-클래스.html#cb324-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb324-26"><a href="dataset과-dataloader-클래스.html#cb324-26" aria-hidden="true" tabindex="-1"></a>        <span class="fu">torch_tensor</span>(<span class="fu">as.matrix</span>(train_data))</span>
+<span id="cb324-27"><a href="dataset과-dataloader-클래스.html#cb324-27" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb324-28"><a href="dataset과-dataloader-클래스.html#cb324-28" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>위의 코드를 살펴보면 <code>prepare_data()</code> 함수는 앞에서 살펴본 <code>R</code> 코드를 응용하여 <code>study_data</code> 데이터셋 (R 환경에 정의되어 있는 데이터)을 가져다가 <code>rsample</code> 패키지의 <code>initial_split()</code> 함수를 사용해서 학습용 데이터셋을 분리한 후 <code>torch_tensor()</code>를 사용해서 <code>torch</code>로 넘겨준다는 것을 알 수 있다. 그리고, <code>.getitem()</code>과 <code>.length()</code>의 멤버함수를 통하여 데이터에 접근할 수 있도록 만들어져 있다. 정의된 <code>study_dataset()</code> 클래스 생성자를 통하여 데이터를 만들어보자.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="dataset과-dataloader-클래스.html#cb7-1" aria-hidden="true" tabindex="-1"></a>torch_data <span class="ot">&lt;-</span> <span class="fu">study_dataset</span>()</span>
-<span id="cb7-2"><a href="dataset과-dataloader-클래스.html#cb7-2" aria-hidden="true" tabindex="-1"></a>torch_data</span></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="dataset과-dataloader-클래스.html#cb325-1" aria-hidden="true" tabindex="-1"></a>torch_data <span class="ot">&lt;-</span> <span class="fu">study_dataset</span>()</span>
+<span id="cb325-2"><a href="dataset과-dataloader-클래스.html#cb325-2" aria-hidden="true" tabindex="-1"></a>torch_data</span></code></pre></div>
 <pre><code>#&gt; &lt;study_dataset&gt;
 #&gt;   Inherits from: &lt;dataset&gt;
 #&gt;   Public:
@@ -496,7 +496,7 @@ pass_exam
 #&gt;     initialize: function () 
 #&gt;     prepare_data: function ()</code></pre>
 <p>결과를 살펴보면 앞에서 정의한 <code>study_dataset()</code> 클래스 생성자 안의 멤버 함수들이 리스트로 제공되는 것을 알 수 있다. <code>.getitem()</code> 멤버함수는 색인(index)을 입력 변수로 받는 함수인데, 입력된 색인 값에 대응되는 데이터를 반환한다. 다음의 코드를 통하여 <code>train_data</code>가 <code>torch_data</code>에 그대로 전달 잘 되었다는 것을 확인할 수 있다.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="dataset과-dataloader-클래스.html#cb9-1" aria-hidden="true" tabindex="-1"></a>torch_data<span class="sc">$</span><span class="fu">.getitem</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="dataset과-dataloader-클래스.html#cb327-1" aria-hidden="true" tabindex="-1"></a>torch_data<span class="sc">$</span><span class="fu">.getitem</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code></pre></div>
 <pre><code>#&gt; [[1]]
 #&gt; torch_tensor
 #&gt;   9.3051  15.0000
@@ -516,7 +516,7 @@ pass_exam
 #&gt;  1
 #&gt;  1
 #&gt; [ CPUFloatType{6} ]</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="dataset과-dataloader-클래스.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(train_data)</span></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="dataset과-dataloader-클래스.html#cb329-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(train_data)</span></code></pre></div>
 <pre><code>#&gt; # A tibble: 6 x 3
 #&gt;   study_time n_question pass_exam
 #&gt;        &lt;dbl&gt;      &lt;int&gt;     &lt;dbl&gt;
@@ -531,7 +531,7 @@ pass_exam
 <h2><span class="header-section-number">9.3</span> 데이터로더 (Dataloader) 클래스</h2>
 <p><code>study_dataset()</code> 생성자를 통하여 데이터를 <code>torch</code> 상에서 접근하도록 만들었다. 앞선 신경망 학습 예제에서 신경망을 학습할 때, 주어진 데이터 전체를 사용하여 미분값(gradient)을 구했다. 하지만, 실제 많은 딥러닝 문제의 경우 데이터의 크기가 너무 커서 한꺼번에 모든 표본을 메모리에 올린 후 학습을 하지 않고, 잘게 쪼갠 여러 개의 배치(batch)를 만든 뒤에 학습을 진행한다.</p>
 <p>다음 차례는 torch에서 신경망을 학습시킬때 데이터의 부분부분을 잘라서 접근 할 수 있도록 만들어 줘야하는데, 이 부분은 <code>dataloader</code> 클래스에서 담당하고 있다. 다음의 코드는 앞에서 정의한 <code>torch_data</code>를 학습할 때 한번에 불러오는 표본 갯수(batch_size)를 8개로 설정한다.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="dataset과-dataloader-클래스.html#cb13-1" aria-hidden="true" tabindex="-1"></a>study_dl <span class="ot">&lt;-</span> <span class="fu">dataloader</span>(torch_data, <span class="at">batch_size =</span> <span class="dv">8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="dataset과-dataloader-클래스.html#cb331-1" aria-hidden="true" tabindex="-1"></a>study_dl <span class="ot">&lt;-</span> <span class="fu">dataloader</span>(torch_data, <span class="at">batch_size =</span> <span class="dv">8</span>)</span></code></pre></div>
 <p>8개를 기준으로 한 세트를 이루므로, 전체 350개의 표본은 총 44개의 <code>batch</code>로 이루어져 있다는 것을 확인 할 수 있다.</p>
 <div class="rmdwarning">
 <h3 id="주의하기">
@@ -541,21 +541,21 @@ pass_exam
 마지막 배치의 경우는 8개가 아닌 6개의 표본들로 이루어져 있다는 것도 짐작할 수 있어야 한다.
 </p>
 </div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="dataset과-dataloader-클래스.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 350/8 == 43.75</span></span>
-<span id="cb14-2"><a href="dataset과-dataloader-클래스.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 350 %% 8 == 6</span></span>
-<span id="cb14-3"><a href="dataset과-dataloader-클래스.html#cb14-3" aria-hidden="true" tabindex="-1"></a>study_dl<span class="sc">$</span><span class="fu">.length</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="dataset과-dataloader-클래스.html#cb332-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 350/8 == 43.75</span></span>
+<span id="cb332-2"><a href="dataset과-dataloader-클래스.html#cb332-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 350 %% 8 == 6</span></span>
+<span id="cb332-3"><a href="dataset과-dataloader-클래스.html#cb332-3" aria-hidden="true" tabindex="-1"></a>study_dl<span class="sc">$</span><span class="fu">.length</span>()</span></code></pre></div>
 <pre><code>#&gt; [1] 44</code></pre>
 <p>이렇게 <code>study_dl</code> 안에 들어있는 각각의 데이터 조각들에 접근을 하기 위해서는 <code>enumerate()</code> 함수를 사용한다. 이 함수에 <code>study_dl</code>을 넣어보면 전체 44개의 원소를 가진 리스트 안에 각각의 배치들이 들어가 있는 것을 확인 할 수 있다.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="dataset과-dataloader-클래스.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">enumerate</span>(study_dl) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="dataset과-dataloader-클래스.html#cb334-1" aria-hidden="true" tabindex="-1"></a><span class="fu">enumerate</span>(study_dl) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span></code></pre></div>
 <pre><code>#&gt; [1] 44</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="dataset과-dataloader-클래스.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">enumerate</span>(study_dl)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="dataset과-dataloader-클래스.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="fu">enumerate</span>(study_dl)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code></pre></div>
 <pre><code>#&gt; [[1]]
-#&gt; &lt;environment: 0x563186ce0468&gt;
+#&gt; &lt;environment: 0x557103625548&gt;
 #&gt; attr(,&quot;class&quot;)
 #&gt; [1] &quot;enum_env&quot;
 #&gt; 
 #&gt; [[2]]
-#&gt; &lt;environment: 0x563186ce23c0&gt;
+#&gt; &lt;environment: 0x5571036274a0&gt;
 #&gt; attr(,&quot;class&quot;)
 #&gt; [1] &quot;enum_env&quot;</code></pre>
 </div>
@@ -603,38 +603,40 @@ Y \sim Bernulli(\sigma(X\beta))
 <div id="torch-코드-구현" class="section level3" number="9.4.1">
 <h3><span class="header-section-number">9.4.1</span> torch 코드 구현</h3>
 <p>이제 <code>torch</code>로 특정 신경망 구조를 구현하는 코드는 익숙해졌으리라고 생각한다. 로지스틱 회귀모형은 단층 모형이고, 마지막 활성함수를 <code>sigmoid()</code> 함수로 감싸줘야하는 것이 특징이다.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="dataset과-dataloader-클래스.html#cb20-1" aria-hidden="true" tabindex="-1"></a>study_net <span class="ot">&lt;-</span> <span class="fu">nn_module</span>(</span>
-<span id="cb20-2"><a href="dataset과-dataloader-클래스.html#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;StudyNet&quot;</span>,</span>
-<span id="cb20-3"><a href="dataset과-dataloader-클래스.html#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">initialize =</span> <span class="cf">function</span>() {</span>
-<span id="cb20-4"><a href="dataset과-dataloader-클래스.html#cb20-4" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>fc1 <span class="ot">&lt;-</span> <span class="fu">nn_linear</span>(<span class="dv">2</span>, <span class="dv">1</span>)</span>
-<span id="cb20-5"><a href="dataset과-dataloader-클래스.html#cb20-5" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>sigmoid <span class="ot">&lt;-</span> <span class="fu">nn_sigmoid</span>()</span>
-<span id="cb20-6"><a href="dataset과-dataloader-클래스.html#cb20-6" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb20-7"><a href="dataset과-dataloader-클래스.html#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">forward =</span> <span class="cf">function</span>(x) {</span>
-<span id="cb20-8"><a href="dataset과-dataloader-클래스.html#cb20-8" aria-hidden="true" tabindex="-1"></a>        x <span class="sc">%&gt;%</span></span>
-<span id="cb20-9"><a href="dataset과-dataloader-클래스.html#cb20-9" aria-hidden="true" tabindex="-1"></a>            self<span class="sc">$</span><span class="fu">fc1</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb20-10"><a href="dataset과-dataloader-클래스.html#cb20-10" aria-hidden="true" tabindex="-1"></a>            self<span class="sc">$</span><span class="fu">sigmoid</span>()</span>
-<span id="cb20-11"><a href="dataset과-dataloader-클래스.html#cb20-11" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb20-12"><a href="dataset과-dataloader-클래스.html#cb20-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb20-13"><a href="dataset과-dataloader-클래스.html#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-14"><a href="dataset과-dataloader-클래스.html#cb20-14" aria-hidden="true" tabindex="-1"></a>logistic_reg <span class="ot">&lt;-</span> <span class="fu">study_net</span>()</span>
-<span id="cb20-15"><a href="dataset과-dataloader-클래스.html#cb20-15" aria-hidden="true" tabindex="-1"></a>logistic_reg</span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="dataset과-dataloader-클래스.html#cb338-1" aria-hidden="true" tabindex="-1"></a>study_net <span class="ot">&lt;-</span> <span class="fu">nn_module</span>(</span>
+<span id="cb338-2"><a href="dataset과-dataloader-클래스.html#cb338-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;StudyNet&quot;</span>,</span>
+<span id="cb338-3"><a href="dataset과-dataloader-클래스.html#cb338-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">initialize =</span> <span class="cf">function</span>() {</span>
+<span id="cb338-4"><a href="dataset과-dataloader-클래스.html#cb338-4" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>fc1 <span class="ot">&lt;-</span> <span class="fu">nn_linear</span>(<span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb338-5"><a href="dataset과-dataloader-클래스.html#cb338-5" aria-hidden="true" tabindex="-1"></a>        self<span class="sc">$</span>sigmoid <span class="ot">&lt;-</span> <span class="fu">nn_sigmoid</span>()</span>
+<span id="cb338-6"><a href="dataset과-dataloader-클래스.html#cb338-6" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb338-7"><a href="dataset과-dataloader-클래스.html#cb338-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">forward =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb338-8"><a href="dataset과-dataloader-클래스.html#cb338-8" aria-hidden="true" tabindex="-1"></a>        x <span class="sc">%&gt;%</span></span>
+<span id="cb338-9"><a href="dataset과-dataloader-클래스.html#cb338-9" aria-hidden="true" tabindex="-1"></a>            self<span class="sc">$</span><span class="fu">fc1</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb338-10"><a href="dataset과-dataloader-클래스.html#cb338-10" aria-hidden="true" tabindex="-1"></a>            self<span class="sc">$</span><span class="fu">sigmoid</span>()</span>
+<span id="cb338-11"><a href="dataset과-dataloader-클래스.html#cb338-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb338-12"><a href="dataset과-dataloader-클래스.html#cb338-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb338-13"><a href="dataset과-dataloader-클래스.html#cb338-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb338-14"><a href="dataset과-dataloader-클래스.html#cb338-14" aria-hidden="true" tabindex="-1"></a>logistic_reg <span class="ot">&lt;-</span> <span class="fu">study_net</span>()</span>
+<span id="cb338-15"><a href="dataset과-dataloader-클래스.html#cb338-15" aria-hidden="true" tabindex="-1"></a>logistic_reg</span></code></pre></div>
 <pre><code>#&gt; An `nn_module` containing 3 parameters.
 #&gt; 
 #&gt; ── Modules ─────────────────────────────────────────────────────────────────────
 #&gt; ● fc1: &lt;nn_linear&gt; #3 parameters
 #&gt; ● sigmoid: &lt;nn_sigmoid&gt; #0 parameters</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="dataset과-dataloader-클래스.html#cb22-1" aria-hidden="true" tabindex="-1"></a>logistic_reg<span class="sc">$</span>parameters</span></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="dataset과-dataloader-클래스.html#cb340-1" aria-hidden="true" tabindex="-1"></a>logistic_reg<span class="sc">$</span>parameters</span></code></pre></div>
 <pre><code>#&gt; $fc1.weight
 #&gt; torch_tensor
-#&gt; -0.2411  0.0127
+#&gt; 0.01 *
+#&gt;  9.9717 -23.9173
 #&gt; [ CPUFloatType{1,2} ]
 #&gt; 
 #&gt; $fc1.bias
 #&gt; torch_tensor
-#&gt; -0.2450
+#&gt; 0.01 *
+#&gt;  4.8379
 #&gt; [ CPUFloatType{1} ]</code></pre>
 <p>코드에서 볼 수 있다시피, 로지스틱 회귀모형은 입력값을 독립변수 갯수인 2개로 받고, 출력값은 하나로 나가는 모형이다. 마지막 층에 <code>sigmoid()</code> 함수는 마지막 출력값을 0과 1사이로 보내기 위하여 사용되었다. 최적화 알고리즘은 <code>optim_sgd</code>으로 설정하였다.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="dataset과-dataloader-클래스.html#cb24-1" aria-hidden="true" tabindex="-1"></a>optimizer <span class="ot">&lt;-</span> <span class="fu">optim_sgd</span>(logistic_reg<span class="sc">$</span>parameters, <span class="at">lr =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="dataset과-dataloader-클래스.html#cb342-1" aria-hidden="true" tabindex="-1"></a>optimizer <span class="ot">&lt;-</span> <span class="fu">optim_sgd</span>(logistic_reg<span class="sc">$</span>parameters, <span class="at">lr =</span> <span class="fl">0.05</span>)</span></code></pre></div>
 </div>
 <div id="손실함수-설정" class="section level3" number="9.4.2">
 <h3><span class="header-section-number">9.4.2</span> 손실함수 설정</h3>
@@ -669,65 +671,68 @@ p\left(\beta|\mathbf{X}, \underline{y}\right) &amp; =\prod_{i=1}^{n}p\left(\beta
 \hat{\beta} \overset{set}{=} \underset{\beta}{arg \ min} \ \ -\ell\left(\beta; X, y\right)
 \]</span>
 이 값을 찾기 위해서 경사하강법을 이용해 <span class="math inline">\(\hat{\beta}\)</span>을 찾아나아가는 과정이 <code>torch</code>에서는 단 두 줄로 표현이 된다.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="dataset과-dataloader-클래스.html#cb25-1" aria-hidden="true" tabindex="-1"></a>loss <span class="ot">&lt;-</span> <span class="fu">nnf_binary_cross_entropy</span>(output, batch[[<span class="dv">2</span>]])</span>
-<span id="cb25-2"><a href="dataset과-dataloader-클래스.html#cb25-2" aria-hidden="true" tabindex="-1"></a>loss<span class="sc">$</span><span class="fu">backward</span>()</span>
-<span id="cb25-3"><a href="dataset과-dataloader-클래스.html#cb25-3" aria-hidden="true" tabindex="-1"></a>optimizer<span class="sc">$</span><span class="fu">step</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="dataset과-dataloader-클래스.html#cb343-1" aria-hidden="true" tabindex="-1"></a>loss <span class="ot">&lt;-</span> <span class="fu">nnf_binary_cross_entropy</span>(output, batch[[<span class="dv">2</span>]])</span>
+<span id="cb343-2"><a href="dataset과-dataloader-클래스.html#cb343-2" aria-hidden="true" tabindex="-1"></a>loss<span class="sc">$</span><span class="fu">backward</span>()</span>
+<span id="cb343-3"><a href="dataset과-dataloader-클래스.html#cb343-3" aria-hidden="true" tabindex="-1"></a>optimizer<span class="sc">$</span><span class="fu">step</span>()</span></code></pre></div>
 <p>앞에서 정의한 <code>study_dl</code> 데이터로더를 사용하여 로지스틱 회귀모형을 학습시키는 코드는 다음과 같다.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="dataset과-dataloader-클래스.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (epoch <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">700</span>) {</span>
-<span id="cb26-2"><a href="dataset과-dataloader-클래스.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb26-3"><a href="dataset과-dataloader-클래스.html#cb26-3" aria-hidden="true" tabindex="-1"></a>  loss_collect <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb26-4"><a href="dataset과-dataloader-클래스.html#cb26-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb26-5"><a href="dataset과-dataloader-클래스.html#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (batch <span class="cf">in</span> <span class="fu">enumerate</span>(study_dl)) {</span>
-<span id="cb26-6"><a href="dataset과-dataloader-클래스.html#cb26-6" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="sc">$</span><span class="fu">zero_grad</span>()</span>
-<span id="cb26-7"><a href="dataset과-dataloader-클래스.html#cb26-7" aria-hidden="true" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>(batch[[<span class="dv">1</span>]])</span>
-<span id="cb26-8"><a href="dataset과-dataloader-클래스.html#cb26-8" aria-hidden="true" tabindex="-1"></a>    loss <span class="ot">&lt;-</span> <span class="fu">nnf_binary_cross_entropy</span>(output, batch[[<span class="dv">2</span>]])</span>
-<span id="cb26-9"><a href="dataset과-dataloader-클래스.html#cb26-9" aria-hidden="true" tabindex="-1"></a>    loss<span class="sc">$</span><span class="fu">backward</span>()</span>
-<span id="cb26-10"><a href="dataset과-dataloader-클래스.html#cb26-10" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="sc">$</span><span class="fu">step</span>()</span>
-<span id="cb26-11"><a href="dataset과-dataloader-클래스.html#cb26-11" aria-hidden="true" tabindex="-1"></a>    loss_collect <span class="ot">&lt;-</span> <span class="fu">c</span>(loss_collect, loss<span class="sc">$</span><span class="fu">item</span>())</span>
-<span id="cb26-12"><a href="dataset과-dataloader-클래스.html#cb26-12" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb26-13"><a href="dataset과-dataloader-클래스.html#cb26-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb26-14"><a href="dataset과-dataloader-클래스.html#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (epoch <span class="sc">%%</span> <span class="dv">100</span> <span class="sc">==</span> <span class="dv">0</span>){</span>
-<span id="cb26-15"><a href="dataset과-dataloader-클래스.html#cb26-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Loss at epoch %d: %3f</span><span class="sc">\n</span><span class="st">&quot;</span>, epoch, <span class="fu">mean</span>(loss_collect)))    </span>
-<span id="cb26-16"><a href="dataset과-dataloader-클래스.html#cb26-16" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb26-17"><a href="dataset과-dataloader-클래스.html#cb26-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<pre><code>#&gt; Loss at epoch 100: 0.255531
-#&gt; Loss at epoch 200: 0.220138
-#&gt; Loss at epoch 300: 0.209447
-#&gt; Loss at epoch 400: 0.204981
-#&gt; Loss at epoch 500: 0.202872
-#&gt; Loss at epoch 600: 0.201842
-#&gt; Loss at epoch 700: 0.201364</code></pre>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="dataset과-dataloader-클래스.html#cb344-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (epoch <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) {</span>
+<span id="cb344-2"><a href="dataset과-dataloader-클래스.html#cb344-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb344-3"><a href="dataset과-dataloader-클래스.html#cb344-3" aria-hidden="true" tabindex="-1"></a>  loss_collect <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb344-4"><a href="dataset과-dataloader-클래스.html#cb344-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb344-5"><a href="dataset과-dataloader-클래스.html#cb344-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (batch <span class="cf">in</span> <span class="fu">enumerate</span>(study_dl)) {</span>
+<span id="cb344-6"><a href="dataset과-dataloader-클래스.html#cb344-6" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="sc">$</span><span class="fu">zero_grad</span>()</span>
+<span id="cb344-7"><a href="dataset과-dataloader-클래스.html#cb344-7" aria-hidden="true" tabindex="-1"></a>    output <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>(batch[[<span class="dv">1</span>]])</span>
+<span id="cb344-8"><a href="dataset과-dataloader-클래스.html#cb344-8" aria-hidden="true" tabindex="-1"></a>    loss <span class="ot">&lt;-</span> <span class="fu">nnf_binary_cross_entropy</span>(output, batch[[<span class="dv">2</span>]])</span>
+<span id="cb344-9"><a href="dataset과-dataloader-클래스.html#cb344-9" aria-hidden="true" tabindex="-1"></a>    loss<span class="sc">$</span><span class="fu">backward</span>()</span>
+<span id="cb344-10"><a href="dataset과-dataloader-클래스.html#cb344-10" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="sc">$</span><span class="fu">step</span>()</span>
+<span id="cb344-11"><a href="dataset과-dataloader-클래스.html#cb344-11" aria-hidden="true" tabindex="-1"></a>    loss_collect <span class="ot">&lt;-</span> <span class="fu">c</span>(loss_collect, loss<span class="sc">$</span><span class="fu">item</span>())</span>
+<span id="cb344-12"><a href="dataset과-dataloader-클래스.html#cb344-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb344-13"><a href="dataset과-dataloader-클래스.html#cb344-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb344-14"><a href="dataset과-dataloader-클래스.html#cb344-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (epoch <span class="sc">%%</span> <span class="dv">100</span> <span class="sc">==</span> <span class="dv">0</span>){</span>
+<span id="cb344-15"><a href="dataset과-dataloader-클래스.html#cb344-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Loss at epoch %d: %3f</span><span class="sc">\n</span><span class="st">&quot;</span>, epoch, <span class="fu">mean</span>(loss_collect)))    </span>
+<span id="cb344-16"><a href="dataset과-dataloader-클래스.html#cb344-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb344-17"><a href="dataset과-dataloader-클래스.html#cb344-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>#&gt; Loss at epoch 100: 0.256948
+#&gt; Loss at epoch 200: 0.220478
+#&gt; Loss at epoch 300: 0.209576
+#&gt; Loss at epoch 400: 0.205040
+#&gt; Loss at epoch 500: 0.202900
+#&gt; Loss at epoch 600: 0.201856
+#&gt; Loss at epoch 700: 0.201370
+#&gt; Loss at epoch 800: 0.201186
+#&gt; Loss at epoch 900: 0.201170
+#&gt; Loss at epoch 1000: 0.201249</code></pre>
 </div>
 </div>
 <div id="학습-결과" class="section level2" number="9.5">
 <h2><span class="header-section-number">9.5</span> 학습 결과</h2>
 <p>학습된 계수 값을 다음과 같다.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="dataset과-dataloader-클래스.html#cb28-1" aria-hidden="true" tabindex="-1"></a>logistic_reg<span class="sc">$</span>parameters</span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="dataset과-dataloader-클래스.html#cb346-1" aria-hidden="true" tabindex="-1"></a>logistic_reg<span class="sc">$</span>parameters</span></code></pre></div>
 <pre><code>#&gt; $fc1.weight
 #&gt; torch_tensor
-#&gt;  1.1832  0.5823
+#&gt;  1.2512  0.6331
 #&gt; [ CPUFloatType{1,2} ]
 #&gt; 
 #&gt; $fc1.bias
 #&gt; torch_tensor
-#&gt; -15.7891
+#&gt; -17.0234
 #&gt; [ CPUFloatType{1} ]</code></pre>
 <div id="평가셋-예측" class="section level3" number="9.5.1">
 <h3><span class="header-section-number">9.5.1</span> 평가셋 예측</h3>
 <p>학습된 로지스틱 회귀모형의 계수값을 사용하여 평가셋의 반응 변수가 1일 확률, 즉, 시험에 통과할 확률을 예측 할 수 있다.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="dataset과-dataloader-클래스.html#cb30-1" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">testing</span>(splited_data)</span>
-<span id="cb30-2"><a href="dataset과-dataloader-클래스.html#cb30-2" aria-hidden="true" tabindex="-1"></a>test_data[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="sc">%&gt;%</span></span>
-<span id="cb30-3"><a href="dataset과-dataloader-클래스.html#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># R to torch</span></span>
-<span id="cb30-4"><a href="dataset과-dataloader-클래스.html#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb30-5"><a href="dataset과-dataloader-클래스.html#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">torch_tensor</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb30-6"><a href="dataset과-dataloader-클래스.html#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># prop. prediction</span></span>
-<span id="cb30-7"><a href="dataset과-dataloader-클래스.html#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb30-8"><a href="dataset과-dataloader-클래스.html#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># torch to R</span></span>
-<span id="cb30-9"><a href="dataset과-dataloader-클래스.html#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.array</span>() <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>()<span class="ot">-&gt;</span> predict</span></code></pre></div>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="dataset과-dataloader-클래스.html#cb348-1" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">testing</span>(splited_data)</span>
+<span id="cb348-2"><a href="dataset과-dataloader-클래스.html#cb348-2" aria-hidden="true" tabindex="-1"></a>test_data[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="sc">%&gt;%</span></span>
+<span id="cb348-3"><a href="dataset과-dataloader-클래스.html#cb348-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># R to torch</span></span>
+<span id="cb348-4"><a href="dataset과-dataloader-클래스.html#cb348-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb348-5"><a href="dataset과-dataloader-클래스.html#cb348-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">torch_tensor</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb348-6"><a href="dataset과-dataloader-클래스.html#cb348-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># prop. prediction</span></span>
+<span id="cb348-7"><a href="dataset과-dataloader-클래스.html#cb348-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb348-8"><a href="dataset과-dataloader-클래스.html#cb348-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># torch to R</span></span>
+<span id="cb348-9"><a href="dataset과-dataloader-클래스.html#cb348-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.array</span>() <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>()<span class="ot">-&gt;</span> predict</span></code></pre></div>
 <p>예측한 확률값이 0.5가 넘을 경우, 학생이 시험에 통과를 할 수 있다고 예측을 하고, 그렇지 않을 경우 통과하지 못한다고 예측해보자.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="dataset과-dataloader-클래스.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make 0 and 1 using 0.5 threshold</span></span>
-<span id="cb31-2"><a href="dataset과-dataloader-클래스.html#cb31-2" aria-hidden="true" tabindex="-1"></a>predict <span class="ot">&lt;-</span> <span class="fu">floor</span>(predict <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb31-3"><a href="dataset과-dataloader-클래스.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(predict)</span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="dataset과-dataloader-클래스.html#cb349-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make 0 and 1 using 0.5 threshold</span></span>
+<span id="cb349-2"><a href="dataset과-dataloader-클래스.html#cb349-2" aria-hidden="true" tabindex="-1"></a>predict <span class="ot">&lt;-</span> <span class="fu">floor</span>(predict <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb349-3"><a href="dataset과-dataloader-클래스.html#cb349-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(predict)</span></code></pre></div>
 <pre><code>#&gt; [1] 0 0 0 0 1 0</code></pre>
 <p>이렇게 예측한 값과 실제 평가셋에 들어있는 학생들의 시험 통과 여부값을 사용하여 결과 비교하여 표로 만들어보면 다음과 같다.</p>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -783,10 +788,10 @@ p\left(\beta|\mathbf{X}, \underline{y}\right) &amp; =\prod_{i=1}^{n}p\left(\beta
 합격
 </td>
 <td style="text-align:right;">
-6
+7
 </td>
 <td style="text-align:right;">
-57
+56
 </td>
 <td style="text-align:right;">
 63
@@ -797,10 +802,10 @@ p\left(\beta|\mathbf{X}, \underline{y}\right) &amp; =\prod_{i=1}^{n}p\left(\beta
 총계
 </td>
 <td style="text-align:right;">
-93
+94
 </td>
 <td style="text-align:right;">
-57
+56
 </td>
 <td style="text-align:right;">
 150
@@ -820,30 +825,32 @@ p\left(\beta|\mathbf{X}, \underline{y}\right) &amp; =\prod_{i=1}^{n}p\left(\beta
 \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2  = 0
 \]</span></p>
 <p>주어진 예제의 평가셋을 시각화 시키고, 학습한 계수를 바탕으로 의사결정선을 구해보면 다음과 같다.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="dataset과-dataloader-클래스.html#cb33-1" aria-hidden="true" tabindex="-1"></a>learned_beta <span class="ot">&lt;-</span> logistic_reg<span class="sc">$</span>parameters<span class="sc">$</span>fc1.weight <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>()</span>
-<span id="cb33-2"><a href="dataset과-dataloader-클래스.html#cb33-2" aria-hidden="true" tabindex="-1"></a>learned_bias <span class="ot">&lt;-</span> logistic_reg<span class="sc">$</span>parameters<span class="sc">$</span>fc1.bias <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>()</span>
-<span id="cb33-3"><a href="dataset과-dataloader-클래스.html#cb33-3" aria-hidden="true" tabindex="-1"></a>addline <span class="ot">&lt;-</span> <span class="cf">function</span>(beta, bias, ...){</span>
-<span id="cb33-4"><a href="dataset과-dataloader-클래스.html#cb33-4" aria-hidden="true" tabindex="-1"></a>  my_slope <span class="ot">&lt;-</span> <span class="sc">-</span>beta[<span class="dv">1</span>] <span class="sc">/</span> beta[<span class="dv">2</span>]</span>
-<span id="cb33-5"><a href="dataset과-dataloader-클래스.html#cb33-5" aria-hidden="true" tabindex="-1"></a>  my_intercept <span class="ot">&lt;-</span> <span class="sc">-</span>bias <span class="sc">/</span> beta[<span class="dv">2</span>]</span>
-<span id="cb33-6"><a href="dataset과-dataloader-클래스.html#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> my_slope,</span>
-<span id="cb33-7"><a href="dataset과-dataloader-클래스.html#cb33-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">intercept =</span> my_intercept, ...)</span>
-<span id="cb33-8"><a href="dataset과-dataloader-클래스.html#cb33-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb33-9"><a href="dataset과-dataloader-클래스.html#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-10"><a href="dataset과-dataloader-클래스.html#cb33-10" aria-hidden="true" tabindex="-1"></a>p_data <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> test_data) <span class="sc">+</span></span>
-<span id="cb33-11"><a href="dataset과-dataloader-클래스.html#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span></span>
-<span id="cb33-12"><a href="dataset과-dataloader-클래스.html#cb33-12" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> study_time,</span>
-<span id="cb33-13"><a href="dataset과-dataloader-클래스.html#cb33-13" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> n_question,</span>
-<span id="cb33-14"><a href="dataset과-dataloader-클래스.html#cb33-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="fu">factor</span>(pass_exam))) <span class="sc">+</span></span>
-<span id="cb33-15"><a href="dataset과-dataloader-클래스.html#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Study time&quot;</span>) <span class="sc">+</span></span>
-<span id="cb33-16"><a href="dataset과-dataloader-클래스.html#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Number of Question&quot;</span>) <span class="sc">+</span></span>
-<span id="cb33-17"><a href="dataset과-dataloader-클래스.html#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse=</span><span class="cn">TRUE</span>),</span>
-<span id="cb33-18"><a href="dataset과-dataloader-클래스.html#cb33-18" aria-hidden="true" tabindex="-1"></a>                        <span class="at">name=</span><span class="st">&quot;Exam&quot;</span>,</span>
-<span id="cb33-19"><a href="dataset과-dataloader-클래스.html#cb33-19" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Fail&quot;</span>, <span class="st">&quot;Success&quot;</span>))</span>
-<span id="cb33-20"><a href="dataset과-dataloader-클래스.html#cb33-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-21"><a href="dataset과-dataloader-클래스.html#cb33-21" aria-hidden="true" tabindex="-1"></a>p_data <span class="sc">+</span> </span>
-<span id="cb33-22"><a href="dataset과-dataloader-클래스.html#cb33-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addline</span>(learned_beta, learned_bias,</span>
-<span id="cb33-23"><a href="dataset과-dataloader-클래스.html#cb33-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">linetype =</span> <span class="st">&quot;solid&quot;</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
-<p><img src="09-dataloader_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="dataset과-dataloader-클래스.html#cb351-1" aria-hidden="true" tabindex="-1"></a>learned_beta <span class="ot">&lt;-</span> logistic_reg<span class="sc">$</span>parameters<span class="sc">$</span>fc1.weight <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>()</span>
+<span id="cb351-2"><a href="dataset과-dataloader-클래스.html#cb351-2" aria-hidden="true" tabindex="-1"></a>learned_bias <span class="ot">&lt;-</span> logistic_reg<span class="sc">$</span>parameters<span class="sc">$</span>fc1.bias <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>()</span>
+<span id="cb351-3"><a href="dataset과-dataloader-클래스.html#cb351-3" aria-hidden="true" tabindex="-1"></a>addline <span class="ot">&lt;-</span> <span class="cf">function</span>(beta, bias, ...){</span>
+<span id="cb351-4"><a href="dataset과-dataloader-클래스.html#cb351-4" aria-hidden="true" tabindex="-1"></a>  my_slope <span class="ot">&lt;-</span> <span class="sc">-</span>beta[<span class="dv">1</span>] <span class="sc">/</span> beta[<span class="dv">2</span>]</span>
+<span id="cb351-5"><a href="dataset과-dataloader-클래스.html#cb351-5" aria-hidden="true" tabindex="-1"></a>  my_intercept <span class="ot">&lt;-</span> <span class="sc">-</span>bias <span class="sc">/</span> beta[<span class="dv">2</span>]</span>
+<span id="cb351-6"><a href="dataset과-dataloader-클래스.html#cb351-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> my_slope,</span>
+<span id="cb351-7"><a href="dataset과-dataloader-클래스.html#cb351-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">intercept =</span> my_intercept, ...)</span>
+<span id="cb351-8"><a href="dataset과-dataloader-클래스.html#cb351-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb351-9"><a href="dataset과-dataloader-클래스.html#cb351-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb351-10"><a href="dataset과-dataloader-클래스.html#cb351-10" aria-hidden="true" tabindex="-1"></a>p_data <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> test_data) <span class="sc">+</span></span>
+<span id="cb351-11"><a href="dataset과-dataloader-클래스.html#cb351-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span></span>
+<span id="cb351-12"><a href="dataset과-dataloader-클래스.html#cb351-12" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> study_time,</span>
+<span id="cb351-13"><a href="dataset과-dataloader-클래스.html#cb351-13" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> n_question,</span>
+<span id="cb351-14"><a href="dataset과-dataloader-클래스.html#cb351-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="fu">factor</span>(pass_exam))) <span class="sc">+</span></span>
+<span id="cb351-15"><a href="dataset과-dataloader-클래스.html#cb351-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Study time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb351-16"><a href="dataset과-dataloader-클래스.html#cb351-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Number of Question&quot;</span>) <span class="sc">+</span></span>
+<span id="cb351-17"><a href="dataset과-dataloader-클래스.html#cb351-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse=</span><span class="cn">TRUE</span>),</span>
+<span id="cb351-18"><a href="dataset과-dataloader-클래스.html#cb351-18" aria-hidden="true" tabindex="-1"></a>                        <span class="at">name=</span><span class="st">&quot;Exam&quot;</span>,</span>
+<span id="cb351-19"><a href="dataset과-dataloader-클래스.html#cb351-19" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Fail&quot;</span>, <span class="st">&quot;Success&quot;</span>))</span>
+<span id="cb351-20"><a href="dataset과-dataloader-클래스.html#cb351-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb351-21"><a href="dataset과-dataloader-클래스.html#cb351-21" aria-hidden="true" tabindex="-1"></a>p_data <span class="sc">+</span> </span>
+<span id="cb351-22"><a href="dataset과-dataloader-클래스.html#cb351-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addline</span>(learned_beta, learned_bias,</span>
+<span id="cb351-23"><a href="dataset과-dataloader-클래스.html#cb351-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">linetype =</span> <span class="st">&quot;solid&quot;</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="09-dataloader_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+그림에서 확인할 수 있다시피, 파란선을 기준으로 초록색과 빨간색 점이 완벽히 갈라져 있지 않다. 즉, 표에서도 확인 할 수 있었듯, 모델의 예측과 실제 데이터가 다른 경우가 있는 것이다.</p>
+<p>일반적으로 딥러닝에서 사용되는 신경망 모델은 로지스틱 회귀모형보다 훨씬 예측력이 뛰어나다고 알려져있다. 다음 챕터에서는 분류문제에 신경망을 적용하여 로지스틱 회귀모형의 성능을 얼마나 향상 시킬 수 있는지 알아보도록 하자.</p>
 
 </div>
 </div>

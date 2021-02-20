@@ -265,12 +265,12 @@ enumerate(study_dl)[1:2]
 
 ```
 #> [[1]]
-#> <environment: 0x563186ce0468>
+#> <environment: 0x557103625548>
 #> attr(,"class")
 #> [1] "enum_env"
 #> 
 #> [[2]]
-#> <environment: 0x563186ce23c0>
+#> <environment: 0x5571036274a0>
 #> attr(,"class")
 #> [1] "enum_env"
 ```
@@ -361,12 +361,14 @@ logistic_reg$parameters
 ```
 #> $fc1.weight
 #> torch_tensor
-#> -0.2411  0.0127
+#> 0.01 *
+#>  9.9717 -23.9173
 #> [ CPUFloatType{1,2} ]
 #> 
 #> $fc1.bias
 #> torch_tensor
-#> -0.2450
+#> 0.01 *
+#>  4.8379
 #> [ CPUFloatType{1} ]
 ```
 
@@ -431,7 +433,7 @@ optimizer$step()
 
 
 ```r
-for (epoch in 1:700) {
+for (epoch in 1:1000) {
   
   loss_collect <- c()
   
@@ -451,13 +453,16 @@ for (epoch in 1:700) {
 ```
 
 ```
-#> Loss at epoch 100: 0.255531
-#> Loss at epoch 200: 0.220138
-#> Loss at epoch 300: 0.209447
-#> Loss at epoch 400: 0.204981
-#> Loss at epoch 500: 0.202872
-#> Loss at epoch 600: 0.201842
-#> Loss at epoch 700: 0.201364
+#> Loss at epoch 100: 0.256948
+#> Loss at epoch 200: 0.220478
+#> Loss at epoch 300: 0.209576
+#> Loss at epoch 400: 0.205040
+#> Loss at epoch 500: 0.202900
+#> Loss at epoch 600: 0.201856
+#> Loss at epoch 700: 0.201370
+#> Loss at epoch 800: 0.201186
+#> Loss at epoch 900: 0.201170
+#> Loss at epoch 1000: 0.201249
 ```
 
 ## 학습 결과
@@ -472,12 +477,12 @@ logistic_reg$parameters
 ```
 #> $fc1.weight
 #> torch_tensor
-#>  1.1832  0.5823
+#>  1.2512  0.6331
 #> [ CPUFloatType{1,2} ]
 #> 
 #> $fc1.bias
 #> torch_tensor
-#> -15.7891
+#> -17.0234
 #> [ CPUFloatType{1} ]
 ```
 
@@ -538,14 +543,14 @@ head(predict)
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> 합격 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 57 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 56 </td>
    <td style="text-align:right;"> 63 </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> 총계 </td>
-   <td style="text-align:right;"> 93 </td>
-   <td style="text-align:right;"> 57 </td>
+   <td style="text-align:right;"> 94 </td>
+   <td style="text-align:right;"> 56 </td>
    <td style="text-align:right;"> 150 </td>
   </tr>
 </tbody>
@@ -593,4 +598,6 @@ p_data +
 ```
 
 <img src="09-dataloader_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+그림에서 확인할 수 있다시피, 파란선을 기준으로 초록색과 빨간색 점이 완벽히 갈라져 있지 않다. 즉, 표에서도 확인 할 수 있었듯, 모델의 예측과 실제 데이터가 다른 경우가 있는 것이다.  
 
+일반적으로 딥러닝에서 사용되는 신경망 모델은 로지스틱 회귀모형보다 훨씬 예측력이 뛰어나다고 알려져있다. 다음 챕터에서는 분류문제에 신경망을 적용하여 로지스틱 회귀모형의 성능을 얼마나 향상 시킬 수 있는지 알아보도록 하자.

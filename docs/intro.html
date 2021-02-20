@@ -33,7 +33,7 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="operation.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,6 +51,8 @@
 
 
 
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <script async defer src="https://hypothes.is/embed.js"></script>
 <meta name="google-site-verification" content="z9CiKKDExNMW8gi4-dN3X6zGa1-OXeSaIpjGFgXgHEg" />
 
@@ -278,6 +280,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.4" data-path="dataset과-dataloader-클래스.html"><a href="dataset과-dataloader-클래스.html#모델-설정---로지스틱-회귀모형"><i class="fa fa-check"></i><b>9.4</b> 모델 설정 - 로지스틱 회귀모형</a>
 <ul>
 <li class="chapter" data-level="9.4.1" data-path="dataset과-dataloader-클래스.html"><a href="dataset과-dataloader-클래스.html#torch-코드-구현"><i class="fa fa-check"></i><b>9.4.1</b> torch 코드 구현</a></li>
+<li class="chapter" data-level="9.4.2" data-path="dataset과-dataloader-클래스.html"><a href="dataset과-dataloader-클래스.html#손실함수-설정"><i class="fa fa-check"></i><b>9.4.2</b> 손실함수 설정</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="dataset과-dataloader-클래스.html"><a href="dataset과-dataloader-클래스.html#학습-결과"><i class="fa fa-check"></i><b>9.5</b> 학습 결과</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="dataset과-dataloader-클래스.html"><a href="dataset과-dataloader-클래스.html#평가셋-예측"><i class="fa fa-check"></i><b>9.5.1</b> 평가셋 예측</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -338,31 +345,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="intro.html#cb8-1" aria-hidden="true" tabindex="-1"></a>rand_tensor <span class="ot">&lt;-</span>  <span class="fu">torch_rand</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
 <span id="cb8-2"><a href="intro.html#cb8-2" aria-hidden="true" tabindex="-1"></a>rand_tensor</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.2156  0.7993  0.6193
-#&gt;  0.8931  0.0246  0.6580
-#&gt;  0.0181  0.8055  0.8854
-#&gt;  0.9878  0.6933  0.2286
-#&gt;  0.2534  0.2907  0.4441
+#&gt;  0.1406  0.8824  0.5817
+#&gt;  0.4629  0.3574  0.5737
+#&gt;  0.2139  0.9520  0.9581
+#&gt;  0.3552  0.8353  0.6410
+#&gt;  0.5302  0.1248  0.1205
 #&gt; [ CPUFloatType{5,3} ]</code></pre>
 <p>참고로 이렇게 만들어진 텐서에는 R에서 텐서과 어레이(array)에 접근할 때사용한 모든 문법들을 사용해서 접근할 수 있다.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="intro.html#cb10-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[,<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.7993
-#&gt;  0.0246
-#&gt;  0.8055
-#&gt;  0.6933
-#&gt;  0.2907
+#&gt;  0.8824
+#&gt;  0.3574
+#&gt;  0.9520
+#&gt;  0.8353
+#&gt;  0.1248
 #&gt; [ CPUFloatType{5} ]</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="intro.html#cb12-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.2156  0.7993  0.6193
-#&gt;  0.8931  0.0246  0.6580
-#&gt;  0.0181  0.8055  0.8854
+#&gt;  0.1406  0.8824  0.5817
+#&gt;  0.4629  0.3574  0.5737
+#&gt;  0.2139  0.9520  0.9581
 #&gt; [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="intro.html#cb14-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.0181  0.8854
-#&gt;  0.9878  0.2286
+#&gt;  0.2139  0.9581
+#&gt;  0.3552  0.6410
 #&gt; [ CPUFloatType{2,2} ]</code></pre>
 <p>위의 예제에서 벌써부터 일부 R유저들은 감격의 눈물을 흘릴 수 있다.</p>
 <div class="rmdwarning">
