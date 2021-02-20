@@ -4,7 +4,7 @@
 
 ## 예제 데이터
 
-언제나 그렇듯, 본 공략집은 예제를 통해서 설명하는 것을 선호한다. 이번 챕터에서는 가상의 학생들의 공부시간과 연습한 문제 갯수, 그리고 시험의 합격 여부에 대한 자료를 만들어보았다. 
+언제나 그렇듯, 본 공략집은 예제를 통해서 설명하는 것을 선호한다. 이번 챕터에서는 가상의 학생들의 공부시간과 연습한 문제 갯수, 그리고 시험의 합격 여부에 대한 자료를 만들어보았다.
 
 
 ```r
@@ -29,10 +29,12 @@ study_data <- tibble(study_time = x1,
 study_data <- study_data[sample(500, 500),]
 
 knitr::kable(head(study_data), format="html",
-             caption = "`study_data` 구조")
+             caption = "`study_data` 구조") %>% 
+  kableExtra::kable_styling(bootstrap_options = "striped",
+                            full_width = F)
 ```
 
-<table>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>(\#tab:unnamed-chunk-1)`study_data` 구조</caption>
  <thead>
   <tr>
@@ -263,12 +265,12 @@ enumerate(study_dl)[1:2]
 
 ```
 #> [[1]]
-#> <environment: 0x5555fe0782a0>
+#> <environment: 0x563186ce0468>
 #> attr(,"class")
 #> [1] "enum_env"
 #> 
 #> [[2]]
-#> <environment: 0x5555fe07c388>
+#> <environment: 0x563186ce23c0>
 #> attr(,"class")
 #> [1] "enum_env"
 ```
@@ -323,6 +325,8 @@ $$
 
 ### torch 코드 구현
 
+이제 `torch`로 특정 신경망 구조를 구현하는 코드는 익숙해졌으리라고 생각한다. 로지스틱 회귀모형은 단층 모형이고, 마지막 활성함수를 `sigmoid()` 함수로 감싸줘야하는 것이 특징이다.
+
 
 ```r
 study_net <- nn_module(
@@ -357,26 +361,77 @@ logistic_reg$parameters
 ```
 #> $fc1.weight
 #> torch_tensor
-#> -0.5930  0.5755
+#> -0.2411  0.0127
 #> [ CPUFloatType{1,2} ]
 #> 
 #> $fc1.bias
 #> torch_tensor
-#> -0.1740
+#> -0.2450
 #> [ CPUFloatType{1} ]
 ```
 
-코드에서 볼 수 있다시피, 로지스틱 회귀모형은 입력값을 독립변수 갯수인 2개로 받고, 출력값은 하나로 나가는 모형이다. 마지막 출력값을 0과 1사이로 보내기 위하여, 마지막 층에 `sigmoid()` 함수가 사용되었다. 
+코드에서 볼 수 있다시피, 로지스틱 회귀모형은 입력값을 독립변수 갯수인 2개로 받고, 출력값은 하나로 나가는 모형이다. 마지막 층에 `sigmoid()` 함수는 마지막 출력값을 0과 1사이로 보내기 위하여 사용되었다. 최적화 알고리즘은 `optim_sgd`으로 설정하였다. 
 
 
 ```r
-optimizer <- optim_sgd(logistic_reg$parameters, lr = 0.01)
+optimizer <- optim_sgd(logistic_reg$parameters, lr = 0.05)
 ```
 
+### 손실함수 설정
+
+로지스틱 회귀모형의 구현에서 핵심 파트는 손실함수(loss function)를 설정하는 부분이다. 앞에서 로지스틱 회귀모형이 종속변수 $Y$를 베르누이 확률변수(Bernoulli random variable)로 모델링을 한다는 것을 살펴보았다.
+
+로지스틱 회귀분석의 계수를 구하기 위해서는 우도함수(Likelihood function)를 정의한 후, 그것을 최대로 만드는 최대우도 추정량(Maximum likelihood estimator; MLE) 값을 찾아야 한다.
+
+확률변서 $Y$가 베르누이 확률변수를 따를 때, 확률질량함수(p.m.f)는 다음과 같다.
+
+$$
+f_Y(y; p) = p^{y}(1-p)^{1-y}, \text{ for }y = 1, 0, \text{ and } 0 \le p \le 1.
+$$
+따라서, 로지스틱 회귀모형의 가정을 위의 확률질량함수와 같이 생각해보면, 주어진 데이터에 대한 우도함수 $p$는 다음과 같다.
+
+$$
+\begin{align}
+p\left(\beta|\mathbf{X}, \underline{y}\right) & =\prod_{i=1}^{n}p\left(\beta|\mathbf{x}_{i},y_{i}\right)\\
+ & =\prod_{i=1}^{n}\sigma\left(\mathbf{x}_{i}^{T}\beta\right)^{y_{i}}\left(1-\sigma\left(\mathbf{x}_{i}^{T}\beta\right)\right)^{1-y_{i}}\\
+ & =\prod_{i=1}^{n}\pi_{i}^{y_{i}}\left(1-\pi_{i}\right)^{1-y_{i}}
+\end{align}
+$$
+위의 수식에서 계산의 편의를 위하여 $\pi_i$를 사용하여 다음의 항을 간단히 표현했음에 주의한다.
+
+$$
+\pi_{i}:=\sigma\left(\mathbf{x}_{i}^{T}\beta\right)
+$$
+
+보통의 최적화 알고리즘의 경우, 손실함수 값을 최소로 만드는 값을 찾는 알고리즘이다. 하지만 MLE의 경우 주어진 우도함수를 최대로 만드는 값이기 때문에 최적화 알고리즘에 사용할 수 있도록 음수값을 붙여주고, 함수를 좀 더 완만하게 만들기 위해서 로그값을 취해준, 음우도함수(negative log-likelihood function)을 사용한다.
+
+$$
+\begin{align*}
+-\ell\left(\beta\right) & =-log\left(p\left(\underline{y}|\mathbf{X},\beta\right)\right)\\
+ & =-\sum_{i=1}^{n}\left\{ y_{i}log\left(\sigma\left(\mathbf{x}_{i}^{T}\beta\right)\right)+\left(1-y_{i}\right)log\left(1-\sigma\left(\mathbf{x}_{i}^{T}\beta\right)\right)\right\} \\
+ & =-\sum_{i=1}^{n}\left\{ y_{i}log\left(\pi_{i}\right)+\left(1-y_{i}\right)log\left(1-\pi_{i}\right)\right\}
+\end{align*}
+$$
+
+위의 함수 $-\ell(\cdot)$은 `torch`에서 `nnf_binary_cross_entropy()` 함수에 정의되어 있다. 따라서 로지스틱 회귀모형의 계수는 다음과 같이 데이터 행렬($X$)과 레이블($y$)가 주어졌을때 $-\ell(\cdot)$ 함수를 최소로 만드는 $\beta$값으로 표현된다.
+
+$$
+\hat{\beta} \overset{set}{=} \underset{\beta}{arg \ min} \ \ -\ell\left(\beta; X, y\right)
+$$
+이 값을 찾기 위해서 경사하강법을 이용해 $\hat{\beta}$을 찾아나아가는 과정이 `torch`에서는 단 두 줄로 표현이 된다.
+
 
 ```r
-epoch <- 1
-for (epoch in 1:10) {
+loss <- nnf_binary_cross_entropy(output, batch[[2]])
+loss$backward()
+optimizer$step()
+```
+
+앞에서 정의한 `study_dl` 데이터로더를 사용하여 로지스틱 회귀모형을 학습시키는 코드는 다음과 같다.
+
+
+```r
+for (epoch in 1:700) {
   
   loss_collect <- c()
   
@@ -389,20 +444,153 @@ for (epoch in 1:10) {
     loss_collect <- c(loss_collect, loss$item())
   }
   
-  cat(sprintf("Loss at epoch %d: %3f\n", epoch, mean(loss_collect)))
+  if (epoch %% 100 == 0){
+      cat(sprintf("Loss at epoch %d: %3f\n", epoch, mean(loss_collect)))    
+  }
 }
 ```
 
 ```
-#> Loss at epoch 1: 1.237522
-#> Loss at epoch 2: 0.764068
-#> Loss at epoch 3: 0.600889
-#> Loss at epoch 4: 0.551459
-#> Loss at epoch 5: 0.532917
-#> Loss at epoch 6: 0.524191
-#> Loss at epoch 7: 0.519167
-#> Loss at epoch 8: 0.515707
-#> Loss at epoch 9: 0.512963
-#> Loss at epoch 10: 0.510566
+#> Loss at epoch 100: 0.255531
+#> Loss at epoch 200: 0.220138
+#> Loss at epoch 300: 0.209447
+#> Loss at epoch 400: 0.204981
+#> Loss at epoch 500: 0.202872
+#> Loss at epoch 600: 0.201842
+#> Loss at epoch 700: 0.201364
 ```
+
+## 학습 결과
+
+학습된 계수 값을 다음과 같다.
+
+
+```r
+logistic_reg$parameters
+```
+
+```
+#> $fc1.weight
+#> torch_tensor
+#>  1.1832  0.5823
+#> [ CPUFloatType{1,2} ]
+#> 
+#> $fc1.bias
+#> torch_tensor
+#> -15.7891
+#> [ CPUFloatType{1} ]
+```
+
+
+### 평가셋 예측
+
+학습된 로지스틱 회귀모형의 계수값을 사용하여 평가셋의 반응 변수가 1일 확률, 즉, 시험에 통과할 확률을 예측 할 수 있다.
+
+
+```r
+test_data <- testing(splited_data)
+test_data[,1:2] %>%
+  # R to torch
+  as.matrix() %>% 
+  torch_tensor() %>%
+  # prop. prediction
+  logistic_reg() %>%
+  # torch to R
+  as.array() %>% as.numeric()-> predict
+```
+
+예측한 확률값이 0.5가 넘을 경우, 학생이 시험에 통과를 할 수 있다고 예측을 하고, 그렇지 않을 경우 통과하지 못한다고 예측해보자.
+
+
+```r
+# make 0 and 1 using 0.5 threshold
+predict <- floor(predict - 0.5) + 1
+head(predict)
+```
+
+```
+#> [1] 0 0 0 0 1 0
+```
+
+이렇게 예측한 값과 실제 평가셋에 들어있는 학생들의 시험 통과 여부값을 사용하여 결과 비교하여 표로 만들어보면 다음과 같다.
+
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>(\#tab:unnamed-chunk-19)평가셋을 통한 모델성능 비교 (p = 0.5)</caption>
+ <thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1"></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">예측</div></th>
+</tr>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> 불합격 </th>
+   <th style="text-align:right;"> 합격 </th>
+   <th style="text-align:right;"> 총계 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr grouplength="3"><td colspan="4" style="border-bottom: 1px solid;"><strong>실제값</strong></td></tr>
+<tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> 불합격 </td>
+   <td style="text-align:right;"> 87 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 87 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> 합격 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 57 </td>
+   <td style="text-align:right;"> 63 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> 총계 </td>
+   <td style="text-align:right;"> 93 </td>
+   <td style="text-align:right;"> 57 </td>
+   <td style="text-align:right;"> 150 </td>
+  </tr>
+</tbody>
+</table>
+
+아래 그림에서처럼 로지스틱 함수는 입력값이 0일때 함수값이 0.5가 된다. 즉, 로지스틱 회귀에서 $X\beta$값이 로지스틱 함수에 입력이 되므로, $X\beta$ 값이 0이 되는 값들을 경계로 모델의 합격 불합격 예측값이 갈리는 것이다. 
+
+<div class="figure" style="text-align: center">
+<img src="09-dataloader_files/figure-html/logistic-fcn-1.png" alt="로지스틱 함수는 x가 0일때 0.5를 지나게 된다." width="672" />
+<p class="caption">(\#fig:logistic-fcn)로지스틱 함수는 x가 0일때 0.5를 지나게 된다.</p>
+</div>
+이러한 선을 의사결정선(decision boundary)라고 부른다.
+
+$$
+\hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2  = 0
+$$
+
+주어진 예제의 평가셋을 시각화 시키고, 학습한 계수를 바탕으로 의사결정선을 구해보면 다음과 같다.
+
+
+```r
+learned_beta <- logistic_reg$parameters$fc1.weight %>% as.numeric()
+learned_bias <- logistic_reg$parameters$fc1.bias %>% as.numeric()
+addline <- function(beta, bias, ...){
+  my_slope <- -beta[1] / beta[2]
+  my_intercept <- -bias / beta[2]
+  geom_abline(slope = my_slope,
+              intercept = my_intercept, ...)
+}
+
+p_data <- ggplot(data = test_data) +
+  geom_point(mapping =
+               aes(x = study_time,
+                   y = n_question,
+               color = factor(pass_exam))) +
+  xlab("Study time") +
+  ylab("Number of Question") +
+  scale_colour_discrete(guide = guide_legend(reverse=TRUE),
+                        name="Exam",
+                        labels=c("Fail", "Success"))
+
+p_data + 
+  addline(learned_beta, learned_bias,
+          linetype = "solid", col = "blue")
+```
+
+<img src="09-dataloader_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
