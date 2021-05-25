@@ -289,7 +289,7 @@ issac$print()
 ```
 
 ```
-#> Error in eval(expr, envir, enclos): attempt to apply non-function
+#> Error in eval(expr, envir, enclos): 함수가 아닌것에 적용하려고 합니다
 ```
 
 ```r

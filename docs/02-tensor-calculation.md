@@ -110,79 +110,11 @@ torch에는 정말 많은 자료형이 있는데, 그 목록은 [다음](https:/
 
 
 ```r
+# error will be generated
 A + B
 ```
 
-```
-#> Error in (function (self, other, alpha) : The size of tensor a (6) must match the size of tensor b (3) at non-singleton dimension 1
-#> Exception raised from infer_size at ../aten/src/ATen/ExpandUtils.cpp:24 (most recent call first):
-#> frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x69 (0x7f692199db89 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libc10.so)
-#> frame #1: at::infer_size(c10::ArrayRef<long>, c10::ArrayRef<long>) + 0x552 (0x7f69114ec382 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #2: at::TensorIterator::compute_shape(at::TensorIteratorConfig const&) + 0xde (0x7f69119eec2e in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #3: at::TensorIterator::build(at::TensorIteratorConfig&) + 0x64 (0x7f69119f11e4 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #4: at::TensorIterator::TensorIterator(at::TensorIteratorConfig&) + 0xdd (0x7f69119f199d in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #5: at::TensorIterator::binary_op(at::Tensor&, at::Tensor const&, at::Tensor const&) + 0x130 (0x7f69119f1b30 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #6: at::native::add(at::Tensor const&, at::Tensor const&, c10::Scalar) + 0x53 (0x7f69116a4bc3 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #7: <unknown function> + 0x13311bd (0x7f6911d0b1bd in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #8: <unknown function> + 0xaf2045 (0x7f69114cc045 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #9: at::Tensor c10::Dispatcher::callWithDispatchKey<at::Tensor, at::Tensor const&, at::Tensor const&, c10::Scalar>(c10::TypedOperatorHandle<at::Tensor (at::Tensor const&, at::Tensor const&, c10::Scalar)> const&, c10::DispatchKey, at::Tensor const&, at::Tensor const&, c10::Scalar) const + 0x27f (0x7f6911eb681f in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #10: at::add(at::Tensor const&, at::Tensor const&, c10::Scalar) + 0x123 (0x7f6911dacfd3 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #11: <unknown function> + 0x2a0f2bb (0x7f69133e92bb in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #12: <unknown function> + 0xaf2045 (0x7f69114cc045 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #13: at::Tensor c10::Dispatcher::callWithDispatchKey<at::Tensor, at::Tensor const&, at::Tensor const&, c10::Scalar>(c10::TypedOperatorHandle<at::Tensor (at::Tensor const&, at::Tensor const&, c10::Scalar)> const&, c10::DispatchKey, at::Tensor const&, at::Tensor const&, c10::Scalar) const + 0x27f (0x7f6911eb681f in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #14: at::add(at::Tensor const&, at::Tensor const&, c10::Scalar) + 0x123 (0x7f6911dacfd3 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #15: _lantern_add_tensor_tensor_scalar + 0x64 (0x7f6921d1f0e4 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/liblantern.so)
-#> frame #16: cpp_torch_namespace_add_self_Tensor_other_Tensor(Rcpp::XPtr<XPtrTorchTensor, Rcpp::PreserveStorage, &(void Rcpp::standard_delete_finalizer<XPtrTorchTensor>(XPtrTorchTensor*)), false>, Rcpp::XPtr<XPtrTorchTensor, Rcpp::PreserveStorage, &(void Rcpp::standard_delete_finalizer<XPtrTorchTensor>(XPtrTorchTensor*)), false>, Rcpp::XPtr<XPtrTorchScalar, Rcpp::PreserveStorage, &(void Rcpp::standard_delete_finalizer<XPtrTorchScalar>(XPtrTorchScalar*)), false>) + 0x48 (0x7f6922664fe8 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/libs/torchpkg.so)
-#> frame #17: _torch_cpp_torch_namespace_add_self_Tensor_other_Tensor + 0x9c (0x7f69223fd00c in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/libs/torchpkg.so)
-#> frame #18: <unknown function> + 0xf9310 (0x7f6938018310 in /usr/lib/R/lib/libR.so)
-#> frame #19: <unknown function> + 0xf9826 (0x7f6938018826 in /usr/lib/R/lib/libR.so)
-#> frame #20: <unknown function> + 0x137106 (0x7f6938056106 in /usr/lib/R/lib/libR.so)
-#> frame #21: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #22: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #23: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-#> frame #24: Rf_eval + 0x353 (0x7f69380628c3 in /usr/lib/R/lib/libR.so)
-#> frame #25: <unknown function> + 0xc650d (0x7f6937fe550d in /usr/lib/R/lib/libR.so)
-#> frame #26: <unknown function> + 0x137106 (0x7f6938056106 in /usr/lib/R/lib/libR.so)
-#> frame #27: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #28: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #29: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-#> frame #30: <unknown function> + 0x13a989 (0x7f6938059989 in /usr/lib/R/lib/libR.so)
-#> frame #31: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #32: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #33: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-#> frame #34: <unknown function> + 0x13a989 (0x7f6938059989 in /usr/lib/R/lib/libR.so)
-#> frame #35: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #36: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #37: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-#> frame #38: <unknown function> + 0x13a989 (0x7f6938059989 in /usr/lib/R/lib/libR.so)
-#> frame #39: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #40: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #41: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-#> frame #42: <unknown function> + 0x13a989 (0x7f6938059989 in /usr/lib/R/lib/libR.so)
-#> frame #43: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #44: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #45: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-#> frame #46: <unknown function> + 0x12d83b (0x7f693804c83b in /usr/lib/R/lib/libR.so)
-#> frame #47: <unknown function> + 0x9021b (0x7f6937faf21b in /usr/lib/R/lib/libR.so)
-#> frame #48: Rf_eval + 0x706 (0x7f6938062c76 in /usr/lib/R/lib/libR.so)
-#> frame #49: <unknown function> + 0x149782 (0x7f6938068782 in /usr/lib/R/lib/libR.so)
-#> frame #50: <unknown function> + 0x137106 (0x7f6938056106 in /usr/lib/R/lib/libR.so)
-#> frame #51: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #52: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #53: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-#> frame #54: <unknown function> + 0x13a989 (0x7f6938059989 in /usr/lib/R/lib/libR.so)
-#> frame #55: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #56: <unknown function> + 0x1440ac (0x7f69380630ac in /usr/lib/R/lib/libR.so)
-#> frame #57: Rf_eval + 0x454 (0x7f69380629c4 in /usr/lib/R/lib/libR.so)
-#> frame #58: <unknown function> + 0x14a22c (0x7f693806922c in /usr/lib/R/lib/libR.so)
-#> frame #59: <unknown function> + 0x1871fd (0x7f69380a61fd in /usr/lib/R/lib/libR.so)
-#> frame #60: <unknown function> + 0x1353c4 (0x7f69380543c4 in /usr/lib/R/lib/libR.so)
-#> frame #61: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #62: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #63: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-```
-
-모양이 다른 텐서를 더하려고 하면 R은 위에서 보듯 너무나 많은 에러를 쏟아낸다. 모양이 다른 두 텐서를 더하기 위해서는 모양을 같게 맞춰줘야 한다. A의 모양을 B의 모양과 같이 바꿔보도록 하자. 모양을 바꿀때는 `view()` 함수를 사용하고, 안에 모양의 형태를 벡터 형식으로 짚어 넣는다는 것을 기억하자.
+모양이 다른 텐서를 더하려고 하면 R은 너무나 많은 에러를 쏟아낼 것이다. 모양이 다른 두 텐서를 더하기 위해서는 모양을 같게 맞춰줘야 한다. A의 모양을 B의 모양과 같이 바꿔보도록 하자. 모양을 바꿀때는 `view()` 함수를 사용하고, 안에 모양의 형태를 벡터 형식으로 짚어 넣는다는 것을 기억하자.
 
 
 ```r
@@ -310,25 +242,9 @@ A %% 3
 
 
 ```r
+# error will be generated
 A
-```
-
-```
-#> torch_tensor
-#>  1  2  3
-#>  4  5  6
-#> [ CPUDoubleType{2,3} ]
-```
-
-```r
 torch_sqrt(A)
-```
-
-```
-#> torch_tensor
-#>  1.0000  1.4142  1.7321
-#>  2.0000  2.2361  2.4495
-#> [ CPUDoubleType{2,3} ]
 ```
 
 위의 연산이 에러가 나는 이유는 A가 정수를 담는 텐서였는데, 연산을 수행한 후에 실수가 담겨져서 나오는 에러이다. R과는 사뭇다른 예민한 아이 `torch`를 위해 형을 바꿔준 후에 연산을 실행하도록 하자.
@@ -770,75 +686,6 @@ A_3 <- torch_tensor(1:6)
 A_1$mm(A_3)
 ```
 
-```
-#> Error in (function (self, mat2) : mat2 must be a matrix
-#> Exception raised from mm_cpu at ../aten/src/ATen/native/LinearAlgebra.cpp:399 (most recent call first):
-#> frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x69 (0x7f692199db89 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libc10.so)
-#> frame #1: at::native::mm_cpu(at::Tensor const&, at::Tensor const&) + 0x334 (0x7f69117ec194 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #2: <unknown function> + 0x133236d (0x7f6911d0c36d in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #3: <unknown function> + 0xaf1c34 (0x7f69114cbc34 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #4: at::Tensor c10::Dispatcher::callWithDispatchKey<at::Tensor, at::Tensor const&, at::Tensor const&>(c10::TypedOperatorHandle<at::Tensor (at::Tensor const&, at::Tensor const&)> const&, c10::DispatchKey, at::Tensor const&, at::Tensor const&) const + 0x1ce (0x7f6911eb424e in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #5: at::mm(at::Tensor const&, at::Tensor const&) + 0xb7 (0x7f6911d9a947 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #6: <unknown function> + 0x2a5db24 (0x7f6913437b24 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #7: <unknown function> + 0xaf1c34 (0x7f69114cbc34 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #8: at::Tensor c10::Dispatcher::callWithDispatchKey<at::Tensor, at::Tensor const&, at::Tensor const&>(c10::TypedOperatorHandle<at::Tensor (at::Tensor const&, at::Tensor const&)> const&, c10::DispatchKey, at::Tensor const&, at::Tensor const&) const + 0x1ce (0x7f6911eb424e in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #9: at::Tensor::mm(at::Tensor const&) const + 0xb7 (0x7f691201dd67 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/./libtorch_cpu.so)
-#> frame #10: _lantern_Tensor_mm_tensor_tensor + 0x4c (0x7f6921cdb79c in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/deps/liblantern.so)
-#> frame #11: cpp_torch_method_mm_self_Tensor_mat2_Tensor(Rcpp::XPtr<XPtrTorchTensor, Rcpp::PreserveStorage, &(void Rcpp::standard_delete_finalizer<XPtrTorchTensor>(XPtrTorchTensor*)), false>, Rcpp::XPtr<XPtrTorchTensor, Rcpp::PreserveStorage, &(void Rcpp::standard_delete_finalizer<XPtrTorchTensor>(XPtrTorchTensor*)), false>) + 0x2c (0x7f692260d4fc in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/libs/torchpkg.so)
-#> frame #12: _torch_cpp_torch_method_mm_self_Tensor_mat2_Tensor + 0x82 (0x7f69223b2f22 in /home/issac/R/x86_64-pc-linux-gnu-library/4.0/torch/libs/torchpkg.so)
-#> frame #13: <unknown function> + 0xf932c (0x7f693801832c in /usr/lib/R/lib/libR.so)
-#> frame #14: <unknown function> + 0xf9826 (0x7f6938018826 in /usr/lib/R/lib/libR.so)
-#> frame #15: <unknown function> + 0x137106 (0x7f6938056106 in /usr/lib/R/lib/libR.so)
-#> frame #16: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #17: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #18: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-#> frame #19: Rf_eval + 0x353 (0x7f69380628c3 in /usr/lib/R/lib/libR.so)
-#> frame #20: <unknown function> + 0xc650d (0x7f6937fe550d in /usr/lib/R/lib/libR.so)
-#> frame #21: <unknown function> + 0x137106 (0x7f6938056106 in /usr/lib/R/lib/libR.so)
-#> frame #22: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #23: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #24: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-#> frame #25: <unknown function> + 0x13a989 (0x7f6938059989 in /usr/lib/R/lib/libR.so)
-#> frame #26: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #27: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #28: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-#> frame #29: <unknown function> + 0x13a989 (0x7f6938059989 in /usr/lib/R/lib/libR.so)
-#> frame #30: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #31: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #32: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-#> frame #33: Rf_eval + 0x353 (0x7f69380628c3 in /usr/lib/R/lib/libR.so)
-#> frame #34: <unknown function> + 0x1470a2 (0x7f69380660a2 in /usr/lib/R/lib/libR.so)
-#> frame #35: Rf_eval + 0x572 (0x7f6938062ae2 in /usr/lib/R/lib/libR.so)
-#> frame #36: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #37: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-#> frame #38: Rf_eval + 0x353 (0x7f69380628c3 in /usr/lib/R/lib/libR.so)
-#> frame #39: <unknown function> + 0x149782 (0x7f6938068782 in /usr/lib/R/lib/libR.so)
-#> frame #40: <unknown function> + 0x137106 (0x7f6938056106 in /usr/lib/R/lib/libR.so)
-#> frame #41: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #42: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #43: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-#> frame #44: <unknown function> + 0x13a989 (0x7f6938059989 in /usr/lib/R/lib/libR.so)
-#> frame #45: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #46: <unknown function> + 0x1440ac (0x7f69380630ac in /usr/lib/R/lib/libR.so)
-#> frame #47: Rf_eval + 0x454 (0x7f69380629c4 in /usr/lib/R/lib/libR.so)
-#> frame #48: <unknown function> + 0x14a22c (0x7f693806922c in /usr/lib/R/lib/libR.so)
-#> frame #49: <unknown function> + 0x1871fd (0x7f69380a61fd in /usr/lib/R/lib/libR.so)
-#> frame #50: <unknown function> + 0x1353c4 (0x7f69380543c4 in /usr/lib/R/lib/libR.so)
-#> frame #51: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #52: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #53: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-#> frame #54: <unknown function> + 0x13a989 (0x7f6938059989 in /usr/lib/R/lib/libR.so)
-#> frame #55: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #56: <unknown function> + 0x1440ac (0x7f69380630ac in /usr/lib/R/lib/libR.so)
-#> frame #57: <unknown function> + 0x1444e4 (0x7f69380634e4 in /usr/lib/R/lib/libR.so)
-#> frame #58: <unknown function> + 0x1377d4 (0x7f69380567d4 in /usr/lib/R/lib/libR.so)
-#> frame #59: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-#> frame #60: <unknown function> + 0x14550f (0x7f693806450f in /usr/lib/R/lib/libR.so)
-#> frame #61: Rf_applyClosure + 0x1c7 (0x7f69380652d7 in /usr/lib/R/lib/libR.so)
-#> frame #62: <unknown function> + 0x13a989 (0x7f6938059989 in /usr/lib/R/lib/libR.so)
-#> frame #63: Rf_eval + 0x180 (0x7f69380626f0 in /usr/lib/R/lib/libR.so)
-```
-
 위의 코드는 연산 에러가 나는데, 이유는 `A_3`의 모양이 `A_1`의 모양과 맞지 않기 때문이다.
 
 
@@ -851,6 +698,7 @@ A_1$size()
 ```
 
 ```r
+A_3 <- torch_tensor(1:6)
 A_3$size()
 ```
 

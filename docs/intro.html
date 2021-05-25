@@ -24,7 +24,7 @@
 <meta name="author" content="슬기로운통계생활" />
 
 
-<meta name="date" content="2021-02-19" />
+<meta name="date" content="2021-05-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="operation.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/header-attrs-2.8.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -66,11 +66,14 @@
   gtag('config', 'G-6MYZBEL4H2');
 </script>
 
+<script data-ad-client="ca-pub-3877288275353516" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -328,11 +331,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-3"><a href="intro.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 텐서 x값 확인</span></span>
 <span id="cb4-4"><a href="intro.html#cb4-4" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0  0  0
-#&gt;  0  0  0
-#&gt;  0  0  0
-#&gt;  0  0  0
-#&gt;  0  0  0
+#&gt; 1e-38 *
+#&gt;  0.9643  1.0561  0.9092
+#&gt;   0.5969  1.0286  0.8908
+#&gt;   0.8908  0.6980  0.9092
+#&gt;   0.9918  0.7714  1.0010
+#&gt;   0.8449  1.0653  1.0286
 #&gt; [ CPUFloatType{5,3} ]</code></pre>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="intro.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 텐서 x의 크기 확인</span></span>
 <span id="cb6-2"><a href="intro.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(x)</span></code></pre></div>
@@ -345,31 +349,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="intro.html#cb8-1" aria-hidden="true" tabindex="-1"></a>rand_tensor <span class="ot">&lt;-</span>  <span class="fu">torch_rand</span>(<span class="dv">5</span>, <span class="dv">3</span>)</span>
 <span id="cb8-2"><a href="intro.html#cb8-2" aria-hidden="true" tabindex="-1"></a>rand_tensor</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.1406  0.8824  0.5817
-#&gt;  0.4629  0.3574  0.5737
-#&gt;  0.2139  0.9520  0.9581
-#&gt;  0.3552  0.8353  0.6410
-#&gt;  0.5302  0.1248  0.1205
+#&gt;  0.8040  0.1883  0.2157
+#&gt;  0.1676  0.4846  0.6489
+#&gt;  0.9481  0.9011  0.5784
+#&gt;  0.9219  0.5491  0.0718
+#&gt;  0.7128  0.7849  0.3758
 #&gt; [ CPUFloatType{5,3} ]</code></pre>
 <p>참고로 이렇게 만들어진 텐서에는 R에서 텐서과 어레이(array)에 접근할 때사용한 모든 문법들을 사용해서 접근할 수 있다.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="intro.html#cb10-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[,<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.8824
-#&gt;  0.3574
-#&gt;  0.9520
-#&gt;  0.8353
-#&gt;  0.1248
+#&gt;  0.1883
+#&gt;  0.4846
+#&gt;  0.9011
+#&gt;  0.5491
+#&gt;  0.7849
 #&gt; [ CPUFloatType{5} ]</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="intro.html#cb12-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.1406  0.8824  0.5817
-#&gt;  0.4629  0.3574  0.5737
-#&gt;  0.2139  0.9520  0.9581
+#&gt;  0.8040  0.1883  0.2157
+#&gt;  0.1676  0.4846  0.6489
+#&gt;  0.9481  0.9011  0.5784
 #&gt; [ CPUFloatType{3,3} ]</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="intro.html#cb14-1" aria-hidden="true" tabindex="-1"></a>rand_tensor[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
-#&gt;  0.2139  0.9581
-#&gt;  0.3552  0.6410
+#&gt;  0.9481  0.5784
+#&gt;  0.9219  0.0718
 #&gt; [ CPUFloatType{2,2} ]</code></pre>
 <p>위의 예제에서 벌써부터 일부 R유저들은 감격의 눈물을 흘릴 수 있다.</p>
 <div class="rmdwarning">
@@ -482,7 +486,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>앞에서 설명한 것처럼 텐서는 행렬의 개념을 확장시킨 것에 지나지 않겠지만, 그렇다고 같은 취급을 해서도 안된다. 그도 그럴것이 R에서 torch의 텐서와 행렬은 같지 않다. 이러한 사실은 다음과 같이 위에서 만든 텐서 <code>x</code>에 R의 기본 연산자인 행렬곱을 적용해보면 알 수 있다.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="intro.html#cb30-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">torch_zeros</span>(<span class="dv">3</span>, <span class="dv">5</span>)</span>
 <span id="cb30-2"><a href="intro.html#cb30-2" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%*%</span> <span class="fu">t</span>(x)</span></code></pre></div>
-<pre><code>#&gt; Error in t.default(x): argument is not a matrix</code></pre>
+<pre><code>#&gt; Error in t.default(x): 인자가 행렬을 가지지 않습니다</code></pre>
 <p>위의 <code>argument is not a matrix</code> 에러에서 우리는 정말 텐서와 행렬은 다르게 취급된다는 것을 알 수 있다. 그렇다면 ‘텐서끼리의 계산은 어떻게 할까?’ 자연스러운 의문이 든다. 다음 장에서는 텐서의 연산에 대하여 배워보자.</p>
 <div class="rmdwarning">
 <h3 id="주의하기">

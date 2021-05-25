@@ -181,12 +181,12 @@ my_net
 ```
 #> An `nn_module` containing 251 parameters.
 #> 
-#> ── Modules ─────────────────────────────────────────────────────────────────────
-#> ● hidden1: <nn_linear> #20 parameters
-#> ● hidden2: <nn_linear> #110 parameters
-#> ● hidden3: <nn_linear> #110 parameters
-#> ● output_layer: <nn_linear> #11 parameters
-#> ● tanh: <nn_tanh> #0 parameters
+#> -- Modules ---------------------------------------------------------------------
+#> * hidden1: <nn_linear> #20 parameters
+#> * hidden2: <nn_linear> #110 parameters
+#> * hidden3: <nn_linear> #110 parameters
+#> * output_layer: <nn_linear> #11 parameters
+#> * tanh: <nn_tanh> #0 parameters
 ```
 
 ### 손실함수와 최적화 방법 선택

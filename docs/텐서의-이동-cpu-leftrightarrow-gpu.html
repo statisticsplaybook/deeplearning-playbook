@@ -24,7 +24,7 @@
 <meta name="author" content="슬기로운통계생활" />
 
 
-<meta name="date" content="2021-02-19" />
+<meta name="date" content="2021-05-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="operation.html"/>
 <link rel="next" href="r6.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/header-attrs-2.8.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -66,11 +66,14 @@
   gtag('config', 'G-6MYZBEL4H2');
 </script>
 
+<script data-ad-client="ca-pub-3877288275353516" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -311,8 +314,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="텐서의-이동-cpu-leftrightarrow-gpu" class="section level1" number="3">
 <h1><span class="header-section-number">Chapter 3</span> 텐서의 이동; CPU <span class="math inline">\(\leftrightarrow\)</span> GPU</h1>
 <p>딥러닝(deep learning)에서는 네트워크의 구조가 조금만 복잡해져도, 필요한 계산량이 엄청나게 늘어나기 때문에 GPU는 사실 필수적이다. <code>torch</code> 패키지에서는 텐서를 다룰때에 현재 다루는 텐서가 어디에 저장되어있는가에 대한 일종의 태그를 달아놓는다. 다음의 코드를 살펴보자.</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb128-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
-<span id="cb128-2"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb128-2" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb123-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb123-2"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb123-2" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  1
 #&gt;  2
@@ -323,28 +326,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="gpu-사용-가능-체크" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> GPU 사용 가능 체크</h2>
 <p>앞서 정의한 텐서 <code>a</code>를 GPU의 메모리로 옮기기 위해서는, 너무나 당연하게 GPU가 현재 시스템에서 접근 가능한지에 대하여 알아보아야한다. GPU 접근성은 <code>cuda_is_available()</code>을 사용한다.</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cuda_is_available</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cuda_is_available</span>()</span></code></pre></div>
 <pre><code>#&gt; [1] TRUE</code></pre>
 </div>
 <div id="cpu-to-gpu" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> CPU to GPU</h2>
 <p>이미 정의된 텐서 a를 GPU로 옮기려면 다음과 같이 <code>cuda()</code> 함수를 이용하면 된다.</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb132-1" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb127-1" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  1
 #&gt;  2
 #&gt;  3
 #&gt;  4
 #&gt; [ CPULongType{4} ]</code></pre>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb134-1" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">cuda</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb129-1" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">cuda</span>()</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  1
 #&gt;  2
 #&gt;  3
 #&gt;  4
 #&gt; [ CUDALongType{4} ]</code></pre>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb136-1" aria-hidden="true" tabindex="-1"></a>gpu <span class="ot">&lt;-</span> <span class="fu">torch_device</span>(<span class="st">&quot;cuda&quot;</span>)</span>
-<span id="cb136-2"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb136-2" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">to</span>(<span class="at">device =</span> gpu)</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb131-1" aria-hidden="true" tabindex="-1"></a>gpu <span class="ot">&lt;-</span> <span class="fu">torch_device</span>(<span class="st">&quot;cuda&quot;</span>)</span>
+<span id="cb131-2"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb131-2" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">to</span>(<span class="at">device =</span> gpu)</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  1
 #&gt;  2
@@ -352,7 +355,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  4
 #&gt; [ CUDALongType{4} ]</code></pre>
 <p>옮길 때에 <code>dtype</code>을 사용하여 다음과 같이 자료형을 바꿔줄 수도 있다.</p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb138-1" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">to</span>(<span class="at">device =</span> gpu, <span class="at">dtype =</span> <span class="fu">torch_double</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb133-1" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">to</span>(<span class="at">device =</span> gpu, <span class="at">dtype =</span> <span class="fu">torch_double</span>())</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  1
 #&gt;  2
@@ -363,8 +366,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="gpu-to-cpu" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> GPU to CPU</h2>
 <p>GPU 상에 직접 텐서를 만드는 방법은 다음과 같다.</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb140-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">device=</span>gpu)</span>
-<span id="cb140-2"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb140-2" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb135-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">device=</span>gpu)</span>
+<span id="cb135-2"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb135-2" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  1
 #&gt;  2
@@ -372,16 +375,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt;  4
 #&gt; [ CUDALongType{4} ]</code></pre>
 <p>이전 섹션에서 CPU에서 GPU로 옮기는 방법과 비슷하게 다음의 코드가 작동한다.</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb142-1" aria-hidden="true" tabindex="-1"></a>b<span class="sc">$</span><span class="fu">cpu</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb137-1" aria-hidden="true" tabindex="-1"></a>b<span class="sc">$</span><span class="fu">cpu</span>()</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  1
 #&gt;  2
 #&gt;  3
 #&gt;  4
 #&gt; [ CPULongType{4} ]</code></pre>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to 함수 이용</span></span>
-<span id="cb144-2"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb144-2" aria-hidden="true" tabindex="-1"></a>cpu <span class="ot">&lt;-</span> <span class="fu">torch_device</span>(<span class="st">&quot;cpu&quot;</span>)</span>
-<span id="cb144-3"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb144-3" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">to</span>(<span class="at">device =</span> cpu)</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to 함수 이용</span></span>
+<span id="cb139-2"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb139-2" aria-hidden="true" tabindex="-1"></a>cpu <span class="ot">&lt;-</span> <span class="fu">torch_device</span>(<span class="st">&quot;cpu&quot;</span>)</span>
+<span id="cb139-3"><a href="텐서의-이동-cpu-leftrightarrow-gpu.html#cb139-3" aria-hidden="true" tabindex="-1"></a>a<span class="sc">$</span><span class="fu">to</span>(<span class="at">device =</span> cpu)</span></code></pre></div>
 <pre><code>#&gt; torch_tensor
 #&gt;  1
 #&gt;  2

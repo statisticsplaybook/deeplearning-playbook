@@ -265,12 +265,12 @@ enumerate(study_dl)[1:2]
 
 ```
 #> [[1]]
-#> <environment: 0x557103625548>
+#> <environment: 0x0000000017704b60>
 #> attr(,"class")
 #> [1] "enum_env"
 #> 
 #> [[2]]
-#> <environment: 0x5571036274a0>
+#> <environment: 0x0000000017702dc8>
 #> attr(,"class")
 #> [1] "enum_env"
 ```
@@ -349,9 +349,9 @@ logistic_reg
 ```
 #> An `nn_module` containing 3 parameters.
 #> 
-#> ── Modules ─────────────────────────────────────────────────────────────────────
-#> ● fc1: <nn_linear> #3 parameters
-#> ● sigmoid: <nn_sigmoid> #0 parameters
+#> -- Modules ---------------------------------------------------------------------
+#> * fc1: <nn_linear> #3 parameters
+#> * sigmoid: <nn_sigmoid> #0 parameters
 ```
 
 ```r
@@ -361,14 +361,12 @@ logistic_reg$parameters
 ```
 #> $fc1.weight
 #> torch_tensor
-#> 0.01 *
-#>  9.9717 -23.9173
+#>  0.2221  0.6924
 #> [ CPUFloatType{1,2} ]
 #> 
 #> $fc1.bias
 #> torch_tensor
-#> 0.01 *
-#>  4.8379
+#>  0.6671
 #> [ CPUFloatType{1} ]
 ```
 
@@ -453,16 +451,16 @@ for (epoch in 1:1000) {
 ```
 
 ```
-#> Loss at epoch 100: 0.256948
-#> Loss at epoch 200: 0.220478
-#> Loss at epoch 300: 0.209576
-#> Loss at epoch 400: 0.205040
-#> Loss at epoch 500: 0.202900
-#> Loss at epoch 600: 0.201856
-#> Loss at epoch 700: 0.201370
-#> Loss at epoch 800: 0.201186
-#> Loss at epoch 900: 0.201170
-#> Loss at epoch 1000: 0.201249
+#> Loss at epoch 100: 0.259373
+#> Loss at epoch 200: 0.221048
+#> Loss at epoch 300: 0.209792
+#> Loss at epoch 400: 0.205139
+#> Loss at epoch 500: 0.202948
+#> Loss at epoch 600: 0.201879
+#> Loss at epoch 700: 0.201380
+#> Loss at epoch 800: 0.201189
+#> Loss at epoch 900: 0.201169
+#> Loss at epoch 1000: 0.201245
 ```
 
 ## 학습 결과
@@ -477,12 +475,12 @@ logistic_reg$parameters
 ```
 #> $fc1.weight
 #> torch_tensor
-#>  1.2512  0.6331
+#>  1.2506  0.6326
 #> [ CPUFloatType{1,2} ]
 #> 
 #> $fc1.bias
 #> torch_tensor
-#> -17.0234
+#> -17.0129
 #> [ CPUFloatType{1} ]
 ```
 
@@ -536,19 +534,19 @@ head(predict)
 <tbody>
   <tr grouplength="3"><td colspan="4" style="border-bottom: 1px solid;"><strong>실제값</strong></td></tr>
 <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> 불합격 </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> 불합격 </td>
    <td style="text-align:right;"> 87 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 87 </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> 합격 </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> 합격 </td>
    <td style="text-align:right;"> 7 </td>
    <td style="text-align:right;"> 56 </td>
    <td style="text-align:right;"> 63 </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> 총계 </td>
+   <td style="text-align:left; padding-left:  2em;" indentlevel="1"> 총계 </td>
    <td style="text-align:right;"> 94 </td>
    <td style="text-align:right;"> 56 </td>
    <td style="text-align:right;"> 150 </td>
